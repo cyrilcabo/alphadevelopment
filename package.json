@@ -1,0 +1,27 @@
+{
+  "name": "alphadevelopment",
+  "version": "1.0.0",
+  "description": "\"Server side of the application\"",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.9",
+    "nodemailer": "^6.4.11",
+    "typescript": "^3.9.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "server-side",
+    "back-end",
+    "server",
+    "alphadev"
+  ],
+  "author": "Cyril Cabo",
+  "license": "ISC"
+}
