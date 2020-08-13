@@ -222,7 +222,7 @@ const ViewProduct = ():JSX.Element => {
 							<h3 className={classes.productTitle}> {product.title} </h3>
 						</Grid>
 						<Grid item>
-							<a className={classes.productLink} href={product.link}> {product.link} </a>
+							<a className={classes.productLink} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a>
 						</Grid>
 						<Grid item>
 							<Chip className={classes.productCategory} label={product.category} />
