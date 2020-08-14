@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/qs": "^6.9.4",
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",
     "graphql": "^15.3.0",
@@ -15,11 +16,13 @@
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "rm ../server/build -rf && mv build ../server/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
