@@ -12,7 +12,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 //Initialize remote fetching
 const httpLink: any = createHttpLink({
-	uri: 'http://localhost:4000'
+	uri: '/'
 });
 
 //Initialize apollo client
