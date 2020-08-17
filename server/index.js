@@ -1,3 +1,4 @@
+
 //Allow .env variables
 require('dotenv').config();
 
@@ -100,4 +101,6 @@ server.express.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-server.start(() => console.log('Server running...'));
+server.start({
+	endpoint: '/graphql',
+}, () => console.log('Server running...'));
