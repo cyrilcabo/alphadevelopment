@@ -46,6 +46,14 @@ const useStyle:any = makeStyles(theme => ({
 			justifyContent: 'center',
 		}
 	},
+	productsContainer: {
+		[theme.breakpoints.up('md')]: {
+			'&::after': {
+				content: "''",
+				flexBasis: '25%',
+			}
+		}
+	}
 }));
 
 interface Product {
@@ -77,7 +85,7 @@ const Products = ():JSX.Element => {
 				<Grid item container className={classes.title}>
 					<h1> <span style={{color: '#00CBFF'}}>Alpha</span> Products </h1>
 				</Grid>
-				<Grid item container justify="space-between">
+				<Grid item container justify="space-between" className={classes.productsContainer}>
 					{mappedProducts}
 				</Grid>
 			</Grid>

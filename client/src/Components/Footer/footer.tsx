@@ -131,7 +131,10 @@ const Footer = ({navs}: Props): JSX.Element => {
 							</Grid>
 						</Grid>
 						<Grid item>
-							<Button className={classes.CTA}> Download Resume </Button>
+							<Button 
+								className={classes.CTA}
+								onClick={() => window.open('/Resume/resume.pdf')}
+							> Download Resume </Button>
 						</Grid>
 					</Grid>
 				</Grid>

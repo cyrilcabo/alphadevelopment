@@ -42,7 +42,7 @@ const useStyle:any = makeStyles(theme => ({
 
 const HomeTechs = ():JSX.Element => {
 	const classes:any = useStyle();
-	const techs:string[] = ['apollo', 'aws', 'bootstrap', 'css', 'docker', 'express', 'firebase', 'github', 'graphql', 'html', 'javascript', 'material', 'mongodb', 'next', 'nginx', 'node', 'react', 'redux', 'socket'];
+	const techs:string[] = ['apollo', 'aws', 'bootstrap', 'css', 'docker', 'express', 'firebase', 'github', 'graphql', 'html', 'javascript', 'material', 'mongodb', 'next', 'nginx', 'node', 'photoshop', 'react', 'redux', 'socket', 'typescript', 'xd'];
 	const mappedTechs:JSX.Element[] = techs.map((item, key) => {
 		return <Grid item xs={4} sm={2} md={1} key={key} container justify="center">
 			<img className={classes.img} src={`/images/Stacks/${item}.png`} alt={`Stack logo: ${item}`} />
