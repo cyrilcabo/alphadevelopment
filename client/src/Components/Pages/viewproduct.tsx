@@ -159,12 +159,31 @@ const useStyle:any = makeStyles(theme => ({
 			margin: '7.5px 7.5px',
 			height: 25,
 		}
-	}
+	},
+	linkContainer: {
+		[theme.breakpoints.down('xs')]: {
+			justifyContent: 'center',
+		}
+	},
+	srcCode: {
+		'& > img': {
+			height: 20,
+			borderRadius: '100%',
+			'&:hover': {
+				boxShadow: '0px 0px 1px black',
+			},
+			[theme.breakpoints.down('md')]: {
+				height: 15,
+			}
+		},
+		marginLeft: 5,
+	},
 }));
 
 interface Product {
 	title: string;
 	link: string;
+	github: string;
 	pid: string;
 	category: string;
 	details: string;
@@ -183,6 +202,7 @@ const ViewProduct = ():JSX.Element => {
 	const [product, setProduct]: [Product, Function] = React.useState({
 		title: "",
 		link: "",
+		github: "",
 		category: "",
 		pid: "",
 		details: "",
@@ -221,8 +241,14 @@ const ViewProduct = ():JSX.Element => {
 						<Grid item>
 							<h3 className={classes.productTitle}> {product.title} </h3>
 						</Grid>
-						<Grid item>
-							<a className={classes.productLink} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a>
+						<Grid item container className={classes.linkContainer} alignItems="center">
+							<Grid item>	
+								<a className={classes.productLink} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a></Grid>
+							<Grid item>
+								<a className={classes.srcCode} href={product.github} target="_blank" rel="noopener noreferrer">
+									<img src={"/images/Logos/github.png"} />
+								</a>
+							</Grid>
 						</Grid>
 						<Grid item>
 							<Chip className={classes.productCategory} label={product.category} />
