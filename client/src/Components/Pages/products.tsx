@@ -59,6 +59,7 @@ const useStyle:any = makeStyles(theme => ({
 interface Product {
 	title: string;
 	link: string;
+	github: string;
 	excerpt: string;
 	details: string;
 	category: string;

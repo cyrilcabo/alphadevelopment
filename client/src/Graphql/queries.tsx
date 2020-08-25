@@ -6,6 +6,7 @@ export const PRODUCTS = gql`
       _id,
       title,
       link,
+      github,
       category,
       excerpt,
       techs,

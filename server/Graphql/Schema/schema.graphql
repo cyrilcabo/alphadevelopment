@@ -15,6 +15,7 @@ type Product {
 	_id: ID!
 	title: String!
 	link: String!
+	github: String!
 	category: String!
 	excerpt: String!
 	techs: [String]!

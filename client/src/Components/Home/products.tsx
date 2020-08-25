@@ -71,6 +71,7 @@ interface Product {
 	category: string;
 	excerpt: string;
 	link: string;
+	github: string;
 	details: string;
 	techs: string[];
 	featured: boolean;

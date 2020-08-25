@@ -53,6 +53,9 @@ const useStyle:any = makeStyles(theme => ({
 			'& > div.MuiGrid-item': {
 				margin: '5px 5px',
 			}
+		},
+		'& div#linkholder': {
+			justifyContent: 'center',
 		}
 	},
 	inverse: {
@@ -73,6 +76,9 @@ const useStyle:any = makeStyles(theme => ({
 			'& > div.MuiGrid-item': {
 				margin: '0px 0px 10px 10px',
 			}
+		},
+		'& div#linkholder': {
+			justifyContent: 'flex-end',
 		}
 	},
 	innerContainer: {
@@ -170,12 +176,31 @@ const useStyle:any = makeStyles(theme => ({
 			padding: '2px 12px',
 			borderRadius: 10,
 		}
+	},
+	srcCode: {
+		'& > img': {
+			height: 20,
+			borderRadius: '100%',
+			'&:hover': {
+				boxShadow: '0px 0px 1px black',
+			},
+			[theme.breakpoints.down('md')]: {
+				height: 15,
+			}
+		},
+		marginLeft: 5,
+	},
+	linkholder: {
+		[theme.breakpoints.down('sm')]: {
+			justifyContent: 'center',
+		}
 	}
 }));
 
 interface Product {
 	title: string;
 	link: string;
+	github: string;
 	details: string;
 	excerpt: string;
 	category: string;
@@ -222,8 +247,15 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 						<Grid item>
 							<h4 className={[classes.title, center ?classes.titleCenter :""].join(' ')}> {product.title} </h4>
 						</Grid>
-						<Grid item>
-							<a className={classes.link} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a>
+						<Grid item container id="linkholder" alignItems="center" className={classes.linkHolder} >
+							<Grid item>
+								<a className={classes.link} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a>
+							</Grid>
+							<Grid item>
+								<a className={[classes.srcCode, 'src-code'].join(' ')} href={product.github} target="_blank" rel="noopener noreferrer">
+									<img src={"/images/Logos/github.png"} />
+								</a>
+							</Grid>
 						</Grid>
 						<Grid item>
 							<Chip label={product.category} className={classes.category} />
