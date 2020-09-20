@@ -7,7 +7,7 @@ Alpha Development is website that serves as both the official portfolio site for
 Alpha Development is live at: https://alphadevop.co . Check it out, and don't forget to follow me for more projects like this.
 
 ## Technologies
-Bookmate is currently built with the following technologies:
+Alpha Development is currently built with the following technologies:
 * NodeJS
 * ExpressJS
 * ReactJS
