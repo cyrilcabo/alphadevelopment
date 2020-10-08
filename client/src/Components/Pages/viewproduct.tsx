@@ -291,8 +291,10 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	productTechContainer: {
+		marginTop: 20,
 		[theme.breakpoints.down('xs')]: {
-			justifyContent: 'space-around'
+			justifyContent: 'space-around',
+			marginTop: 10,
 		}
 	},
 	productTech: {
