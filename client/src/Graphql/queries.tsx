@@ -8,11 +8,17 @@ export const PRODUCTS = gql`
       link,
       github,
       category,
-      excerpt,
       techs,
+      images,
       featured,
-      details,
-      pid
+      pid,
+      details {
+        intro,
+        features {
+          title,
+          details
+        }
+      }
     }
   }
 `;

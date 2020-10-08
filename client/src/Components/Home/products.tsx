@@ -26,17 +26,21 @@ const useStyle:any = makeStyles(theme => ({
 	title: {
 		fontSize: '3rem',
 		margin: '100px 0px 50px 0px',
+		letterSpacing: '2.5px',
 		color: "#212121",
 		textAlign: 'center',
 		[theme.breakpoints.down('md')]: {
 			fontSize: '2.75rem',
+			letterSpacing: '2px',
 		},
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '2.5rem',
 			marginTop: 70,
+			letterSpacing: '2px',
 		},
 		[theme.breakpoints.down('xs')]: {
 			fontSize: '2rem',
+			letterSpacing: '1px',
 		}
 	},
 	productContainer: {
@@ -46,14 +50,17 @@ const useStyle:any = makeStyles(theme => ({
 		marginBottom: 50,
 	},
 	CTA: {
-		backgroundColor: '#FFA114',
+		backgroundColor: '#191919',
 		color: 'white',
-		fontSize: '1.5rem',
+		fontSize: '1.4rem',
 		fontWeight: 600,
 		padding: '5px 20px',
 		borderRadius: '40px',
+		'&:hover': {
+			color: '#191919'
+		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.4rem'
+			fontSize: '1.35rem'
 		},
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '1.2rem',
@@ -69,13 +76,23 @@ const useStyle:any = makeStyles(theme => ({
 interface Product {
 	title: string;
 	category: string;
-	excerpt: string;
 	link: string;
 	github: string;
-	details: string;
+	details: ProductDetail;
 	techs: string[];
+	images: string[];
 	featured: boolean;
 	pid: string;
+}
+
+interface ProductDetail {
+	intro: string;
+	features: ProductFeature[];
+}
+
+interface ProductFeature {
+	title: string;
+	details: string;
 }
 
 const HomeProducts = ():JSX.Element => {

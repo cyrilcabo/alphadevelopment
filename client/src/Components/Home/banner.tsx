@@ -35,15 +35,19 @@ const useStyle:any = makeStyles(theme => ({
 	title: {
 		fontSize: '5rem',
 		margin: '20px 0px 20px 0px',
+		letterSpacing: '5px',
 		[theme.breakpoints.down('md')]: {
 			fontSize: '4.5rem',
-			margin: '0px 0px 15px 0px'
+			margin: '0px 0px 15px 0px',
+			letterSpacing: '4px',
 		},
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '3.5rem',
+			letterSpacing: '3px',
 		},
 		[theme.breakpoints.down('xs')]: {
 			fontSize: '2.5rem',
+			letterSpacing: '2px'
 		}
 	},
 	subTitle: {
@@ -59,22 +63,22 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	CTA: {
 		backgroundColor: '#FFA114',
-		color: 'black',
+		color: '#191919',
 		fontWeight: 600,
-		fontSize: '2rem',
-		padding: '5px 30px',
+		fontSize: '1.5rem',
+		padding: '5px 20px',
 		borderRadius: 40,
 		'&:hover': {
 			color: '#FFA114'
 		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.8rem',
+			fontSize: '1.45rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.3rem',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.3rem',
+			fontSize: '1.15rem',
 			padding: '3px 20px',
 		}
 	}

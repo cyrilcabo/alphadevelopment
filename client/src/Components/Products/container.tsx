@@ -166,15 +166,23 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	CTA: {
-		fontSize: '1rem',
-		fontWeight: 550,
-		backgroundColor: '#FFA114',
+		fontSize: '1.2rem',
+		fontFamily: 'agencyFB, sans-serif',
+		letterSpacing: '2px',
+		fontWeight: 900,
+		backgroundColor: '#191919',
 		color: 'white',
-		padding: '5px 15px',
-		borderRadius: '30px',
+		padding: '0px 15px',
+		borderRadius: '5px',
+		'&:hover': {
+			color: '#191919'
+		},
+		[theme.breakpoints.down('md')]: {
+			fontSize: '1.1rem',
+		},
 		[theme.breakpoints.down('sm')]: {
-			padding: '2px 12px',
-			borderRadius: 10,
+			padding: '0px 12px',
+			fontSize: '1rem',
 		}
 	},
 	srcCode: {
@@ -194,6 +202,18 @@ const useStyle:any = makeStyles(theme => ({
 		[theme.breakpoints.down('sm')]: {
 			justifyContent: 'center',
 		}
+	},
+	imgContainer: {
+		minHeight: 238,
+		[theme.breakpoints.down('md')]: {
+			minHeight: 182,
+		},
+		[theme.breakpoints.down('sm')]: {
+			minHeight: 192,
+		},
+		[theme.breakpoints.down('xs')]: {
+			minHeight: 173
+		}
 	}
 }));
 
@@ -201,12 +221,22 @@ interface Product {
 	title: string;
 	link: string;
 	github: string;
-	details: string;
-	excerpt: string;
+	details: ProductDetail;
 	category: string;
 	techs: string[];
+	images: string[];
 	featured: boolean;
 	pid: string;
+}
+
+interface ProductDetail {
+	intro: string;
+	features: ProductFeature[];
+}
+
+interface ProductFeature {
+	title: string;
+	details: string;
 }
 
 interface Props {
@@ -239,7 +269,7 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 
 	return (
 		<Grid item xs={12} className={center ?classes.center :rootCenter ?classes.center :[classes.root, inverse ?classes.inverse :''].join(' ')} container>
-			<Grid item xs={12} md={3} className={'img-container'}>
+			<Grid item xs={12} md={3} className={`img-container ${classes.imgContainer}`}>
 				<img className={classes.productImg} src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/thumbs/${product.pid}.jpg`} alt={"Product thumbnail"} />
 			</Grid>
 			<Grid item xs={12} md={8} container direction="column" justify="space-between" className={'outer-container'}>
@@ -261,7 +291,7 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 							<Chip label={product.category} className={classes.category} />
 						</Grid>
 						<Grid item className={'detail-container'}>
-							<p className={[classes.details, center ?classes.detailsCenter :""].join(' ')}> {product.excerpt}... </p>
+							<p className={[classes.details, center ?classes.detailsCenter :""].join(' ')}> {product.details.intro.slice(0, 150)}... </p>
 						</Grid>
 						<Grid item container alignItems="center" className={[classes.techContainer, 'tech-container'].join(' ')}>
 							{mappedTech}

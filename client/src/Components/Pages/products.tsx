@@ -17,6 +17,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyle:any = makeStyles(theme => ({
 	root: {
 		paddingBottom: 100,
+		minHeight: 600,
 	},
 	container: {
 		[theme.breakpoints.down('xs')]: {
@@ -60,12 +61,22 @@ interface Product {
 	title: string;
 	link: string;
 	github: string;
-	excerpt: string;
-	details: string;
+	details: ProductDetail;
 	category: string;
 	techs: string[];
+	images: string[];
 	featured: boolean;
 	pid: string;
+}
+
+interface ProductDetail {
+	intro: string;
+	features: ProductFeature[];
+}
+
+interface ProductFeature {
+	title: string;
+	details: string;
 }
 
 const Products = ():JSX.Element => {

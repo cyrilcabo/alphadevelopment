@@ -17,9 +17,19 @@ type Product {
 	link: String!
 	github: String!
 	category: String!
-	excerpt: String!
 	techs: [String]!
-	details: String!
+	images: [String]!
 	featured: Boolean!
 	pid: String!
+	details: ProductDetails!
+}
+
+type ProductDetails {
+	intro: String!
+	features: [ProductFeature]
+}
+
+type ProductFeature {
+	title: String!
+	details: String!
 }
