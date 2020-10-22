@@ -7,14 +7,15 @@ import * as serviceWorker from './serviceWorker';
 //Google analytics
 import ReactGA from 'react-ga';
 
-ReactGA.initialize('UA-170812891-1');
-ReactGA.pageview(window.location.pathname + window.location.search);
-
 //Configure Apollo Client
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+
+//Initialize Google analytics
+ReactGA.initialize('UA-170812891-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 //Initialize remote fetching
 const httpLink: any = createHttpLink({
