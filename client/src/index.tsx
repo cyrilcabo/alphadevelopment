@@ -4,6 +4,12 @@ import './Styles/index.css';
 import App from './Components/App';
 import * as serviceWorker from './serviceWorker';
 
+//Google analytics
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-170812891-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 //Configure Apollo Client
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
