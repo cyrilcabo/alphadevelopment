@@ -57,9 +57,9 @@ const AboutBanner = ():JSX.Element => {
 				</Grid>
 				<Grid item>
 					<p className={classes.subTitle}> 
-						<span style={{color: '#00CBFF'}}>Explore</span>.
+						<span style={{color: '#00CBFF'}}> Explore</span>.
 						Innovate.
-						<span style={{color: '#FFA114'}}>Evolve</span>.
+						<span style={{color: '#FFA114'}}> Evolve</span>.
 					</p>
 				</Grid>
 			</Grid>
