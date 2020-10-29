@@ -12,6 +12,7 @@ import Routes from './Routes/routes';
 
 //Utility components
 import ScrollToTop from './Utils/scrolltotop';
+import SVGDefs from './Utils/svgdefs';
 
 //React-router
 import {BrowserRouter as Router} from 'react-router-dom';
@@ -51,6 +52,7 @@ const App = ():JSX.Element  => {
     <Router>
       <ScrollToTop>
         <Grid item xs={12}>
+            <SVGDefs />
             <Navbar navs={navs} handleActive={handleActive}/>
              <NavDrawer active={active} handleActive={handleActive} navs={navs} />
             <Routes />
