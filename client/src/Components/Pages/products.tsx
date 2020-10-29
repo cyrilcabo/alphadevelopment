@@ -89,8 +89,8 @@ interface ProductFeature {
 
 const Products = ():JSX.Element => {
 	const classes:any = useStyle();
-	const [products, setProducts]: [Product[], Function] = React.useState([]);
 	const {data, loading} = useQuery(PRODUCTS);
+	const [products, setProducts]: [Product[], Function] = React.useState(data ?data.products :[]);
 	React.useEffect(() => {
 		if (data) setProducts(data.products);
 	}, [data]);
