@@ -1,5 +1,6 @@
 //Material components
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Utils
 import React from 'react';
@@ -54,6 +55,13 @@ const useStyle:any = makeStyles(theme => ({
 				flexBasis: '25%',
 			}
 		}
+	},
+	loadingContainer: {
+		minHeight: 300,
+		textAlign: 'center',
+		[theme.breakpoints.down('sm')]: {
+			minHeight: 250,
+		}
 	}
 }));
 
@@ -82,7 +90,7 @@ interface ProductFeature {
 const Products = ():JSX.Element => {
 	const classes:any = useStyle();
 	const [products, setProducts]: [Product[], Function] = React.useState([]);
-	const {data} = useQuery(PRODUCTS);
+	const {data, loading} = useQuery(PRODUCTS);
 	React.useEffect(() => {
 		if (data) setProducts(data.products);
 	}, [data]);
@@ -97,9 +105,15 @@ const Products = ():JSX.Element => {
 				<Grid item container className={classes.title}>
 					<h1> <span style={{color: '#00CBFF'}}>Alpha</span> Products </h1>
 				</Grid>
-				<Grid item container justify="space-between" className={classes.productsContainer}>
-					{mappedProducts}
-				</Grid>
+				{loading
+					?<Grid item container className={classes.loadingContainer} alignItems="center" justify="center" direction="column">
+						<CircularProgress />
+						<p> Loading products... </p>
+					</Grid>
+					:<Grid item container justify="space-between" className={classes.productsContainer}>
+						{mappedProducts}
+					</Grid>
+				}
 			</Grid>
 		</Grid>
 	);

@@ -1,6 +1,7 @@
 //Material components
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Utils
 import React from 'react';
@@ -22,6 +23,9 @@ const useStyle:any = makeStyles(theme => ({
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 861,
 		}
+	},
+	rootLoading: {
+		minHeight: 600,
 	},
 	title: {
 		fontSize: '3rem',
@@ -49,11 +53,16 @@ const useStyle:any = makeStyles(theme => ({
 		},
 		marginBottom: 50,
 	},
+	loadingContainer: {
+		minHeight: 250,
+		marginBottom: 50,
+	},
 	CTA: {
 		backgroundColor: '#191919',
 		color: 'white',
 		fontSize: '1.4rem',
 		fontWeight: 600,
+		marginBottom: 20,
 		padding: '5px 20px',
 		borderRadius: '40px',
 		'&:hover': {
@@ -98,7 +107,7 @@ interface ProductFeature {
 const HomeProducts = ():JSX.Element => {
 	const classes:any = useStyle();
 	const history:any = useHistory();
-	const {data} = useQuery(PRODUCTS);
+	const {data, loading} = useQuery(PRODUCTS);
 	const [products, setProducts]: [Product[], Function] = React.useState([]);
 	const viewAll = ():void => history.push('/products');
 
@@ -112,16 +121,21 @@ const HomeProducts = ():JSX.Element => {
 		</Grid>
 	});
 	return (
-		<Grid item xs={12} className={classes.root} container justify="center" id="products">
+		<Grid item xs={12} className={loading ?classes.rootLoading :classes.root} container justify="center" id="products">
 			<Grid item xs={11} md={10} container direction="column" alignItems="center">
 				<Grid item>
 					<h2 className={classes.title}> Check out our <span style={{color: '#FFA114'}}>Alpha</span> Products! </h2>
 				</Grid>
-				<Grid item container className={classes.productContainer}>
-					{mappedProducts}
-				</Grid>
+				{loading
+					?<Grid item container className={classes.loadingContainer} direction="column" alignItems="center" justify="center">
+						<CircularProgress />
+					</Grid>
+					:<Grid item container className={classes.productContainer}>
+						{mappedProducts}
+					</Grid>
+				}
 				<Grid item>
-					<Button className={classes.CTA} onClick={viewAll}> VIEW ALL </Button>
+					<Button className={classes.CTA} onClick={viewAll} disabled={loading}> VIEW ALL </Button>
 				</Grid>
 			</Grid>
 		</Grid>
