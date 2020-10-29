@@ -29,7 +29,7 @@ const useStyle = makeStyles(theme => ({
 		width: '80%',
 		overflowY: 'auto',
 		overflowX: 'hidden',
-		padding: '15px 0px',
+		padding: '25px 0px',
 		position: 'relative',
 		[theme.breakpoints.down('xs')]: {
 			width: '90%'
