@@ -24,6 +24,13 @@ const useStyle:any = makeStyles(theme => ({
 			minHeight: 520,
 		}
 	},
+	rootImg: {
+		backgroundImage: 'url(/images/Banner/header.jpeg)',
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+		backgroundAttachment: 'fixed',
+		backgroundSize: 'cover',
+	},
 	growthIcon: {
 		[theme.breakpoints.down('md')]: {
 			width: 70, 
@@ -33,32 +40,35 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	title: {
-		fontSize: '5rem',
+		fontSize: '4rem',
+		fontFamily: 'Helvetica, Arial, sans-serif',
 		margin: '20px 0px 20px 0px',
-		letterSpacing: '5px',
+		textShadow: '0px 0px 10px black',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '4.5rem',
+			fontSize: '3.3rem',
 			margin: '0px 0px 15px 0px',
-			letterSpacing: '4px',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '3.5rem',
-			letterSpacing: '3px',
+			fontSize: '2.8rem',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '2.5rem',
-			letterSpacing: '2px'
+			fontSize: '2.2rem',
 		}
 	},
 	subTitle: {
-		fontSize:'1.5rem',
+		fontSize:'1.4rem',
+		fontFamily: 'serif',
 		margin: '0px 0px 80px 0px',
+		textShadow: '0px 0px 7px black',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.4rem',
+			fontSize: '1.3rem',
 		},
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '1.2rem',
 			marginBottom: 60,
+		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '1rem',
 		}
 	},
 	CTA: {
@@ -87,7 +97,7 @@ const useStyle:any = makeStyles(theme => ({
 const HomeBanner = ():JSX.Element => {
 	const classes:any = useStyle();
 	return (
-		<Grid item className={classes.root} container justify="center" alignItems="center">
+		<Grid item className={[classes.root, classes.rootImg].join(' ')} container justify="center" alignItems="center">
 			<Grid item xs={11} md={10} container direction="column" alignItems="center">
 				<Grid item>
 					<Growth className={classes.growthIcon} viewBox="0 0 91 96.759"/>
