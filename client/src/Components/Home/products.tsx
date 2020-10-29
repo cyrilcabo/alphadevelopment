@@ -19,7 +19,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle:any = makeStyles(theme => ({
 	root: {
-		minHeight: 961,
+		minHeight: 921,
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 861,
 		}
