@@ -2,7 +2,7 @@ import React from 'react';
 
 const SVGDefs = ():JSX.Element => {
 	return (
-		<svg height={0} width={0} viewBox="0 0 0 0">
+		<svg height={"0px"} width={"0px"} style={{position: 'absolute'}} viewBox="0 0 0 0">
 			<defs>
 			    <linearGradient id="half-25" x1="0%" y1="100%" x2="0%" y2="0%">
 			      <stop offset="0%" style={{stopColor: "gold", "stopOpacity": 1}} />
