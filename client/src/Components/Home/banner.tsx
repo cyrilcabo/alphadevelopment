@@ -15,13 +15,12 @@ const useStyle:any = makeStyles(theme => ({
 	root: {
 		minHeight: 636,
 		backgroundColor: '#191919',
-		textAlign: 'center',
 		color: 'white',
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 580,
 		},
 		[theme.breakpoints.down('xs')]: {
-			minHeight: 520,
+			minHeight: 450,
 		}
 	},
 	rootImg: {
@@ -31,13 +30,44 @@ const useStyle:any = makeStyles(theme => ({
 		backgroundAttachment: 'fixed',
 		backgroundSize: 'cover',
 	},
+	bgImg: {
+		height: 0,
+		width: 0,
+	},
 	growthIcon: {
-		[theme.breakpoints.down('md')]: {
-			width: 70, 
+		marginBottom: 30,
+		display: 'none',
+		[theme.breakpoints.down('sm')]: {
+			display: 'flex',
+			marginBottom: 20,
 		},
 		[theme.breakpoints.down('xs')]: {
-			width: 50,
+			marginBottom: 15,
+		},
+		'& > svg': {	
+			[theme.breakpoints.down('md')]: {
+				width: 70, 
+			},
+			[theme.breakpoints.down('xs')]: {
+				width: 50,
+			}
 		}
+	},
+	growthNL: {
+		display: 'flex',
+	},
+	content: {
+		[theme.breakpoints.down('sm')]: {
+			alignItems: 'center',
+			textAlign: 'center'
+		}
+	},
+	contentCenter: {
+		alignItems: 'center',
+		textAlign: 'center',
+		width: '100%',
+		maxWidth: '100%',
+		flexBasis: '100%'
 	},
 	title: {
 		fontSize: '4rem',
@@ -96,22 +126,31 @@ const useStyle:any = makeStyles(theme => ({
 
 const HomeBanner = ():JSX.Element => {
 	const classes:any = useStyle();
+	const image = React.useRef(null);
+
+	const [imageLoaded, setImageLoaded]: [boolean, Function] = React.useState(image ?true :false);
+
+	const handleLoad = ():void => setImageLoaded(true);
+
 	return (
 		<Grid item className={[classes.root, classes.rootImg].join(' ')} container justify="center" alignItems="center">
-			<Grid item xs={11} md={10} container direction="column" alignItems="center">
-				<Grid item>
-					<Growth className={classes.growthIcon} viewBox="0 0 91 96.759"/>
-				</Grid>
-				<Grid item>
-					<h1 className={classes.title}> Expanding your business? </h1>
-				</Grid>
-				<Grid item>
-					<p className={classes.subTitle}> Reach more clients with a website! </p>
-				</Grid>
-				<Grid item>
-					<a href="#products" style={{textDecoration: 'none'}}>
-						<Button className={classes.CTA}> EXPLORE </Button>
-					</a>
+			<img onLoad={handleLoad} ref={image} className={classes.bgImg} src={"/images/Banner/header.jpeg"} alt={"Background image"} />
+			<Grid item xs={11} md={10} lg={10} container alignItems="center">
+				<Grid item xs={12} md={7} lg={8} container direction="column" alignItems="flex-start" className={[classes.content, imageLoaded ?"" :classes.contentCenter].join(' ')}>	
+					<Grid item className={[classes.growthIcon, imageLoaded ?"" :classes.growthNL].join(' ')}>
+						<Growth viewBox="0 0 91 96.759"/>
+					</Grid>
+					<Grid item>
+						<h1 className={classes.title}> Expanding your business? </h1>
+					</Grid>
+					<Grid item>
+						<p className={classes.subTitle}> Reach more clients with a website! </p>
+					</Grid>
+					<Grid item>
+						<a href="#products" style={{textDecoration: 'none'}}>
+							<Button className={classes.CTA}> EXPLORE </Button>
+						</a>
+					</Grid>
 				</Grid>
 			</Grid>
 		</Grid>
