@@ -440,7 +440,7 @@ const ViewProduct = ():JSX.Element => {
 		<Grid item xs={12}>
 			{modalOpen
 				?<Modal handleClose={handleModalClose.bind(ViewProduct)}>
-					<RateFeature />
+					<RateFeature title={product.title} />
 				</Modal>
 				:""
 			}	

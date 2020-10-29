@@ -32,13 +32,17 @@ const useStyle = makeStyles(theme => ({
 	}
 }));
 
-const RateFeature = ():JSX.Element => {
+interface Props {
+	title: string;
+}
+
+const RateFeature = (props: Props):JSX.Element => {
 	const classes = useStyle();
 	return (
 		<Grid item xs={12} className={classes.root} container justify="center">
 			<Grid item container xs={11} md={10} direction="column">
 				<Grid item>
-					<h2 className={classes.title}> Bookmate Reviews (200) </h2>
+					<h2 className={classes.title}> {props.title} Reviews (200) </h2>
 				</Grid>
 				<Grid item>
 					<hr className={classes.divider} />
