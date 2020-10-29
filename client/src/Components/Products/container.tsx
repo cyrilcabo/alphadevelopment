@@ -1,7 +1,9 @@
 //Material components
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
+
+//Custom components
+import Rating from './rating';
 
 //Utils
 import React from 'react';
@@ -283,12 +285,12 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 							</Grid>
 							<Grid item>
 								<a className={[classes.srcCode, 'src-code'].join(' ')} href={product.github} target="_blank" rel="noopener noreferrer">
-									<img src={"/images/Logos/github.png"} />
+									<img src={"/images/Logos/github.png"} alt={"Github logo"} />
 								</a>
 							</Grid>
 						</Grid>
 						<Grid item>
-							<Chip label={product.category} className={classes.category} />
+							<Rating />
 						</Grid>
 						<Grid item className={'detail-container'}>
 							<p className={[classes.details, center ?classes.detailsCenter :""].join(' ')}> {product.details.intro.slice(0, 150)}... </p>

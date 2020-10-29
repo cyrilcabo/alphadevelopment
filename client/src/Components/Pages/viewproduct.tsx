@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+//Custom components
+import Rating from '../Products/rating';
+
 //Utils
 import React from 'react';
 import qs from 'qs';
@@ -225,6 +228,12 @@ const useStyle:any = makeStyles(theme => ({
 			justifyContent: 'center'
 		}
 	},
+	productRating: {
+		[theme.breakpoints.down('xs')]: {
+			display: 'flex',
+			justifyContent: 'center'
+		}
+	},
 	productDetails: {
 		fontFamily: 'sans-serif',
 		textAlign: 'justify',
@@ -406,7 +415,7 @@ const ViewProduct = ():JSX.Element => {
 
 	const imgThumbs:JSX.Element[] = product.images.map((item, key) => {
 		return <Grid item key={key} className={`${classes.thumbs} ${activeImage===item ?classes.thumbsActive :""}`} onClick={makeImageActive.bind(ViewProduct, item)}>
-			<img src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/products/${product.pid}/thumbs/${item}.jpg`} />
+			<img src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/products/${product.pid}/thumbs/${item}.jpg`} alt={`Thumbnail for ${item}`} />
 		</Grid>
 	});
 
@@ -458,9 +467,12 @@ const ViewProduct = ():JSX.Element => {
 									<a className={classes.productLink} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a></Grid>
 								<Grid item>
 									<a className={classes.srcCode} href={product.github} target="_blank" rel="noopener noreferrer">
-										<img src={"/images/Logos/github.png"} />
+										<img src={"/images/Logos/github.png"} alt={"Github logo"} />
 									</a>
 								</Grid>
+							</Grid>
+							<Grid item className={classes.productRating}>
+								<Rating isView />
 							</Grid>
 							<Grid item className={classes.productCategory} >
 								<Chip label={product.category} />
