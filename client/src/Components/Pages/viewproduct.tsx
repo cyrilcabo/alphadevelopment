@@ -6,6 +6,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Custom components
 import Rating from '../Products/rating';
+import Modal from '../Modal/modal';
+import RateFeature from '../Rate/ratefeature';
 
 //Utils
 import React from 'react';
@@ -368,7 +370,8 @@ const ViewProduct = ():JSX.Element => {
 	const classes = useStyle();
 	const history = useHistory();
 	const location = useLocation();
-	const {productid} = qs.parse(location.search, {ignoreQueryPrefix: true});
+	const {productid, review} = qs.parse(location.search, {ignoreQueryPrefix: true});
+	const [modalOpen, setModalOpen]: [boolean, Function] = React.useState(false);
 	const {data} = useQuery(PRODUCTS); 
 
 	const viewAll = ():void => history.push('/products');
@@ -390,6 +393,9 @@ const ViewProduct = ():JSX.Element => {
 	const [activeImage, setActiveImage]: [string, Function] = React.useState("");
 	const [imageLoading, setImageLoading]: [boolean, Function] = React.useState(false);
 
+	const handleModalOpen = (): void => setModalOpen(true);
+	const handleModalClose = (): void => setModalOpen(false);
+
 	const onLoad = (e: any): void => setImageLoading(false);
 
 	const makeImageActive = (name: string):void => {
@@ -401,6 +407,10 @@ const ViewProduct = ():JSX.Element => {
 	React.useEffect(() => {
 		if (data) setProduct(data.products.find((item:Product) => item.pid===productid));
 	}, [data, productid]);
+
+	React.useEffect(() => {
+		if (review==="true") setModalOpen(true);
+	}, [review])
 
 	React.useEffect(() => {
 		setActiveImage(product.images[0]);
@@ -420,14 +430,20 @@ const ViewProduct = ():JSX.Element => {
 	});
 
 	const features:JSX.Element[] = product.details.features.map((item, key) => {
-		return <Grid item>
+		return <Grid item key={key}>
 			<h3 className={classes.featureTitle}> {item.title} </h3>
 			<p className={classes.featureDetails}> {item.details} </p>
 		</Grid>
 	});
 
 	return (
-		<Grid item xs={12}>	
+		<Grid item xs={12}>
+			{modalOpen
+				?<Modal handleClose={handleModalClose.bind(ViewProduct)}>
+					<RateFeature />
+				</Modal>
+				:""
+			}	
 			<Grid item xs={12} container justify="center">
 				<Grid item xs={11} md={10} container>
 					<Grid item className={classes.title} container alignItems="center" justify="space-between">
@@ -472,7 +488,7 @@ const ViewProduct = ():JSX.Element => {
 								</Grid>
 							</Grid>
 							<Grid item className={classes.productRating}>
-								<Rating isView />
+								<Rating isView isBig handleOpen={handleModalOpen.bind(ViewProduct)} />
 							</Grid>
 							<Grid item className={classes.productCategory} >
 								<Chip label={product.category} />
