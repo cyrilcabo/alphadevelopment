@@ -14,8 +14,13 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyle:any = makeStyles(theme => ({
 	root: {
 		minHeight: 636,
+		width: '100%',
+		position: 'relative',
 		backgroundColor: '#191919',
 		color: 'white',
+		[theme.breakpoints.up('xl')]: {
+			minHeight: 769,
+		},
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 580,
 		},
@@ -24,15 +29,31 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	rootImg: {
-		backgroundImage: 'url(/images/Banner/header.jpeg)',
+		position: 'absolute',
+		zIndex: 0,
+		height: '100%',
+		width: '100%',
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
-		backgroundAttachment: 'fixed',
-		backgroundSize: 'cover',
+		backgroundAttachment: 'local',
+		backgroundSize: '100% 100%',
+		[theme.breakpoints.only('xs')]: {
+			backgroundImage: 'url(/images/Banner/Banner_XS.jpg)',
+		},
+		[theme.breakpoints.up('sm')]: {
+			backgroundImage: 'url(/images/Banner/Banner_SM.jpg)',
+		},
+		[theme.breakpoints.only('lg')]: {
+			backgroundImage: 'url(/images/Banner/Banner_LG.jpg)',
+		},
+		[theme.breakpoints.only('xl')]: {
+			backgroundImage: 'url(/images/Banner/Banner_XL.jpg)',
+		},
 	},
 	bgImg: {
 		height: 0,
 		width: 0,
+		display: 'none',
 	},
 	growthIcon: {
 		marginBottom: 30,
@@ -55,6 +76,9 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	growthNL: {
 		display: 'flex',
+	},
+	contentContainer: {
+		zIndex: 2,
 	},
 	content: {
 		[theme.breakpoints.down('sm')]: {
@@ -133,9 +157,16 @@ const HomeBanner = ():JSX.Element => {
 	const handleLoad = ():void => setImageLoaded(true);
 
 	return (
-		<Grid item className={[classes.root, classes.rootImg].join(' ')} container justify="center" alignItems="center">
-			<img onLoad={handleLoad} ref={image} className={classes.bgImg} src={"/images/Banner/header.jpeg"} alt={"Background image"} />
-			<Grid item xs={11} md={10} lg={10} container alignItems="center">
+		<Grid item className={classes.root} container justify="center" alignItems="center">
+			<div className={classes.rootImg} />
+			<picture onLoad={handleLoad} ref={image}> 
+				<source media="(min-width: 0px)" srcSet="/images/Banner/Banner_XS.jpg" />
+				<source media="(min-width: 600px)" srcSet="/images/Banner/Banner_SM.jpg" />
+				<source media="(min-width: 1280px)" srcSet="/images/Banner/Banner_LG.jpg" />
+				<source media="(min-width: 1920px)" srcSet="/images/Banner/Banner_XL.jpg" />
+				<img className={classes.bgImg} src={"/images/Banner/Banner_XS.jpg"} alt={"Background image"} />
+			</picture>
+			<Grid item xs={11} md={10} lg={10} container alignItems="center" className={classes.contentContainer}>
 				<Grid item xs={12} md={7} lg={8} container direction="column" alignItems="flex-start" className={[classes.content, imageLoaded ?"" :classes.contentCenter].join(' ')}>	
 					<Grid item className={[classes.growthIcon, imageLoaded ?"" :classes.growthNL].join(' ')}>
 						<Growth viewBox="0 0 91 96.759"/>
