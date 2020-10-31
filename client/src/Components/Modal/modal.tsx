@@ -25,7 +25,7 @@ const useStyle = makeStyles(theme => ({
 	container: {
 		zIndex: 2,
 		backgroundColor: 'aliceblue',
-		height: '70vh',
+		height: '90vh',
 		width: '80%',
 		overflowY: 'auto',
 		overflowX: 'hidden',
@@ -37,7 +37,7 @@ const useStyle = makeStyles(theme => ({
 	},
 	closeIcon: {
 		position: 'absolute', 
-		top: '14vh', 
+		top: '4.2vh', 
 		right: '9.5%',
 		height: 25,
 		width: 25,
