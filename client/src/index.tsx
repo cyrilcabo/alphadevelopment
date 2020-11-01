@@ -14,12 +14,12 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 //Initialize Google analytics
-/*ReactGA.initialize('UA-170812891-1');
-ReactGA.pageview(window.location.pathname + window.location.search);*/
+ReactGA.initialize('UA-170812891-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 //Initialize remote fetching
 const httpLink: any = createHttpLink({
-	uri: 'http://localhost:4000/graphql'
+	uri: '/graphql'
 });
 
 //Initialize apollo client
