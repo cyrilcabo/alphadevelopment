@@ -1,14 +1,24 @@
 type Query {
-	products(featured: Boolean, exclude: [String]): [Product]!
+	products(featured: Boolean, skip: Int): [ProductSummary]!
+	product(pid: String!): Product!
 }
 
 type Mutation {
 	subscribe(email: String!): StatusMessage!
+	like(productId: String!, name: String, msg: String, rating: Int!): Like!
 }
 
 type StatusMessage {
 	error: Boolean!
 	message: String!
+}
+
+type Like {
+	success: Boolean!
+	_id: String
+	name: String
+	msg: String
+	rating: Int
 }
 
 type Product {
@@ -22,6 +32,18 @@ type Product {
 	featured: Boolean!
 	pid: String!
 	details: ProductDetails!
+}
+
+type ProductSummary {
+	_id: ID!
+	title: String!
+	link: String!
+	github: String!
+	techs: [String!]
+	category: String!
+	featured: Boolean!
+	pid: String!
+	summary: String!
 }
 
 type ProductDetails {

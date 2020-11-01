@@ -96,10 +96,6 @@ server.express.use(cookieParser(process.env.COOKIE_SECRET));
 server.express.use((req, res, next) => setCookie(req, res, next));
 server.express.use(express.static(path.join(__dirname, "build")));
 
-server.express.get('/cookie', (req, res) => {
-  res.send("Cookie here!");
-});
-
 server.express.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
 });

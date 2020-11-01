@@ -20,6 +20,14 @@ const Mutation =  {
 			};
 		});
 		return response;
+	},
+	like: async (parent, args, context) => {
+		return {
+			id: context.request.signedCookies["alpha_id"],
+			name: args.name,
+			msg: args.msg,
+			rating: args.rating
+		};
 	}
 }
 
