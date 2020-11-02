@@ -87,27 +87,17 @@ interface Product {
 	category: string;
 	link: string;
 	github: string;
-	details: ProductDetail;
 	techs: string[];
-	images: string[];
 	featured: boolean;
 	pid: string;
-}
-
-interface ProductDetail {
-	intro: string;
-	features: ProductFeature[];
-}
-
-interface ProductFeature {
-	title: string;
-	details: string;
+	summary: string;
+	rating: number;
 }
 
 const HomeProducts = ():JSX.Element => {
 	const classes:any = useStyle();
 	const history:any = useHistory();
-	const {data, loading} = useQuery(PRODUCTS);
+	const {data, loading} = useQuery(PRODUCTS, {variables: {featured: true}});
 	const [products, setProducts]: [Product[], Function] = React.useState([]);
 	const viewAll = ():void => history.push('/products');
 

@@ -69,27 +69,19 @@ interface Product {
 	title: string;
 	link: string;
 	github: string;
-	details: ProductDetail;
 	category: string;
 	techs: string[];
-	images: string[];
 	featured: boolean;
 	pid: string;
+	summary: string;
+	rating: number;
 }
 
-interface ProductDetail {
-	intro: string;
-	features: ProductFeature[];
-}
-
-interface ProductFeature {
-	title: string;
-	details: string;
-}
+let skip = 0;
 
 const Products = ():JSX.Element => {
 	const classes:any = useStyle();
-	const {data, loading} = useQuery(PRODUCTS);
+	const {data, loading} = useQuery(PRODUCTS, {variables: {skip: 0}});
 	const [products, setProducts]: [Product[], Function] = React.useState(data ?data.products :[]);
 	React.useEffect(() => {
 		if (data) setProducts(data.products);

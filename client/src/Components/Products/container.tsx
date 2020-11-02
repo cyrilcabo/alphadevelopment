@@ -223,22 +223,12 @@ interface Product {
 	title: string;
 	link: string;
 	github: string;
-	details: ProductDetail;
 	category: string;
-	techs: string[];
-	images: string[];
 	featured: boolean;
+	techs: string[];
 	pid: string;
-}
-
-interface ProductDetail {
-	intro: string;
-	features: ProductFeature[];
-}
-
-interface ProductFeature {
-	title: string;
-	details: string;
+	summary: string;
+	rating: number;
 }
 
 interface Props {
@@ -290,10 +280,10 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 							</Grid>
 						</Grid>
 						<Grid item>
-							<Rating />
+							<Rating value={product.rating} />
 						</Grid>
 						<Grid item className={'detail-container'}>
-							<p className={[classes.details, center ?classes.detailsCenter :""].join(' ')}> {product.details.intro.slice(0, 150)}... </p>
+							<p className={[classes.details, center ?classes.detailsCenter :""].join(' ')}> {product.summary}... </p>
 						</Grid>
 						<Grid item container alignItems="center" className={[classes.techContainer, 'tech-container'].join(' ')}>
 							{mappedTech}

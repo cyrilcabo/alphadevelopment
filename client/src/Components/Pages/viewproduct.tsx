@@ -16,7 +16,7 @@ import {useHistory, useLocation} from 'react-router-dom';
 
 //Graphql
 import {useQuery} from 'react-apollo';
-import {PRODUCTS} from '../../Graphql/queries';
+import {PRODUCT} from '../../Graphql/queries';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -341,6 +341,7 @@ const useStyle:any = makeStyles(theme => ({
 }));
 
 interface Product {
+	_id: string;
 	title: string;
 	link: string;
 	github: string;
@@ -349,6 +350,8 @@ interface Product {
 	details: ProductDetail;
 	techs: string[];
 	images: string[];
+	rating: number;
+	reviews: number;
 }
 
 interface ProductDetail {
@@ -372,22 +375,25 @@ const ViewProduct = ():JSX.Element => {
 	const location = useLocation();
 	const {productid, review} = qs.parse(location.search, {ignoreQueryPrefix: true});
 	const [modalOpen, setModalOpen]: [boolean, Function] = React.useState(false);
-	const {data} = useQuery(PRODUCTS); 
+	const {data, refetch} = useQuery(PRODUCT, {variables: {pid: productid}}); 
 
 	const viewAll = ():void => history.push('/products');
 
 	const [product, setProduct]: [Product, Function] = React.useState({
+		_id: "",
 		title: "",
 		link: "",
 		github: "",
 		category: "",
 		pid: "",
 		images: [],
+		techs: [], 
 		details: {
 			intro: "",
 			features: [],
 		},
-		techs: [], 
+		rating: 0,
+		reviews: 0,
 	});
 
 	const [activeImage, setActiveImage]: [string, Function] = React.useState("");
@@ -395,6 +401,9 @@ const ViewProduct = ():JSX.Element => {
 
 	const handleModalOpen = (): void => setModalOpen(true);
 	const handleModalClose = (): void => setModalOpen(false);
+	const handleRefetch = ():void => {
+		refetch();
+	}
 
 	const onLoad = (e: any): void => setImageLoading(false);
 
@@ -405,7 +414,7 @@ const ViewProduct = ():JSX.Element => {
 	}
 
 	React.useEffect(() => {
-		if (data) setProduct(data.products.find((item:Product) => item.pid===productid));
+		if (data) setProduct(data.product);
 	}, [data, productid]);
 
 	React.useEffect(() => {
@@ -440,7 +449,7 @@ const ViewProduct = ():JSX.Element => {
 		<Grid item xs={12}>
 			{modalOpen
 				?<Modal handleClose={handleModalClose.bind(ViewProduct)}>
-					<RateFeature title={product.title} />
+					<RateFeature title={product.title} id={product._id} handleClose={handleModalClose} reviews={product.reviews} handleRefetch={handleRefetch} />
 				</Modal>
 				:""
 			}	
@@ -488,7 +497,7 @@ const ViewProduct = ():JSX.Element => {
 								</Grid>
 							</Grid>
 							<Grid item className={classes.productRating}>
-								<Rating isView isBig handleOpen={handleModalOpen.bind(ViewProduct)} />
+								<Rating isView isBig value={product.rating} reviews={product.reviews} handleOpen={handleModalOpen.bind(ViewProduct)} />
 							</Grid>
 							<Grid item className={classes.productCategory} >
 								<Chip label={product.category} />
