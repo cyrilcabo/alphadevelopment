@@ -10,8 +10,8 @@ export const SUBSCRIBE = gql`
 `;
 
 export const LIKE = gql`
-	mutation like ($pId: String!, $name: String, $msg: String, $rating: Int!) {
-		like (productId: $pId, name: $name, msg: $msg, rating: $rating) {
+	mutation like ($pId: String!, $name: String, $msg: String, $rating: Int!, $id: String) {
+		like (productId: $pId, name: $name, msg: $msg, rating: $rating, id: $id) {
 			success,
 			_id,
 			name,
