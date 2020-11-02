@@ -121,10 +121,10 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	explore: {
 		margin: '40px 0px 60px 0px',
-		minHeight: 110,
+		minHeight: 90,
 		position: 'relative',
 		[theme.breakpoints.down('md')]: {
-			minHeight: 95,
+			minHeight: 85,
 		},
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 80,
