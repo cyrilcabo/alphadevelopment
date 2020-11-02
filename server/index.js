@@ -22,6 +22,9 @@ const htmlEmail = require('./utils/mail_html.js');
 const { Query } = require('./Graphql/Resolvers/query');
 const { Mutation } = require('./Graphql/Resolvers/mutation');
 
+//GraphQL schema
+const typeDefs = require('./Graphql/Schema/index');
+
 //Configure database
 const client = new MongoClient(process.env.MONGO_URI, {
 	useNewUrlParser: true,
@@ -83,7 +86,7 @@ const sendmail = async (contact) => {
 
 //Initialize server
 const server = new GraphQLServer({
-	typeDefs: './Graphql/Schema/schema.graphql',
+	typeDefs,
 	resolvers,
 	context: request => ({
 		...request,
