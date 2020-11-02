@@ -1,6 +1,7 @@
 type Query {
 	products(featured: Boolean, skip: Int): [ProductSummary]!
 	product(pid: String!): Product!
+	reviews(pid: String!, skip: Int): [Review]!
 }
 
 type Mutation {
@@ -19,6 +20,14 @@ type Like {
 	name: String
 	msg: String
 	rating: Int
+}
+
+type Review {
+	_id: String!
+	name: String
+	msg: String
+	rating: Int!
+	datePosted: Date
 }
 
 type Product {
@@ -55,3 +64,5 @@ type ProductFeature {
 	title: String!
 	details: String!
 }
+
+scalar Date
