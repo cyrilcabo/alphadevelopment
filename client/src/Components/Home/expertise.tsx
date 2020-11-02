@@ -115,9 +115,59 @@ const useStyle:any = makeStyles(theme => ({
 			fontSize: '1.1rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1rem',
+			fontSize: '1.2rem',
+			lineSpacing: '1px'
 		}
 	},
+	explore: {
+		margin: '40px 0px 60px 0px',
+		minHeight: 110,
+		position: 'relative',
+		[theme.breakpoints.down('md')]: {
+			minHeight: 95,
+		},
+		[theme.breakpoints.down('sm')]: {
+			minHeight: 80,
+			margin: '10px 0px 60px 0px'
+		},
+		[theme.breakpoints.down('xs')]: {
+			minHeight: 60,
+			margin: '10px 0px 40px 0px',
+		}
+	},
+	exploreBg: {
+		position: 'absolute',
+		zIndex: 0,
+		height: '100%',
+		width: '100%',
+		backgroundColor: '#102427',
+		opacity: '0.6'
+	},
+	exploreInner: {
+		zIndex: 1,
+		backgroundColor: '#17303a',
+		boxShadow: '0px 0px 2px #1d1818',
+	},
+	exploreMsg: {
+		color: 'white',
+		fontFamily: 'Helvetica, Arial, sans-serif',
+		fontSize: '1.8rem',
+		cursor: 'pointer',
+		margin: 0,
+		transition: 'color 0.5s',
+		'&:hover': {
+			color: '#FFA114',
+		},
+		[theme.breakpoints.down('md')]: {
+			fontSize: '1.6rem'
+		},
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '1.4rem'
+		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '1.2rem',
+		}
+	}
 }));
 
 interface Service {
@@ -170,6 +220,12 @@ const HomeExpertise = ():JSX.Element => {
 				</Grid>
 				<Grid item container className={classes.serviceContainer} justify="space-between">
 					{mappedServices}
+				</Grid>
+			</Grid>
+			<Grid item xs={12} container justify="center" className={classes.explore}>
+				<div className={classes.exploreBg} />
+				<Grid item xs={11} sm={10} md={9} lg={8} container className={classes.exploreInner} justify="center" alignItems="center">
+					<h4 className={classes.exploreMsg}> Explore our services </h4>
 				</Grid>
 			</Grid>
 		</Grid>
