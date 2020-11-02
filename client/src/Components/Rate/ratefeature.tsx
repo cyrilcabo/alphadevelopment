@@ -5,6 +5,12 @@ import Grid from '@material-ui/core/Grid';
 
 //Custom components
 import RateProduct from './rateproduct';
+import RatingsList from './ratingslist';
+
+//GraphQL
+import {useQuery} from 'react-apollo';
+
+import {REVIEWS, IS_REVIEWED} from '../../Graphql/queries';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -29,26 +35,106 @@ const useStyle = makeStyles(theme => ({
 	divider: {
 		height: '1px',
 		width: '100%'
+	},
+	container: {
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'space-between',
+		'& > div.MuiGrid-item': {
+			[theme.breakpoints.down('sm')]: {
+				width: '100%',
+				flexBasis: '100%',
+			}
+		},
+		[theme.breakpoints.down('sm')]: {
+			justifyContent: 'center',
+			flexDirection: 'column'
+		}
+	},
+	rateContainer: {
+		position: 'relative',
+		[theme.breakpoints.up('md')]: {
+			width: '47%',
+			flexBasis: '47%'
+		},
+		[theme.breakpoints.down('sm')]: {
+			marginBottom: 20
+		}
+	},
+	listContainer: {
+		[theme.breakpoints.up('md')]: {
+			width: '50%',
+			flexBasis: '50%'
+		}
 	}
 }));
 
 interface Props {
 	title: string;
+	id: string;
+	reviews: number;
+	handleClose: HandleClose;
+	handleRefetch: HandleRefetch;
+}
+
+interface HandleClose {
+	(): void;
+}
+
+interface HandleRefetch {
+	(): void;
+}
+
+interface Review {
+	name: string;
+	msg: string;
+	rating: number;
+	_id: string;
+}
+
+interface IsReviewed extends Review {
+	success: boolean;
 }
 
 const RateFeature = (props: Props):JSX.Element => {
 	const classes = useStyle();
+	const {data: reviewData, loading: reviewLoading, error: reviewError, refetch: reviewRefetch} = useQuery(IS_REVIEWED, {variables: {pid: props.id}});
+	const {data, loading, error, refetch} = useQuery(REVIEWS, {variables: {pid: props.id, skip: 0}});
+	const [list, setList]: [Review[], Function] = React.useState([]);
+
+	React.useEffect(() => {
+		if (data && data.reviews.length) {
+			setList([...list, ...(data.reviews as Review[])]);
+		}
+	}, [data]);
+
+	const handleReviewRefetch = ():void => {
+		reviewRefetch();
+		props.handleRefetch();
+	}
+
+
 	return (
 		<Grid item xs={12} className={classes.root} container justify="center">
 			<Grid item container xs={11} md={10} direction="column">
 				<Grid item>
-					<h2 className={classes.title}> {props.title} Reviews (200) </h2>
+					<h2 className={classes.title}> {props.title} Reviews ({props.reviews}) </h2>
 				</Grid>
 				<Grid item>
 					<hr className={classes.divider} />
 				</Grid>
-				<Grid item>
-					<RateProduct />
+				<Grid item className={classes.container}>
+					<Grid item className={classes.rateContainer}>
+						<RateProduct 
+							id={props.id} 
+							handleClose={props.handleClose} 
+							data={reviewData && reviewData.isReviewed}
+							reviewRefetch={handleReviewRefetch}
+						/>
+					</Grid>
+					<Grid item className={classes.listContainer}>
+						<RatingsList id={props.id} list={list} loading={loading} isVoted={(reviewData && reviewData.isReviewed.success) || false} />
+					</Grid>
 				</Grid>
 			</Grid>
 		</Grid>

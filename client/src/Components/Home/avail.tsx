@@ -9,7 +9,7 @@ import {ReactComponent as LineDesign} from '../../images/SVG/Line Design.svg';
 
 //Graphql
 import {useMutation} from 'react-apollo';
-import {SUBSCRIBE} from '../../Graphql/queries';
+import {SUBSCRIBE} from '../../Graphql/mutation';
 
 //Utils
 import React from 'react';

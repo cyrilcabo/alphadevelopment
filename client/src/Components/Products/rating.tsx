@@ -79,6 +79,7 @@ interface Props {
 	interactive?: boolean;
 	value?: number;
 	handleRate?: HandleRate;
+	reviews?: number;
 }
 
 interface HandleOpen {
@@ -92,13 +93,9 @@ interface HandleRate {
 const Rating = (props: Props):JSX.Element => {
 	const classes = useStyle();
 	//Get props
-	const {isView, isBig, handleOpen, handleRate, value, interactive} = props;
+	const {isView, isBig, handleOpen, handleRate, value, interactive, reviews} = props;
 
-	const [rating, setRating]: [number, Function] = React.useState(value || 4.55);
-
-	React.useEffect(() => {
-		if (interactive) setRating(value);
-	}, [value]);
+	const rating = value || 0;
 
 	//Separate whole number part and decimal part
 	const rDown: number = Math.floor(rating);
@@ -131,7 +128,7 @@ const Rating = (props: Props):JSX.Element => {
 			{stars}
 			{isView
 				?<Grid item>
-					<p className={[classes.rateNum, "rate-num"].join(' ')} onClick={handleOpen}> (115) </p>
+					<p className={[classes.rateNum, "rate-num"].join(' ')} onClick={handleOpen}> ({reviews}) </p>
 				</Grid>
 				:""
 			}
