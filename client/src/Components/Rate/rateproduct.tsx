@@ -8,8 +8,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Graphql
 import {LIKE} from '../../Graphql/mutation';
-import {IS_REVIEWED} from '../../Graphql/queries';
-import {useMutation, useQuery} from 'react-apollo';
+import {IS_REVIEWED, PRODUCT, PRODUCTS} from '../../Graphql/queries';
+import {SKIP_PRODUCTS} from '../../Graphql/localqueries';
+import {useMutation} from 'react-apollo';
 
 //Custom components
 import Rating from '../Products/rating';
@@ -120,21 +121,16 @@ const useStyle = makeStyles(theme => ({
 
 interface Props {
 	id: string;
+	pid: string;
 	handleClose: HandleClose;
-	data: Data;
-	reviewRefetch: HandleReviewRefetch;
+	data: IsReviewed;
 }
 
 interface HandleClose {
 	(): void;
 }
 
-interface HandleReviewRefetch {
-	(): void;
-}
-
 interface Data {
-	success: boolean;
   	name: string;
   	msg: string;
   	rating: number;
@@ -142,11 +138,79 @@ interface Data {
   	_id: string;
 }
 
+interface IsReviewed extends Data {
+	success: boolean;
+}
+
 
 const RateProduct = (props: Props): JSX.Element => {
 	const classes = useStyle();
-	const {data, reviewRefetch} = props;
-	const [rateProduct, {data: rateData, loading: rateLoading, error: rateError}] = useMutation(LIKE);
+	const {data} = props;
+	const [rateProduct, {data: rateData, loading: rateLoading, error: rateError}] = useMutation(LIKE, {
+		update(cache, {data: {like}}) {
+			//Update review state
+			const prevState: any = cache.readQuery({query: IS_REVIEWED, variables: {pid: props.id}});
+			cache.writeQuery({
+				query: IS_REVIEWED,
+				variables: {pid: props.id},
+				data: {isReviewed: {
+					...prevState.isReviewed, 
+					name: like.name, 
+					msg: like.msg, 
+					rating: like.rating, 
+					success: 
+					like.success, 
+					_id: prevState.isReviewed._id || like._id,
+				}}
+			});
+			//Update parent product
+			const productData: any = (cache.readQuery({query: PRODUCT, variables: {pid: props.pid}}) as any).product;
+			const updatedReviews = like.new ?productData.reviews+1 :productData.reviews;
+			const updatedRating = ((productData.rating*productData.reviews)+(like.rating-like.prev))/updatedReviews;
+			cache.writeQuery({
+				query: PRODUCT,
+				variables: {pid: props.pid},
+				data: {product: {
+					...productData,
+					rating: updatedRating,
+					reviews: updatedReviews
+
+				}}
+			});
+
+			//Update products list
+			const skipData: any = cache.readQuery({query: SKIP_PRODUCTS});
+			//Featured products
+			if ((cache as any).data.data.ROOT_QUERY[`products({"featured":true})`]) {
+				const featuredData:any = cache.readQuery({query: PRODUCTS, variables: {featured: true}});
+				cache.writeQuery({
+					query: PRODUCTS,
+					variables: {featured: true},
+					data: { products: featuredData.products.map((item: any) => {
+						if (item._id===props.id) item.rating = updatedRating;
+						return item;
+					})}
+				})
+			}
+			//All list
+			for (let i = 0; i <= skipData.skipProducts; i+=12) {
+				if ((cache as any).data.data.ROOT_QUERY[`products({"skip":${skipData.skipProducts}})`]) {
+					const prevState: any = cache.readQuery({query: PRODUCTS, variables: {skip: i}});
+					if (prevState.products.find((i: any) => i._id===props.id)) {
+						cache.writeQuery({
+							query: PRODUCTS,
+							variables: {skip: i},
+							data: {products: prevState.products.map((item:any) => {
+								if (item._id===props.id) item.rating = updatedRating;
+								return item;
+							})}
+						});
+						break;
+					}
+				}
+			}
+		}
+	});
 	const [rateValue, setRateValue] = React.useState(1);
 	const [thoughts, setThoughts] = React.useState("");
 	const [name, setName] = React.useState("");
@@ -158,37 +222,47 @@ const RateProduct = (props: Props): JSX.Element => {
 	const handleName = (e: any):void => setName(e.target.value);
 	const handleRate = (value: number):void => setRateValue(value);
 
-	const cancel = ():void => (isEditing) ?setIsEditing(false) :props.handleClose();
+	const cancel = ():void => {
+		if (isEditing) {
+			setIsEditing(false);
+			setName(data.name);
+			setRateValue(data.rating);
+			setThoughts(data.msg);
+		} else {
+			props.handleClose();
+		}
+	}
 	const submitLike = ():void => {
 		if (data.rating === rateValue && data.msg === thoughts) return;
 		if (rateValue && (rateValue >= 1 && rateValue <= 5)) {
-			rateProduct({variables: {pId: props.id, name: data.name || name, msg: thoughts, rating: rateValue, id: data ?data._id :""}});
+			rateProduct({variables: {
+				pId: props.id, 
+				name: data.name || name, 
+				msg: thoughts, 
+				rating: rateValue,
+				prev: data.rating || 0, 
+				id: data ?data._id :""
+			}});
 		}
 	}
 	const editVote = ():void => setIsEditing(true);
 
-	React.useEffect(() => {
-		if (rateData && rateData.like.success) reviewRefetch();
-	}, [rateData]);
+	const update = (input: Data | IsReviewed):void => {
+		setIsVoted(true);
+		setIsEditing(false);
+		setErr(false);
+		setName(input.name);
+		setThoughts(input.msg);
+		setRateValue(input.rating);
+	}
 
 	React.useEffect(() => {
 		if (rateError || (rateData && !rateData.like.success)) setErr(true);
 	}, [rateError, rateData]);
 
 	React.useEffect(() => {
-		if (data && data.success) {
-			setIsVoted(true);
-			setIsEditing(false);
-			setErr(false);
-			setName(data.name);
-			setThoughts(data.msg);
-			setRateValue(data.rating);
-		}
+		if (data && data.success) update(data);
 	}, [data]);
-
-	React.useEffect(() => {
-		reviewRefetch();
-	}, [props.id])
 
 	return (
 		<Grid item className={classes.root} container xs={12} direction="column">

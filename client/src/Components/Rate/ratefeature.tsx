@@ -74,14 +74,10 @@ interface Props {
 	id: string;
 	reviews: number;
 	handleClose: HandleClose;
-	handleRefetch: HandleRefetch;
+	pid: string;
 }
 
 interface HandleClose {
-	(): void;
-}
-
-interface HandleRefetch {
 	(): void;
 }
 
@@ -98,21 +94,23 @@ interface IsReviewed extends Review {
 
 const RateFeature = (props: Props):JSX.Element => {
 	const classes = useStyle();
-	const {data: reviewData, loading: reviewLoading, error: reviewError, refetch: reviewRefetch} = useQuery(IS_REVIEWED, {variables: {pid: props.id}});
-	const {data, loading, error, refetch} = useQuery(REVIEWS, {variables: {pid: props.id, skip: 0}});
+	const {data: reviewData} = useQuery(IS_REVIEWED, {variables: {pid: props.id}});
+	const [skip, setSkip] = React.useState(0);
+	const {data, loading, refetch} = useQuery(REVIEWS, {variables: {pid: props.id, skip: skip}});
+	const [hasMore, setHasMore] = React.useState(data ?data.length >= 12 :false)
 	const [list, setList]: [Review[], Function] = React.useState([]);
 
 	React.useEffect(() => {
 		if (data && data.reviews.length) {
-			setList([...list, ...(data.reviews as Review[])]);
+			setList((list: Review[]) => [...list, ...data.reviews]);
+			setHasMore(data.reviews.length >= 12);
 		}
 	}, [data]);
 
-	const handleReviewRefetch = ():void => {
-		reviewRefetch();
-		props.handleRefetch();
+	const loadMore = () => {
+		setSkip(skip+12);
+		refetch();
 	}
-
 
 	return (
 		<Grid item xs={12} className={classes.root} container justify="center">
@@ -126,14 +124,21 @@ const RateFeature = (props: Props):JSX.Element => {
 				<Grid item className={classes.container}>
 					<Grid item className={classes.rateContainer}>
 						<RateProduct 
-							id={props.id} 
+							id={props.id}
+							pid={props.pid} 
 							handleClose={props.handleClose} 
 							data={reviewData && reviewData.isReviewed}
-							reviewRefetch={handleReviewRefetch}
 						/>
 					</Grid>
 					<Grid item className={classes.listContainer}>
-						<RatingsList id={props.id} list={list} loading={loading} isVoted={(reviewData && reviewData.isReviewed.success) || false} />
+						<RatingsList 
+							id={props.id} 
+							list={list} 
+							loading={loading} 
+							isVoted={(reviewData && reviewData.isReviewed.success) || false} 
+							hasMore={hasMore}
+							loadMore={loadMore}
+						/>
 					</Grid>
 				</Grid>
 			</Grid>

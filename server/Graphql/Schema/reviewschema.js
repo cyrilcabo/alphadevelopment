@@ -5,6 +5,8 @@ const reviewSchema = `
 		name: String
 		msg: String
 		rating: Int
+		prev: Int
+		new: Boolean
 	}
 
 	type Review {

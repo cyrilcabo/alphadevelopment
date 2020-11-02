@@ -11,7 +11,7 @@ const productSchema = `
 		pid: String!
 		details: ProductDetails!
 		reviews: Int!
-		rating: Int!
+		rating: Float
 	}
 
 	type ProductSummary {
@@ -24,7 +24,7 @@ const productSchema = `
 		featured: Boolean!
 		pid: String!
 		summary: String!
-		rating: Int
+		rating: Float
 	}
 
 	type ProductDetails {

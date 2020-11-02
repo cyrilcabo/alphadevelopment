@@ -11,6 +11,7 @@ import ProductContainer from '../Products/container';
 //Graphql
 import {useQuery} from 'react-apollo';
 import {PRODUCTS} from '../../Graphql/queries';
+import {SKIP_PRODUCTS} from '../../Graphql/localqueries';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -77,11 +78,10 @@ interface Product {
 	rating: number;
 }
 
-let skip = 0;
-
 const Products = ():JSX.Element => {
 	const classes:any = useStyle();
-	const {data, loading} = useQuery(PRODUCTS, {variables: {skip: 0}});
+	const {data: skipData} = useQuery(SKIP_PRODUCTS); 
+	const {data, loading} = useQuery(PRODUCTS, {variables: {skip: skipData.skipProducts}});
 	const [products, setProducts]: [Product[], Function] = React.useState(data ?data.products :[]);
 	React.useEffect(() => {
 		if (data) setProducts(data.products);

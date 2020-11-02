@@ -3,6 +3,7 @@ import React from 'react';
 //Material components
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 
 //Custom components
 import RatingsCard from './ratingscard';
@@ -46,6 +47,24 @@ const useStyle = makeStyles(theme => ({
 	},
 	success: {
 		color: 'green'
+	},
+	btn: {
+		display: 'flex',
+		justifyContent: 'center',
+		'& > button': {
+			backgroundColor: '#254d61',
+			color: 'white',
+			padding: '5px 10px',
+			width: 180,
+			fontWeight: 550,
+			[theme.breakpoints.down('md')]: {
+				width: 170,
+			},
+			[theme.breakpoints.down('sm')]: {
+				width: 140,
+				padding: '4px 10px'
+			}
+		}
 	}
 }));
 
@@ -54,6 +73,8 @@ interface Props {
 	list: Review[];
 	loading: boolean;
 	isVoted: boolean;
+	hasMore: boolean;
+	loadMore: LoadMore;
 }
 
 interface Review {
@@ -62,9 +83,13 @@ interface Review {
 	rating: number;
 }
 
+interface LoadMore {
+	(): void;
+}
+
 const RatingsList = (props: Props) => {
 	const classes = useStyle();
-	const {list, loading, isVoted} = props;
+	const {list, loading, isVoted, hasMore, loadMore} = props;
 
 	const cards = list.map((item, key) => {
 		return <Grid item key={key}>
@@ -90,6 +115,14 @@ const RatingsList = (props: Props) => {
 				?<Grid item className={classes.loading}>
 					<CircularProgress />
 					<p> Loading reviews... </p>
+				</Grid>
+				:""
+			}
+			{hasMore
+				?<Grid item className={classes.btn}>
+					<Button onClick={loadMore} disabled={!hasMore}>
+						Load more
+					</Button>
 				</Grid>
 				:""
 			}

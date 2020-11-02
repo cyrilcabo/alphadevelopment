@@ -31,6 +31,13 @@ const client: any = new ApolloClient({
 	cache: cache,
 });
 
+//Initialize local state
+cache.writeData({
+	data: {
+		skipProducts: 0,
+	}
+});
+
 
 //Bind apollo client to application
 ReactDOM.render(

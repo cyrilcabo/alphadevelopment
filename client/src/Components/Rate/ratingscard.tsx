@@ -64,7 +64,6 @@ const useStyle = makeStyles(theme => ({
 		height: '1px',
 		width: '100%',
 		backgroundColor: '#717171',
-		boxShadow: '0px 1px 2px black',
 		margin: '7px 0px 5px 0px'
 	}
 }));

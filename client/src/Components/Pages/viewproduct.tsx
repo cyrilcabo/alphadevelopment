@@ -375,7 +375,7 @@ const ViewProduct = ():JSX.Element => {
 	const location = useLocation();
 	const {productid, review} = qs.parse(location.search, {ignoreQueryPrefix: true});
 	const [modalOpen, setModalOpen]: [boolean, Function] = React.useState(false);
-	const {data, refetch} = useQuery(PRODUCT, {variables: {pid: productid}}); 
+	const {data} = useQuery(PRODUCT, {variables: {pid: productid}}); 
 
 	const viewAll = ():void => history.push('/products');
 
@@ -401,9 +401,6 @@ const ViewProduct = ():JSX.Element => {
 
 	const handleModalOpen = (): void => setModalOpen(true);
 	const handleModalClose = (): void => setModalOpen(false);
-	const handleRefetch = ():void => {
-		refetch();
-	}
 
 	const onLoad = (e: any): void => setImageLoading(false);
 
@@ -449,7 +446,7 @@ const ViewProduct = ():JSX.Element => {
 		<Grid item xs={12}>
 			{modalOpen
 				?<Modal handleClose={handleModalClose.bind(ViewProduct)}>
-					<RateFeature title={product.title} id={product._id} handleClose={handleModalClose} reviews={product.reviews} handleRefetch={handleRefetch} />
+					<RateFeature title={product.title} id={product._id} pid={product.pid} handleClose={handleModalClose} reviews={product.reviews} />
 				</Modal>
 				:""
 			}	
