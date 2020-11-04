@@ -7,6 +7,7 @@ import HomeProducts from '../Home/products';
 import HomeExpertise from '../Home/expertise';
 import HomeTechs from '../Home/techs';
 import HomeAvail from '../Home/avail';
+import Testimonials from '../Testimonials/testimonials';
 
 //Utils
 import React from 'react';
@@ -19,6 +20,7 @@ const Index = ():JSX.Element => {
 			<HomeExpertise />
 			<HomeTechs />
 			<HomeAvail />
+			<Testimonials />
 		</Grid>
 	);
 }
