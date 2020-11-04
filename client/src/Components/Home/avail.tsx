@@ -21,7 +21,6 @@ const useStyle:any = makeStyles(theme => ({
 	root: {
 		minHeight: 413,
 		position: 'relative',
-		marginBottom: 100,
 		color: 'white',
 		[theme.breakpoints.down('xs')]: {
 			minHeight: 383,
