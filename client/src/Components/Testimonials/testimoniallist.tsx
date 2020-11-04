@@ -3,6 +3,7 @@ import React from 'react';
 //Material
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Custom components
 import TestimonialCard from './testimonialcard';
@@ -92,6 +93,10 @@ const useStyle = makeStyles(theme => ({
 		'& .nav-bg-right': {
 			backgroundImage: 'linear-gradient(to left, gray, white)',
 		}
+	},
+	loadingContainer: {
+		minHeight: 300,
+		textAlign: 'center'
 	}
 }));
 
@@ -153,11 +158,21 @@ const TestimonialList = ():JSX.Element => {
 					<span> 	&lsaquo; </span>
 				</ButtonBase>
 			</Grid>
-			<Grid item container className={classes.root} xs={12} sm={11} md={10} justify="center" alignItems="center" ref={rootEl}>
-				<Grid item container className={classes.innerContainer} xs={12}>
-					{testimonials}
+			{loading
+				?<Grid item container justify="center" alignItems="center" direction="column" className={classes.loadingContainer}>
+					<Grid item>
+						<CircularProgress />
+					</Grid>
+					<Grid item>
+						Loading testimonials...
+					</Grid>
 				</Grid>
-			</Grid>
+				:<Grid item container className={classes.root} xs={12} sm={11} md={10} justify="center" alignItems="center" ref={rootEl}>
+					<Grid item container className={classes.innerContainer} xs={12}>
+						{testimonials}
+					</Grid>
+				</Grid>
+			}
 			<Grid item className={[classes.nav, classes.navRight].join(' ')}>
 				<ButtonBase className={classes.navInnerContainer} onClick={navigate.bind(TestimonialList, "right")}>
 					<div className={[classes.navBg, "nav-bg-right"].join(' ')} />
