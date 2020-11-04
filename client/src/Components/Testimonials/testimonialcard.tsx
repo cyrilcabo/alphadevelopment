@@ -159,7 +159,7 @@ const TestimonialCard = (props: Props):JSX.Element => {
 		<Grid item className={classes.root}>
 			<Grid item className={classes.avatarContainer}>
 				{props.image
-					?<img className={classes.avatar} src={`/images/Testimonials/${props.image}`} alt="Avatar" />	
+					?<img className={classes.avatar} src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/testimonials/${props.image}`} alt="Avatar" />	
 					:<div className={classes.avatar}>
 						<p> {props.name[0]} </p>
 					</div>
