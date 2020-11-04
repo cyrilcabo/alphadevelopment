@@ -7,8 +7,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 //Custom components
 import TestimonialCard from './testimonialcard';
 
-//Utils
-import {featuredTestimonials} from '../Utils/featuredtestimonials';
+//Graphql
+import {useQuery} from 'react-apollo';
+import {TESTIMONIALS} from '../../Graphql/queries';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -95,15 +96,19 @@ const useStyle = makeStyles(theme => ({
 }));
 
 interface Testimonial {
+	_id: string;
 	name: string;
 	content: string;
 	image?: string;
 	project: string;
+	featured: boolean;
 }
 
 const TestimonialList = ():JSX.Element => {
 	const classes = useStyle();
 	const rootEl = React.useRef(null);
+	const {data, loading} = useQuery(TESTIMONIALS, {variables: {featured: true}});
+	const [featuredTestimonials, setFeaturedTestimonials] = React.useState(data ?data.testimonials :[]);
 
 	React.useEffect(() => {
 		if (window.matchMedia('(max-width: 960px)').matches || (featuredTestimonials.length > 2 && window.matchMedia('(min-width: 960px)').matches)) {
@@ -116,7 +121,12 @@ const TestimonialList = ():JSX.Element => {
 			}, time);
 			return () => { window.clearInterval(scroll); };
 		}
-	}, []);
+	}, [featuredTestimonials]);
+
+	React.useEffect(() => {
+		if (data) setFeaturedTestimonials(data.testimonials);
+	}, [data]);
+
 	const navigate = (type: string):void => {
 		const {current: el}:any = rootEl;
 		if ((type==='left' && el.scrollLeft >= 0) || (type==='right' && el.scrollLeft <= (el.scrollWidth+el.offsetWidth))) {
