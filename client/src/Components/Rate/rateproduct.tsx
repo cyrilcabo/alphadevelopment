@@ -87,6 +87,7 @@ const useStyle = makeStyles(theme => ({
 		fontSize: '1rem',
 		fontWeight: 550,
 		width: 100,
+		height: '100%',
 		[theme.breakpoints.down('xs')]: {
 			width: '100%',
 		}
@@ -115,6 +116,14 @@ const useStyle = makeStyles(theme => ({
 		color: 'white',
 		'&:hover': {
 			color: 'maroon'
+		}
+	},
+	loader: {
+		height: '1rem !important',
+		width: '1rem !important',
+		[theme.breakpoints.down('xs')]: {
+			height: '25px !important',
+			width: '25px !important'
 		}
 	}
 }));
@@ -344,7 +353,7 @@ const RateProduct = (props: Props): JSX.Element => {
 								onClick={submitLike}
 							> 
 								{rateLoading
-									?<CircularProgress />
+									?<CircularProgress className={classes.loader}/>
 									:"Submit"
 								} 
 							</Button>
