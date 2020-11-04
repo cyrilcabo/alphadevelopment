@@ -24,6 +24,10 @@ const Query = {
 		}).catch(err => {
 			return {success: false}
 		});
+	},
+	testimonials: async (parent, args, context) => {
+		if (args.featured) return await context.db.then(db => db.collection("testimonials").find({featured: true}).toArray());
+		return await context.db.then(db => db.collection("testimonials").find().sort({featured: -1}).skip(args.skip || 0).limit(10).toArray());
 	}
 }
 
