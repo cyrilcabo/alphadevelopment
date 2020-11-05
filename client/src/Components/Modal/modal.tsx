@@ -35,6 +35,9 @@ const useStyle = makeStyles(theme => ({
 			width: '90%'
 		}
 	},
+	darkMode: {
+		backgroundColor: '#211f1f',
+	},
 	closeIcon: {
 		position: 'absolute', 
 		top: '4.2vh', 
@@ -69,19 +72,20 @@ const useStyle = makeStyles(theme => ({
 interface Props {
 	handleClose: HandleClose;
 	children: JSX.Element;
+	dark?: boolean;
 }
 
 interface HandleClose {
 	(): void;
 }
 
-const View = (props: Props) => {
+const Modal = (props: Props) => {
 	const classes = useStyle();
 	return (
 		<Grid item xs={12} className={classes.root} container justify="center" alignItems="center">
 			<div className={classes.bg} onClick={props.handleClose} />
 			<div className={classes.closeIcon} onClick={props.handleClose}> &#x274C; </div>
-			<Grid item container className={classes.container} justify={"center"}>
+			<Grid item container className={[classes.container, props.dark ?classes.darkMode :''].join(' ')} justify={"center"}>
 				{props.children}
 			</Grid>
 			<style>{`
@@ -94,4 +98,4 @@ const View = (props: Props) => {
 	);
 }
 
-export default View;
+export default Modal;
