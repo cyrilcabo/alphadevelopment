@@ -96,7 +96,7 @@ const RateFeature = (props: Props):JSX.Element => {
 	const classes = useStyle();
 	const {data: reviewData} = useQuery(IS_REVIEWED, {variables: {pid: props.id}});
 	const [skip, setSkip] = React.useState(0);
-	const {data, loading, refetch} = useQuery(REVIEWS, {variables: {pid: props.id, skip: skip}});
+	const {data, loading} = useQuery(REVIEWS, {variables: {pid: props.id, skip: skip}});
 	const [hasMore, setHasMore] = React.useState(data ?data.reviews.length >= 12 :false)
 	const [list, setList]: [Review[], Function] = React.useState([]);
 
@@ -109,7 +109,6 @@ const RateFeature = (props: Props):JSX.Element => {
 
 	const loadMore = () => {
 		setSkip(skip+12);
-		refetch();
 	}
 
 	return (
