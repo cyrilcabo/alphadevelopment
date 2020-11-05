@@ -3,8 +3,12 @@ import React from 'react';
 //Grid
 import Grid from '@material-ui/core/Grid';
 
+//Custom components
+import ContactContainer from '../Contact/contactcontainer';
+
 //Utils
 import {servicesList} from '../Utils/serviceslist';
+import definePlaceholder from '../Utils/defineplaceholder';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -63,7 +67,7 @@ const useStyle = makeStyles(theme => ({
 		width: 280,
 		padding: '30px 20px',
 		backgroundColor: 'white',
-		boxShadow: '0px 0px 3px #313131',
+		boxShadow: '0px 0px 5px black',
 		marginBottom: 50,
 		display: 'flex',
 		flexDirection: 'column',
@@ -142,6 +146,18 @@ interface Offer {
 
 const ServicesBanner = ():JSX.Element => {
 	const classes = useStyle();
+	const [modalOpen, setModalOpen] = React.useState(false);
+	const [activePlaceholder, setActivePlaceholder] = React.useState("");
+
+	const handleClose = (): void => {
+		setModalOpen(false);
+		setActivePlaceholder("");
+	}
+	const handleOpen = (index: number):void => {
+		setModalOpen(true);
+		setActivePlaceholder(definePlaceholder(index));
+	}
+
 	const offers = servicesList.map((item: Offer, index: number) => {
 		const cardColor = index===0 || index===5 ?classes.cardA :(index===2 || index===4) ?classes.cardB :"";
 		return <Grid item container xs={11} sm={6} md={4} justify="center" alignItems="center" key={index}>
@@ -152,7 +168,7 @@ const ServicesBanner = ():JSX.Element => {
 				<Grid item className={classes.cardContent}>
 					<p> {item.content} </p>
 				</Grid>
-				<Grid item className={classes.learn}>
+				<Grid item className={classes.learn} onClick={handleOpen.bind(ServicesBanner, index)}>
 					<p> Contact us &#9656;&#9656; </p>
 				</Grid>
 			</Grid>
@@ -160,6 +176,7 @@ const ServicesBanner = ():JSX.Element => {
 	});
 	return (
 		<Grid item className={classes.root} xs={12} container justify="center">
+			<ContactContainer handleClose={handleClose} open={modalOpen} placeholder={activePlaceholder} />
 			<Grid item xs={11} md={10} container direction="column">
 				<Grid item className={classes.title}>
 					<h1> What <span style={{color: '#fda12e'}}>Alpha</span> Development offers </h1>
