@@ -74,6 +74,21 @@ const useStyle:any = makeStyles(theme => ({
 			textAlign: 'center',
 			justifyContent: 'center',
 		}
+	},
+	midContainer: {
+		[theme.breakpoints.up('md')]: {
+			flex: 1,
+			justifyContent: 'center',
+			'& > div.MuiGrid-container': {
+				maxWidth: 200
+			}
+		}
+	},
+	rightContainer: {
+		[theme.breakpoints.down('sm')]: {
+			flexBasis: '100%',
+			maxWidth: '100%'
+		}
 	}
 }));
 
@@ -112,7 +127,7 @@ const Footer = ({navs}: Props): JSX.Element => {
 						</Grid>	
 					</Grid>
 				</Grid>
-				<Grid item xs={12} md={3} lg={2}>
+				<Grid item xs={12} className={classes.midContainer}>
 					<Grid item container direction="column" alignItems="center" justify="space-around">
 						<Grid item container justify="space-around" className={classes.logoContainer}>
 							<Grid item>
@@ -138,7 +153,7 @@ const Footer = ({navs}: Props): JSX.Element => {
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item xs={12} md={4} lg={3}>
+				<Grid item className={classes.rightContainer}>
 					<Grid item container className={classes.navContainer}>
 						{navLinks}
 					</Grid>
