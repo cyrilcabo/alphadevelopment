@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 
 //Utils
 import React from 'react';
+import {useHistory} from 'react-router';
 
 //SVG
 import {ReactComponent as LineDesign} from '../../images/SVG/Line Design.svg';
@@ -168,23 +169,6 @@ const useStyle:any = makeStyles(theme => ({
 			fontSize: '1.2rem',
 		}
 	},
-	'@keyframes animate': {
-		'0%': {
-			opacity: '0',
-		},
-		'25%': {
-			opacity: '0.25',
-		},
-		'50%': {
-			opacity: '0.5'
-		},
-		'100%': {
-			opacity: '1',
-		}
-	},
-	animateText: {
-		animation: '$animate 1s',
-	}
 }));
 
 interface Service {
@@ -196,8 +180,8 @@ interface Service {
 
 const HomeExpertise = ():JSX.Element => {
 	const classes:any = useStyle();
-	const [clicked, setClicked] = React.useState(false);
-	const handleClick = ():void => setClicked(true);
+	const history = useHistory();
+	const handleClick = ():void => history.push('/services');
 	const services:Service[] = [
 		{
 			name: "Frontend Services",
@@ -244,11 +228,8 @@ const HomeExpertise = ():JSX.Element => {
 			<Grid item xs={12} container justify="center" className={classes.explore}>
 				<div className={classes.exploreBg} />
 				<Grid item xs={11} sm={10} md={9} lg={8} container className={classes.exploreInner} justify="center" alignItems="center">
-					<h4 className={[classes.exploreMsg, clicked ?classes.animateText :""].join(' ')} onClick={handleClick}> 
-						{clicked
-							?"Coming soon..."
-							:"Explore our services"
-						} 
+					<h4 className={classes.exploreMsg} onClick={handleClick}> 
+						Explore our services
 					</h4>
 				</Grid>
 			</Grid>
