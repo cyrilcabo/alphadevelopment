@@ -9,6 +9,7 @@ import Index from '../Pages/index';
 import Products from '../Pages/products';
 import ViewProduct from '../Pages/viewproduct';
 import About from '../Pages/about';
+import Services from '../Pages/services';
 
 const Routes = ():JSX.Element => {
 	return (
@@ -24,6 +25,15 @@ const Routes = ():JSX.Element => {
 			</Route>
 			<Route path="/about" exact>
 				<About />
+			</Route>
+			<Route path="/services" exact>
+				<Services />
+			</Route>
+			<Route path="">
+				<Index />
+			</Route>
+			<Route path="/*">
+				<Index />
 			</Route>
 		</Switch>
 	);
