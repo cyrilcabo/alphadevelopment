@@ -28,16 +28,18 @@ const useStyle = makeStyles(theme => ({
 	innerContainer: {
 		flexWrap: 'nowrap',
 		'& > div.MuiGrid-item': {
-			width: '50%',
+			width: '48%',
 			flexShrink: 0,
 			display: 'flex',
 			justifyContent: 'center',
 			scrollSnapAlign: 'start',
 			scrollSnapStop: 'normal',
-			marginRight: 5,
-			marginLeft: 5,
+			marginRight: '1%',
+			marginLeft: '1%',
 			[theme.breakpoints.down('sm')]: {
 				width: '100%',
+				marginLeft: '5px',
+				marginRight: '5px'
 			}
 		}
 	},
@@ -112,27 +114,44 @@ interface Testimonial {
 const TestimonialList = ():JSX.Element => {
 	const classes = useStyle();
 	const rootEl = React.useRef(null);
+	const [scrollId, setScrollId] = React.useState(-1);
+	const [run, reRun] = React.useState(1);
 	const {data, loading} = useQuery(TESTIMONIALS, {variables: {featured: true}});
 	const [featuredTestimonials, setFeaturedTestimonials] = React.useState(data ?data.testimonials :[]);
 
+	const resetTimer = ():void => {
+		window.clearInterval(scrollId);
+		setScrollId(-1);
+		reRun(run*-1);
+	}
+
+	const touchStart = ():void => {
+		window.clearInterval(scrollId);
+		setScrollId(-1);
+	}
+
+	const touchEnd = ():void => reRun(run*-1);
+
 	React.useEffect(() => {
 		if (window.matchMedia('(max-width: 960px)').matches || (featuredTestimonials.length > 2 && window.matchMedia('(min-width: 960px)').matches)) {
-			const time = window.matchMedia('(min-width: 960px)').matches ?10000 :5000;
+			const time = window.matchMedia('(min-width: 960px)').matches ?10000 :7000;
 			let pos = 1;
 			const {current: el}: any = rootEl;
-			const scroll:number = window.setInterval(() => {
-				if (el.scrollLeft >= (el.scrollWidth-el.offsetWidth) || (el.scrollLeft <= el.offsetWidth && pos === -1)) pos *= -1;
-				el.scrollLeft += (el.offsetWidth*pos);
-			}, time);
+			const scroll = window.setInterval(() => {
+				if (el.scrollLeft >= (el.scrollWidth-el.clientWidth) || (el.scrollLeft <= el.clientWidth && pos === -1)) pos *= -1;
+				el.scrollLeft += (el.clientWidth*pos);
+			}, time)
+			setScrollId(scroll);
 			return () => { window.clearInterval(scroll); };
 		}
-	}, [featuredTestimonials]);
+	}, [featuredTestimonials, run]);
 
 	React.useEffect(() => {
 		if (data) setFeaturedTestimonials(data.testimonials);
 	}, [data]);
 
 	const navigate = (type: string):void => {
+		resetTimer();
 		const {current: el}:any = rootEl;
 		if ((type==='left' && el.scrollLeft >= 0) || (type==='right' && el.scrollLeft <= (el.scrollWidth+el.offsetWidth))) {
 			const op = type==='left' ?-1 :1;
@@ -167,7 +186,7 @@ const TestimonialList = ():JSX.Element => {
 						Loading testimonials...
 					</Grid>
 				</Grid>
-				:<Grid item container className={classes.root} xs={12} sm={11} md={10} justify="center" alignItems="center" ref={rootEl}>
+				:<Grid item container onTouchStart={touchStart} onTouchEnd={touchEnd} className={classes.root} xs={12} sm={11} md={10} justify="center" alignItems="center" ref={rootEl}>
 					<Grid item container className={classes.innerContainer} xs={12}>
 						{testimonials}
 					</Grid>
