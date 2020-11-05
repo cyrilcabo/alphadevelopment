@@ -44,6 +44,10 @@ const App = ():JSX.Element  => {
       link: "/products",
     },
     {
+      name: "Services",
+      link: "/services"
+    },
+    {
       name: "About",
       link: "/about",
     }
