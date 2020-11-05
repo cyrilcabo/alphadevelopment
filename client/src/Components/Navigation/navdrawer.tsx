@@ -24,7 +24,7 @@ const useStyle:any = makeStyles(theme => ({
 		position: 'fixed',
 		top: 0,
 		marginTop: 55,
-		zIndex: 2,
+		zIndex: 10,
 		height: 0,
 		backgroundColor: '#212121',
 		transition: 'height 0.3s',
