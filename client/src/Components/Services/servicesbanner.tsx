@@ -103,6 +103,7 @@ const useStyle = makeStyles(theme => ({
 	cardContent: {
 		fontSize: '1.2rem',
 		lineHeight: '25px',
+		flex: 1,
 		'& > p': {
 			margin: 0,
 		},
@@ -121,6 +122,16 @@ const useStyle = makeStyles(theme => ({
 	},
 	cardB: {
 		backgroundColor: '#fda12e',
+	},
+	learn: {
+		color: '#004c5f',
+		'& p': {
+			cursor: 'pointer',
+			'&:hover': {
+				textShadow: '0px 0px 1px #313131'
+			},
+			margin: 0,
+		}
 	}
 }));
 
@@ -140,6 +151,9 @@ const ServicesBanner = ():JSX.Element => {
 				</Grid>
 				<Grid item className={classes.cardContent}>
 					<p> {item.content} </p>
+				</Grid>
+				<Grid item className={classes.learn}>
+					<p> Contact us &#9656;&#9656; </p>
 				</Grid>
 			</Grid>
 		</Grid>
