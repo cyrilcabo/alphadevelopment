@@ -23,9 +23,9 @@ const Mutation =  {
 		});
 		return response;
 	},
-	like: async (parent, args, context) => {
+	like: (parent, args, context) => {
 		if ((args.rating < 1 || args.rating > 5) || (args.prev && (args.prev < 1 || args.prev > 5)) || !context.request.signedCookies["alpha_id"]) return {success: false};
-		return await context.db.then(db => db.collection("reviews").updateOne({_id: args.id ?ObjectId(args.id) :ObjectId()}, {
+		return context.db.then(db => db.collection("reviews").updateOne({_id: args.id ?ObjectId(args.id) :ObjectId()}, {
 			$set: {	
 				name: args.name || "",
 				rating: args.rating,
@@ -36,7 +36,7 @@ const Mutation =  {
 			}
 		}, {upsert: true})).then(async (cursor) => {
 			const inc = cursor.upsertedId && cursor.upsertedId._id ?1 :0;	
-			await context.db.then(db => {
+			context.db.then(db => {
 				db.collection("products").updateOne({_id: ObjectId(args.productId)}, {$inc: {reviews: inc, totalRating: args.rating-(args.prev || 0)}});
 				db.collection("products_summary").updateOne({_id: ObjectId(args.productId)}, {$inc: {reviews: inc, totalRating: args.rating-(args.prev || 0)}});
 			});
