@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Rating from '../Products/rating';
 import Modal from '../Modal/modal';
 import RateFeature from '../Rate/ratefeature';
+import ContactContainer from '../Contact/contactcontainer';
 
 //Utils
 import React from 'react';
@@ -338,6 +339,13 @@ const useStyle:any = makeStyles(theme => ({
 		},
 		marginLeft: 5,
 	},
+	contactBtn: {
+		backgroundColor: '#191919',
+		color: 'white',
+		fontSize: '1rem',
+		fontWeight: 550,
+		padding: '5px 10px'
+	}
 }));
 
 interface Product {
@@ -375,6 +383,7 @@ const ViewProduct = ():JSX.Element => {
 	const location = useLocation();
 	const {productid, review} = qs.parse(location.search, {ignoreQueryPrefix: true});
 	const [modalOpen, setModalOpen]: [boolean, Function] = React.useState(false);
+	const [contactOpen, setContactOpen]: [boolean, Function] = React.useState(false);
 	const {data} = useQuery(PRODUCT, {variables: {pid: productid}}); 
 
 	const viewAll = ():void => history.push('/products');
@@ -401,6 +410,8 @@ const ViewProduct = ():JSX.Element => {
 
 	const handleModalOpen = (): void => setModalOpen(true);
 	const handleModalClose = (): void => setModalOpen(false);
+	const handleContactOpen = ():void => setContactOpen(true);
+	const handleContactClose = ():void => setContactOpen(false);
 
 	const onLoad = (e: any): void => setImageLoading(false);
 
@@ -444,6 +455,11 @@ const ViewProduct = ():JSX.Element => {
 
 	return (
 		<Grid item xs={12}>
+			<ContactContainer 
+				open={contactOpen} 
+				handleClose={handleContactClose} 
+				placeholder={`Hi! ${product.title} is amazing! Can we work on a similar one?`}
+			/>
 			{modalOpen
 				?<Modal handleClose={handleModalClose.bind(ViewProduct)}>
 					<RateFeature title={product.title} id={product._id} pid={product.pid} handleClose={handleModalClose} reviews={product.reviews} />
@@ -518,6 +534,11 @@ const ViewProduct = ():JSX.Element => {
 							<Grid item container direction="column">
 								{features}
 							</Grid>
+						</Grid>
+						<Grid item>
+							<Button className={classes.contactBtn} onClick={handleContactOpen}>
+								CONTACT US
+							</Button>
 						</Grid>
 					</Grid>
 				</Grid>

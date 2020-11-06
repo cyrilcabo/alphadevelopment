@@ -48,7 +48,7 @@ const resolvers = {
 }
 
 //Nodemailer configuration
-const sendmail = async (contact) => {
+const sendmail = async (contact, type, subject, message) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     port: 587,
@@ -61,10 +61,10 @@ const sendmail = async (contact) => {
 
   const info = await transporter.sendMail({
     from: process.env.GMAIL_USER,
-    to: contact,
-    subject: "AlphaDevelopment Services",
-    text: textEmail,
-  	html: htmlEmail,
+    to: [contact, process.env.GMAIL_USER],
+    subject: type===1 ?"AlphaDevelopment Services" :`AlphaDevelopment Contact: ${subject}`,
+    text: type===1 ?textEmail :message,
+  	html: type===1 ?htmlEmail :"",
   });
 
   return info;
