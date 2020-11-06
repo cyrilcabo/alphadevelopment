@@ -1,6 +1,9 @@
 //Material components
 import Grid from '@material-ui/core/Grid';
 
+//Custom components
+import ContactContainer from '../Contact/contactcontainer';
+
 //Utils
 import React from 'react';
 
@@ -62,7 +65,7 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	contactContainer: {
-		marginBottom: 40,
+		marginBottom: 20,
 		'& > div.MuiGrid-item': {
 			margin: '10px 20px',
 		},
@@ -90,13 +93,36 @@ const useStyle:any = makeStyles(theme => ({
 		[theme.breakpoints.down('xs')]: {
 			height: 20,
 		}
+	},
+	sendMessage: {
+		margin: "0px 0px 20px 0px",
+		fontSize: '1.3rem',
+		fontWeight: 550,
+		color: '#10cafc',
+		cursor: 'pointer',
+		'& p': {
+			margin: 0,
+		},
+		'&:hover': {
+			color: 'white',
+			textShadow: '0px 0px 2px #313131',
+		},
+		[theme.breakpoints.down('md')]: {
+			fontSize: '1.2rem'
+		},
 	}
 }));
 
 const AboutConnect = ():JSX.Element => {
 	const classes:any = useStyle();
+
+	const [open, setOpen] = React.useState(false);
+	const handleClose = ():void => setOpen(false);
+	const handleOpen = ():void => setOpen(true);
+
 	return (
 		<Grid item className={classes.root} container xs={12} justify="center">
+			<ContactContainer open={open} handleClose={handleClose} />
 			<Grid item xs={11} sm={10} lg={8} container direction="column" alignItems="center" className={classes.container}>
 				<Grid item>
 					<h2 className={classes.title}> How to <span style={{color: '#FFA114'}}>connect</span> with us? </h2>
@@ -118,6 +144,9 @@ const AboutConnect = ():JSX.Element => {
 							<a className={classes.contact} href={"mailto:cyrilcabo@gmail.com"}> cyrilcabo@gmail.com </a>
 						</Grid>
 					</Grid>
+				</Grid>
+				<Grid item className={classes.sendMessage}>
+					<p onClick={handleOpen}> MESSAGE US </p>
 				</Grid>
 				<Grid item>
 					<p className={classes.details}>
