@@ -71,7 +71,7 @@ const ContactForm = (props: Props) => {
 	const socialIcons = ['FB_logo', 'github'].map((i, index) => {
 		return <Grid item key={index}>
 			<IconButton onClick={() => window.open(links[index])}>
-				<img src={`/images/Logos/${i}.png`} />
+				<img src={`/images/Logos/${i}.png`} alt="Contact logos" />
 			</IconButton>
 		</Grid>
 	});
