@@ -98,7 +98,8 @@ const ServiceTestimonials = ():JSX.Element => {
 
 	React.useEffect(() => {
 		const scroll = () => {
-			if (window.scrollY >= (document.body.offsetHeight - window.innerHeight - 155) && hasMore && !loading) setSkip(skip+10);
+			if (window.scrollY >= (document.body.offsetHeight - window.innerHeight - 155) && hasMore && !loading) 
+				setSkip((s: number) => s+10);
 		}
 		window.addEventListener("scroll", scroll);
 		if (!hasMore) window.removeEventListener("scroll", scroll);
