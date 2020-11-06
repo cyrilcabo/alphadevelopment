@@ -110,17 +110,7 @@ const ContactInfo = (props: Props):JSX.Element => {
 	const [contactInfo, setContactInfo] = React.useState("");
 	const [messageInfo, setMessageInfo] = React.useState(props.placeholder || "");
 	const [errorInfo, setErrorInfo] = React.useState({error: false, message: ""});
-	const [counter, setCounter] = React.useState(2);
 	const [sendQuery, {data, loading, error}] = useMutation(CONTACT);
-	//Display helper message
-	const handleInfo = (type: string) => {
-		if (counter <= 0) return false;
-		if (type==="UNSET") setCounter(counter-1);
-		setErrorInfo({
-			error: false, 
-			message: type==="SET" ?"How we can reach you back." :""
-		});
-	}
 	//Save user input
 	const handleContactInfo = (e: Event | any) => setContactInfo(e.target.value);
 	const handleMessageInfo = (e: Event | any) => setMessageInfo(e.target.value);
@@ -165,8 +155,7 @@ const ContactInfo = (props: Props):JSX.Element => {
 							color="secondary" 
 							className={classes.textBox}
 							onChange={handleContactInfo}
-							onFocus={handleInfo.bind(ContactInfo, "SET")}
-							onBlur={handleInfo.bind(ContactInfo, "UNSET")}
+							helperText={"How we can reach you back"}
 							value={contactInfo}
 							placeholder={'Email / Phone number'}
 						/>
