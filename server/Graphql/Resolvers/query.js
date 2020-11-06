@@ -7,11 +7,12 @@ const Query = {
 		return context.db.then(db => db.collection("products_summary").find().sort({featured: -1}).skip(skip).limit(limit).toArray()).then(arr => arr.map(item => ({...item, rating: item.totalRating/item.reviews || 0})));
 	},
 	product: (parent, args, context) => {
-		const result = context.db.then(db => db.collection("products").findOne({pid: args.pid}));
-		return {
-			...result,
-			rating: result.totalRating/result.reviews || 0,
-		}
+		return context.db.then(db => db.collection("products").findOne({pid: args.pid})).then(result => {
+			return {
+				...result,
+				rating: result.totalRating/result.reviews || 0,
+			}
+		});
 	},
 	reviews: (parent, args, context) => {
 		const skip = args.skip || 0;
