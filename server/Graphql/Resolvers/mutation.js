@@ -1,27 +1,31 @@
 const {ObjectId} = require('mongodb');
 
 const Mutation =  {
-	subscribe: async (parent, args, context) => {
-		let response = {error: false, message: ""};
-		await context.send(args.email).then(info => {
-			if (info.accepted.length) {
-				response = {
-					error: false,
-					message: "Email subscribed succesfully!"
+	subscribe: (parent, args, context) => {
+		return context.db.then(db => db.collection("subscribed_emails").insertOne({_id: args.email})).then(() => {
+			return context.send(args.email, 1).then(info => {
+				if (info.accepted.length) {
+					return response = {
+						error: false,
+						message: "Email subscribed succesfully!"
+					};
+				}
+				return response = {
+					error: true,
+					messsage: "Something went wrong. Try again.",
 				};
-				return;
-			}
-			response = {
-				error: true,
-				messsage: "Something went wrong. Try again.",
-			};
+			}).catch(err => {
+				return response = {
+					error: true,
+					message: "Service currently unavailable.",
+				};
+			});
 		}).catch(err => {
-			response = {
+			if (err) return {
 				error: true,
-				message: "Service currently unavailable.",
-			};
+				message: "Email already subscribed!",
+			}
 		});
-		return response;
 	},
 	like: (parent, args, context) => {
 		if ((args.rating < 1 || args.rating > 5) || (args.prev && (args.prev < 1 || args.prev > 5)) || !context.request.signedCookies["alpha_id"]) return {success: false};
@@ -56,6 +60,21 @@ const Mutation =  {
 				return {success: false}
 			}
 		}).catch(err => ({success: false}));
+	},
+	contact: (parent, args, context) => {
+		if (!args.contact || !args.message) return {error: true, message: "All fields required!"}
+		return context.send(null, 2, args.contact, args.message).then(info => {
+			if (info.accepted.length) {
+				return {
+					error: false,
+					message: "Message succesfully sent."
+				}
+			}
+			return {
+				error: true,
+				message: "Something went wrong.",
+			}
+		}).catch (err => ({error: true, message: "Service unavailable."}));
 	}
 }
 

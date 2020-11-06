@@ -22,3 +22,12 @@ export const LIKE = gql`
 		}
 	}
 `;
+
+export const CONTACT = gql`
+	mutation contact ($contact: String!, $message: String!) {
+		contact (contact: $contact, message: $message) {
+			error,
+			message
+		}
+	}
+`;
