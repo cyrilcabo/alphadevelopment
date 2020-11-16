@@ -41,7 +41,7 @@ const useStyle:any = makeStyles(theme => ({
 			backgroundImage: 'url(/images/Banner/Banner_XS.jpg)',
 		},
 		[theme.breakpoints.down('sm')]: {
-			filter: 'brightness(0.5) contrast(1.2)',
+			filter: 'brightness(0.4) contrast(1.2)',
 		},
 		[theme.breakpoints.up('sm')]: {
 			backgroundImage: 'url(/images/Banner/Banner_SM.jpg)',
