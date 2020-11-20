@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 //Utils
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -22,6 +22,21 @@ const useStyle:any = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'center',
 		padding: 0,
+	},
+	brandContainer: {
+		display: 'flex',
+		alignItems: 'center',
+		cursor: 'pointer'
+	},
+	brandLogo: {
+		height: 30,
+		width: 30,
+		marginRight: 5,
+		[theme.breakpoints.down('sm')]: {
+			marginRight: 3,
+			height: 25,
+			width: 25
+		}
 	},
 	brandTitle: {
 		fontSize: '1.2rem',
@@ -75,6 +90,8 @@ interface Props {
 
 const Navbar = ({navs, handleActive}: Props):JSX.Element => {
 	const classes:any = useStyle();
+	const history = useHistory();
+	const brandClick = () => history.push('/');
 	const navLinks:JSX.Element[] = navs.map((item, key) => {
 		return <Grid item className={classes.navs} key={key}>
 			<Link to={item.link}>
@@ -101,7 +118,8 @@ const Navbar = ({navs, handleActive}: Props):JSX.Element => {
 									</IconButton>
 								</Hidden>	
 							</Grid>
-							<Grid item>
+							<Grid item className={classes.brandContainer} onClick={brandClick}>
+								<img className={classes.brandLogo} src={"/icons/logo_64.png"} alt="Brand logo" />
 								<h4 className={classes.brandTitle}> ALPHA<span style={{color: '#00CBFF'}}>DEVELOPMENT</span> </h4>
 							</Grid>
 						</Grid>
