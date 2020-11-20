@@ -13,6 +13,11 @@
       "type": "image/x-icon"
     },
     {
+      "src": "icons/logo_128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
       "src": "icons/logo_192.png",
       "sizes": "192x192 144x144",
       "type": "image/png"
