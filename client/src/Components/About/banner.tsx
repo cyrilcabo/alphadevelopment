@@ -9,17 +9,46 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle:any = makeStyles(theme => ({
 	root: {
-		minHeight: 444,
+		minHeight: 514,
+		padding: '30px 0px',
 		backgroundColor: '#191919',
 		color: 'white',
 		textAlign: 'center',
+		[theme.breakpoints.down('md')]: {
+			minHeight: 444,
+		},
 		[theme.breakpoints.down('xs')]: {
-			minHeight: 394,
+			minHeight: 344,
+		}
+	},
+	container: {
+		marginTop: 50,
+		[theme.breakpoints.down('sm')]: {
+			marginTop: 60,
+		},
+		[theme.breakpoints.down('xs')]: {
+			marginTop: 40,
+		}
+	},
+	brandLogo: {
+		height: 128,
+		width: 128,
+		[theme.breakpoints.down('md')]: {
+			height: 116,
+			width: 116
+		},
+		[theme.breakpoints.down('sm')]: {
+			height: 102,
+			width: 102,
+		},
+		[theme.breakpoints.down('xs')]: {
+			height: 96,
+			width: 96
 		}
 	},
 	title: {
 		fontSize: '6rem',
-		margin: '0px 0px 30px 0px',
+		margin: '0px 0px 10px 0px',
 		[theme.breakpoints.down('md')]: {
 			fontSize: '5rem',
 		},
@@ -50,8 +79,11 @@ const useStyle:any = makeStyles(theme => ({
 const AboutBanner = ():JSX.Element => {
 	const classes:any = useStyle();
 	return (
-		<Grid item className={classes.root} xs={12} container justify="center" alignItems="center">
-			<Grid item xs={11} md={10} container direction="column" alignItems="center">
+		<Grid item className={classes.root} xs={12} container justify="center">
+			<Grid item xs={11} md={10} container direction="column" alignItems="center" className={classes.container}>
+				<Grid item>
+					<img src={"/icons/logo_128.png"} className={classes.brandLogo} alt="Logo" />
+				</Grid>
 				<Grid item>
 					<h1 className={classes.title}> <span style={{color: '#00CBFF'}}>Alpha</span> Development </h1>
 				</Grid>
