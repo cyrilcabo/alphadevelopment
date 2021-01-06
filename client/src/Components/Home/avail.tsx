@@ -132,11 +132,17 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	msg: {
-		fontSize: '1.1rem',
+		fontSize: '1rem',
 		margin: '8px 0px',
 		textAlign: 'center',
 		color: 'white',
 		fontWeight: 600,
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '0.95rem'
+		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '0.9rem'
+		}
 	},
 	progress: {
 		height: 20,
