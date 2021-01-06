@@ -9,6 +9,7 @@ import Rating from '../Products/rating';
 import Modal from '../Modal/modal';
 import RateFeature from '../Rate/ratefeature';
 import ContactContainer from '../Contact/contactcontainer';
+import LoadingScreen from '../LoadingScreen/loadingscreen';
 
 //Utils
 import React from 'react';
@@ -452,6 +453,8 @@ const ViewProduct = ():JSX.Element => {
 			<p className={classes.featureDetails}> {item.details} </p>
 		</Grid>
 	});
+
+	if (!product._id) return <LoadingScreen />
 
 	return (
 		<Grid item xs={12}>
