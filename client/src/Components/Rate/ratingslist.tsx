@@ -102,7 +102,7 @@ const RatingsList = (props: Props) => {
 	})
 	return (
 		<Grid item xs={12} className={classes.root} container direction="column">
-			{!list.length
+			{!list.length && !loading
 				?<Grid item className={[classes.empty, isVoted ?classes.success :""].join(" ")}>
 					{isVoted
 						?"You are the first to rate the product!"
