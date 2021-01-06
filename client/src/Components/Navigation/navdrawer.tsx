@@ -58,9 +58,9 @@ const useStyle:any = makeStyles(theme => ({
 	navLinks: {
 		color: 'white',
 		margin: '12px 0px',
-		fontSize: '1.2rem',
+		fontSize: '1rem',
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1rem',
+			fontSize: '0.95rem',
 		}
 	}
 }));

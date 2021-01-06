@@ -17,6 +17,8 @@ const useStyle:any = makeStyles(theme => ({
 		height: 56,
 		backgroundColor: '#212121',
 		zIndex: 5,
+		display: 'flex',
+		justifyContent: 'center'
 	},
 	toolbar: {
 		display: 'flex',
@@ -39,7 +41,7 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	brandTitle: {
-		fontSize: '1.2rem',
+		fontSize: '0.98rem',
 		margin: 0,
 		color: 'white',
 	},
@@ -47,7 +49,7 @@ const useStyle:any = makeStyles(theme => ({
 		display: 'flex',
 	},
 	navs: {
-		fontSize: '1.2rem',
+		fontSize: '1rem',
 		color: 'white',
 		margin: '0px 0px 0px 35px',
 		'& a': {
