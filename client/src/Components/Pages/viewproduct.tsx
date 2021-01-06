@@ -432,7 +432,11 @@ const ViewProduct = ():JSX.Element => {
 	}
 
 	React.useEffect(() => {
-		if (data) setProduct(data.product);
+		let timer:NodeJS.Timeout;
+		if (data) timer = setTimeout(() => setProduct(data.product), 300);
+		return () => {
+			if (timer) clearTimeout(timer);
+		}
 	}, [data, productid]);
 
 	React.useEffect(() => {

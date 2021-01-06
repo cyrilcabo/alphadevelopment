@@ -6,11 +6,26 @@ import React, {lazy, Suspense} from 'react';
 import LoadingScreen from '../LoadingScreen/loadingscreen';
 
 //Components
-const Index = lazy(() => import('../Pages/index'));
-const Products = lazy(() => import('../Pages/products'));
-const ViewProduct = lazy(() => import('../Pages/viewproduct'));
-const About = lazy(() => import('../Pages/about'));
-const Services = lazy(() => import('../Pages/services'));
+const Index = lazy(async() => {
+	await new Promise(resolve => setTimeout(resolve, 300));
+	return import('../Pages/index');
+});
+const Products = lazy(async() => {
+	await new Promise(resolve => setTimeout(resolve, 300));
+	return import('../Pages/products');
+});
+const ViewProduct = lazy(async() => {
+	await new Promise(resolve => setTimeout(resolve, 300));
+	return import('../Pages/viewproduct');
+});
+const About = lazy(async() => {
+	await new Promise(resolve => setTimeout(resolve, 300));
+	return import('../Pages/about');
+});
+const Services = lazy(async() => {
+	await new Promise(resolve => setTimeout(resolve, 300));
+	return import('../Pages/services');
+});
 
 const Routes = ():JSX.Element => {
 	return (
