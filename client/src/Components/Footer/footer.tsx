@@ -20,26 +20,33 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	container: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center',
 		'& > div.MuiGrid-item': {
-			display: 'flex',
-			alignItems: 'center',
 			[theme.breakpoints.down('sm')]: {
 				marginBottom: 20,
 			}
 		}
 	},
 	brandTitle: {
-		fontSize: '1.3rem',
+		fontSize: '1rem',
 		margin: '0px 0px 5px 0px',
 	},
 	brandSlogan: {
 		margin: 0,
-		fontSize: '0.8rem',
+		fontSize: '0.7rem',
 	},
 	logoContainer: {
 		[theme.breakpoints.down('sm')]: {
 			justifyContent: 'center',
 		}
+	},
+	logo: {
+		'&:hover': {
+			transform: 'scale(1.1)',
+		},
+		transition: 'transform 0.5s',
 	},
 	CTA: {
 		color: 'white',
@@ -55,7 +62,7 @@ const useStyle:any = makeStyles(theme => ({
 		textAlign: 'right',
 		'& > div.MuiGrid-item': {
 			marginLeft: 20,
-			fontSize: '1rem',
+			fontSize: '0.95rem',
 			'& a': {
 				color: 'white',
 				textDecoration: 'none',
@@ -75,9 +82,23 @@ const useStyle:any = makeStyles(theme => ({
 			justifyContent: 'center',
 		}
 	},
+	leftContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'flex-start',
+		justifyContent: 'center',
+		[theme.breakpoints.down('sm')]: {
+			alignItems: 'center'
+		},
+		'& > div.MuiGrid-item': {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center'
+		}
+	},
 	midContainer: {
 		[theme.breakpoints.up('md')]: {
-			flex: 1,
+			display: 'flex',
 			justifyContent: 'center',
 			'& > div.MuiGrid-container': {
 				maxWidth: 200
@@ -113,8 +134,8 @@ const Footer = ({navs}: Props): JSX.Element => {
 	return (
 		<Grid item xs={12} className={classes.root} container justify="center" alignItems="center">
 			<Grid item xs={11} md={10} container className={classes.container} justify="space-between">
-				<Grid item xs={12} md={3} lg={2}>
-					<Grid item container direction="column" alignItems="center">
+				<Grid item xs={12} md={4} className={classes.leftContainer}>
+					<Grid item>
 						<Grid item>
 							<h4 className={classes.brandTitle}> <span style={{color: '#00CBFF'}}>Alpha</span> Development </h4>
 						</Grid>
@@ -127,7 +148,7 @@ const Footer = ({navs}: Props): JSX.Element => {
 						</Grid>	
 					</Grid>
 				</Grid>
-				<Grid item xs={12} className={classes.midContainer}>
+				<Grid item xs={12} md={4} className={classes.midContainer}>
 					<Grid item container direction="column" alignItems="center" justify="space-around">
 						<Grid item container justify="space-around" className={classes.logoContainer}>
 							<Grid item>
@@ -153,7 +174,7 @@ const Footer = ({navs}: Props): JSX.Element => {
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item className={classes.rightContainer}>
+				<Grid item xs={12} md={4} className={classes.rightContainer}>
 					<Grid item container className={classes.navContainer}>
 						{navLinks}
 					</Grid>
