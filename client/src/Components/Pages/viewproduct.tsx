@@ -340,6 +340,15 @@ const useStyle:any = makeStyles(theme => ({
 		},
 		marginLeft: 5,
 	},
+	disabledSrc: {
+		cursor: 'not-allowed',
+		'& > img': {
+			filter: 'invert(100%)',
+			'&:hover': {
+				boxShadow: 'unset',
+			},
+		}
+	},
 	contactBtn: {
 		backgroundColor: '#191919',
 		color: 'white',
@@ -507,7 +516,7 @@ const ViewProduct = ():JSX.Element => {
 								<Grid item>	
 									<a className={classes.productLink} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a></Grid>
 								<Grid item>
-									<a className={classes.srcCode} href={product.github} target="_blank" rel="noopener noreferrer">
+									<a className={[classes.srcCode, !product.github && classes.disabledSrc].join(' ')} href={product.github || undefined} target="_blank" rel="noopener noreferrer">
 										<img src={"/images/Logos/github.png"} alt={"Github logo"} />
 									</a>
 								</Grid>

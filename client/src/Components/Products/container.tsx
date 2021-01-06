@@ -200,6 +200,15 @@ const useStyle:any = makeStyles(theme => ({
 		},
 		marginLeft: 5,
 	},
+	disabledSrc: {
+		cursor: 'not-allowed',
+		'& > img': {
+			filter: 'invert(100%)',
+			'&:hover': {
+				boxShadow: 'unset',
+			},
+		}
+	},
 	linkholder: {
 		[theme.breakpoints.down('sm')]: {
 			justifyContent: 'center',
@@ -277,7 +286,7 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 								<a className={classes.link} href={product.link} target="_blank" rel="noopener noreferrer"> {product.link} </a>
 							</Grid>
 							<Grid item>
-								<a className={[classes.srcCode, 'src-code'].join(' ')} href={product.github} target="_blank" rel="noopener noreferrer">
+								<a className={[classes.srcCode, 'src-code', !product.github && classes.disabledSrc].join(' ')} href={product.github || undefined} target="_blank" rel="noopener noreferrer">
 									<img src={"/images/Logos/github.png"} alt={"Github logo"} />
 								</a>
 							</Grid>
