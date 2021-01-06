@@ -81,11 +81,9 @@ const server = new GraphQLServer({
 	})
 });
 
-const cacheAge = 3600000*24*7;
-
 server.express.use(cookieParser(process.env.COOKIE_SECRET));
 server.express.use((req, res, next) => setCookie(req, res, next));
-server.express.use(express.static(path.join(__dirname, "build"), {maxAge: cacheAge}));
+server.express.use(express.static(path.join(__dirname, "build"), {maxAge: '7d'}));
 
 server.express.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
