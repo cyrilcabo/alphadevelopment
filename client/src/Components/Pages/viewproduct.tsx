@@ -24,14 +24,14 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle:any = makeStyles(theme => ({
 	title: {
-		margin: '70px 0px 40px 0px',
+		margin: '80px 0px 40px 0px',
 		'& h1': {
-			fontSize: '3.5rem',
+			fontSize: '2.5rem',
 			[theme.breakpoints.down('sm')]: {
-				fontSize: '3rem'
+				fontSize: '2rem'
 			},
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '2.5rem',
+				fontSize: '1.75rem',
 			}
 		},
 		'& button': {
@@ -172,7 +172,7 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	titleContainer: {
 		'& > div.MuiGrid-item': {
-			marginBottom: 18,
+			marginBottom: 15,
 			[theme.breakpoints.down('xs')]: {
 				marginBottom: 9,
 			}
@@ -180,16 +180,16 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	productTitle: {
 		'& > h3': {
-			fontSize: '2.5rem',
+			fontSize: '2rem',
 			margin: 0,
 			[theme.breakpoints.down('md')]: {
-				fontSize: '2.2rem',
-			},
-			[theme.breakpoints.down('sm')]: {
 				fontSize: '1.8rem',
 			},
+			[theme.breakpoints.down('sm')]: {
+				fontSize: '1.6rem',
+			},
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '1.7rem'
+				fontSize: '1.4rem'
 			}
 		},
 		[theme.breakpoints.down('xs')]: {
@@ -202,15 +202,15 @@ const useStyle:any = makeStyles(theme => ({
 	productLink: {
 		textDecoration: 'none',
 		color: '#00CBFF',
-		fontSize: '1.2rem',
+		fontSize: '1.05rem',
 		'&:hover': {
 			color: '#FFA114',
 		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.1rem',
+			fontSize: '1rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1rem',
+			fontSize: '0.95rem',
 		}
 	},
 	productCategory: {

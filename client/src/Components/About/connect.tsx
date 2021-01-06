@@ -31,18 +31,18 @@ const useStyle:any = makeStyles(theme => ({
 		},
 	},
 	title: {
-		fontSize: '3rem',
+		fontSize: '2.25rem',
 		margin: '80px 0px 40px 0px',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2.5rem',
+			fontSize: '2rem',
 			marginBottom: 30,
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '2rem',
+			fontSize: '1.8rem',
 			marginTop: 60,
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.4rem',
 			marginBottom: 15,
 			marginTop: 50,
 		}
@@ -74,7 +74,7 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	contact: {
-		fontSize: '1.2rem',
+		fontSize: '1rem',
 		letterSpacing: '1px',
 		margin: 0,
 		textDecoration: 'none',
@@ -83,8 +83,11 @@ const useStyle:any = makeStyles(theme => ({
 			color: '#FFA114'
 		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.1rem',
+			fontSize: '0.95rem',
 		},
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '0.9rem'
+		}
 	},
 	icon: {
 		[theme.breakpoints.down('sm')]: {
@@ -96,7 +99,7 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	sendMessage: {
 		margin: "0px 0px 20px 0px",
-		fontSize: '1.3rem',
+		fontSize: '1.2rem',
 		fontWeight: 550,
 		color: '#10cafc',
 		cursor: 'pointer',
@@ -108,8 +111,11 @@ const useStyle:any = makeStyles(theme => ({
 			textShadow: '0px 0px 2px #313131',
 		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.2rem'
+			fontSize: '1.1rem'
 		},
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '1rem'
+		}
 	}
 }));
 

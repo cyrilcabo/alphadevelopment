@@ -34,14 +34,14 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	title: {
 		'& > h1': {
-			fontSize: '3.5rem',
+			fontSize: '2.5rem',
 			margin: '80px 0px',
 			[theme.breakpoints.down('sm')]: {
 				margin: '60px 0px',
-				fontSize: '3rem'
+				fontSize: '2rem'
 			},
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '2.5rem',
+				fontSize: '1.75rem',
 			}
 		},
 		[theme.breakpoints.down('sm')]: {

@@ -58,7 +58,7 @@ const useStyle:any = makeStyles(theme => ({
 		marginTop: 50,
 		textAlign: 'center',
 		'& > div.MuiGrid-item': {
-			marginBottom: 20,
+			marginBottom: 15,
 			width: '50%',
 			[theme.breakpoints.down('md')]: {
 				width: '60%',
@@ -73,15 +73,15 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	title: {
 		margin: 0,
-		fontSize: '2.5rem',
+		fontSize: '2rem',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2rem',
-		},
-		[theme.breakpoints.down('sm')]: {
 			fontSize: '1.8rem',
 		},
-		[theme.breakpoints.down('xs')]: {
+		[theme.breakpoints.down('sm')]: {
 			fontSize: '1.5rem',
+		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '1.3rem',
 		}
 	},
 	textfield: {
@@ -123,12 +123,12 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	details: {
 		margin: 0,
-		fontSize: '1.2rem',
+		fontSize: '0.95rem',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.1rem',
+			fontSize: '0.93rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1rem'
+			fontSize: '0.9rem'
 		}
 	},
 	msg: {

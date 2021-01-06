@@ -28,23 +28,19 @@ const useStyle:any = makeStyles(theme => ({
 		minHeight: 600,
 	},
 	title: {
-		fontSize: '3rem',
+		fontSize: '2.5rem',
 		margin: '100px 0px 50px 0px',
-		letterSpacing: '2.5px',
 		color: "#212121",
 		textAlign: 'center',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2.75rem',
-			letterSpacing: '2px',
+			fontSize: '2.25rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '2.5rem',
+			fontSize: '2rem',
 			marginTop: 70,
-			letterSpacing: '2px',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '2rem',
-			letterSpacing: '1px',
+			fontSize: '1.65rem',
 		}
 	},
 	productContainer: {

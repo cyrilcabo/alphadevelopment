@@ -31,19 +31,19 @@ const useStyle:any = makeStyles(theme => ({
 		zIndex: -2,
 	},
 	title: {
-		fontSize: '3rem',
+		fontSize: '2.5rem',
 		margin: '60px 0px 50px 0px',
 		color: "white",
 		textAlign: 'center',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2.75rem',
+			fontSize: '2.25rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '2.5rem',
+			fontSize: '2rem',
 			marginTop: 70,
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '2rem',
+			fontSize: '1.65rem',
 		}
 	},
 	design: {
@@ -76,7 +76,7 @@ const useStyle:any = makeStyles(theme => ({
 			marginBottom: 50,
 		},
 		'& > div.MuiGrid-item': {
-			marginBottom: 15,
+			marginBottom: 8,
 			[theme.breakpoints.down('sm')]: {
 				width: '80%',
 				marginBottom: 2,
@@ -95,28 +95,28 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	serviceTitle: {
-		fontSize: '2rem',
+		fontSize: '1.5rem',
 		color: '#FFA114',
 		margin: 0,
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.8rem',
+			fontSize: '1.4rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.3rem',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.3rem',
+			fontSize: '1.2rem',
 		}
 	},
 	serviceDetails: {
-		fontSize: '1.3rem',
+		fontSize: '1.05rem',
 		margin: 0,
 		color: 'white',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.1rem',
+			fontSize: '1rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.2rem',
+			fontSize: '0.97rem',
 			lineSpacing: '1px'
 		}
 	},

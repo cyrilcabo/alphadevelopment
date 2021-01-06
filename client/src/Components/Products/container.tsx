@@ -13,8 +13,10 @@ import {useHistory} from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle:any = makeStyles(theme => ({
-	root: {
+	parentRoot: {
 		display: 'flex',
+	},
+	root: {
 		'& > div.outer-container': {
 			marginLeft: 30,
 		},
@@ -24,7 +26,8 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	center: {
-		justifyContent: 'center',
+		flexDirection: 'column',
+		alignItems: 'center',
 		textAlign: 'center',
 		'& > div.MuiGrid-item': {
 			maxWidth: '100%',
@@ -42,7 +45,7 @@ const useStyle:any = makeStyles(theme => ({
 		},
 		'& div.inner-container': {
 			'& > div.MuiGrid-item': {
-				marginBottom: 15,
+				marginBottom: 8,
 				'&.detail-container': {
 					[theme.breakpoints.down('sm')]: {
 						maxWidth: '80%',
@@ -62,7 +65,7 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	inverse: {
 		flexDirection: 'row-reverse',
-		'& > div.img-container': {
+		'& div.img-container': {
 			justifyContent: 'flex-start',
 		},
 		'& > div.outer-container': {
@@ -84,6 +87,8 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	innerContainer: {
+		display: 'flex',
+		flexDirection: 'column',
 		'& > div.MuiGrid-item': {
 			marginBottom: 10,
 		}
@@ -100,33 +105,30 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	title: {
-		fontSize: '2rem',
+		fontSize: '1.4rem',
 		margin: 0,
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.8rem'
+			fontSize: '1.2rem'
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.1rem',
 		}
 	},
 	titleCenter: {
-		fontSize: '1.8rem',
-		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.5rem',
-		}
+		fontSize: '1.3rem',
 	},
 	link: {
 		color: '#035e75',
 		textDecoration: 'none',
-		fontSize: '1.2rem',
+		fontSize: '0.97rem',
 		'&:hover': {
 			color: '#FFA114'
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.1rem',
+			fontSize: '0.95rem',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1rem',
+			fontSize: '0.93rem',
 		}
 	},
 	category: {
@@ -143,8 +145,6 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	details: {
 		fontSize: '1rem',
-		fontFamily: 'serif',
-		letterSpacing: '1px',
 		margin: 0,
 		[theme.breakpoints.down('sm')]: {
 			fontSize: '0.95rem',
@@ -259,13 +259,16 @@ const ProductContainer = ({inverse, center, product}: Props):JSX.Element => {
 		</Grid>
 	});
 
+	const productImg =  <Grid item className={`img-container ${classes.imgContainer}`}>
+		<img className={classes.productImg} src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/thumbs/${product.pid}.jpg`} alt={"Product thumbnail"} />
+	</Grid>;
+
 	return (
-		<Grid item xs={12} className={center ?classes.center :rootCenter ?classes.center :[classes.root, inverse ?classes.inverse :''].join(' ')} container>
-			<Grid item xs={12} md={3} className={`img-container ${classes.imgContainer}`}>
-				<img className={classes.productImg} src={`https://s3.us-east-2.amazonaws.com/alphadevelopment/thumbs/${product.pid}.jpg`} alt={"Product thumbnail"} />
-			</Grid>
+		<Grid item xs={12} className={[center ?classes.center :rootCenter ?classes.center :[classes.root, inverse ?classes.inverse :''].join(' '), classes.parentRoot].join(' ')}>
+			{!center && productImg}
 			<Grid item xs={12} md={8} container direction="column" justify="space-between" className={'outer-container'}>
-					<Grid item container direction="column" className={[classes.innerContainer, 'inner-container'].join(' ')}>	
+					<Grid item className={[classes.innerContainer, 'inner-container'].join(' ')}>
+						{center && productImg}
 						<Grid item>
 							<h4 className={[classes.title, center ?classes.titleCenter :""].join(' ')}> {product.title} </h4>
 						</Grid>

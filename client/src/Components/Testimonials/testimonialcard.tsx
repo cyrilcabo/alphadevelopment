@@ -125,22 +125,23 @@ const useStyle = makeStyles(theme => ({
 		'& h3': {
 			margin: 0,
 			color: '#fda12e',
-			fontSize: '1.3rem',
+			fontSize: '1.1rem',
 			[theme.breakpoints.down('md')]: {
-				fontSize: '1.2rem'
+				fontSize: '1.05rem'
 			},
 			[theme.breakpoints.down('sm')]: {
-				fontSize: '1.1rem',
+				fontSize: '1rem',
 			},
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '1rem',
+				fontSize: '0.95rem',
 			}
 		},
 		'& p': {
 			margin: 0,
 			fontStyle: 'italic',
+			fontSize: '0.9rem',
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '0.95rem',
+				fontSize: '0.85rem',
 			}
 		}
 	}

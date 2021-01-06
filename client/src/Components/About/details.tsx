@@ -17,17 +17,17 @@ const useStyle:any = makeStyles(theme => ({
 		},
 	},
 	title: {
-		fontSize: '3rem',
+		fontSize: '2.25rem',
 		margin: '80px 0px 20px 0px',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2.5rem',
+			fontSize: '2rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '2rem',
+			fontSize: '1.8rem',
 			marginTop: 60,
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.4rem',
 			marginTop: 50,
 		}
 	},

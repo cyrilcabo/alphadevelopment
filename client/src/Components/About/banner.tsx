@@ -47,31 +47,31 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	title: {
-		fontSize: '6rem',
+		fontSize: '4rem',
 		margin: '0px 0px 10px 0px',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '5rem',
+			fontSize: '3.8rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '4rem',
+			fontSize: '2.5rem',
 			marginBottom: 20,
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '2.5rem',
+			fontSize: '1.8rem',
 			marginBottom: 10,
 		}
 	},
 	subTitle: {
 		margin: 0,
-		fontSize: '2.5rem',
+		fontSize: '1.8rem',
 		[theme.breakpoints.down('md')]: {
-			fontSize: '2rem',
+			fontSize: '1.6rem',
 		},
 		[theme.breakpoints.down('sm')]: {
-			fontSize: '1.8rem',
+			fontSize: '1.3rem',
 		},
 		[theme.breakpoints.down('xs')]: {
-			fontSize: '1.5rem',
+			fontSize: '1.1rem',
 		}
 	}
 }));
