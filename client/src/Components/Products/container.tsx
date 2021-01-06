@@ -168,9 +168,7 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	CTA: {
-		fontSize: '1.2rem',
-		fontFamily: 'agencyFB, sans-serif',
-		letterSpacing: '2px',
+		fontSize: '1rem',
 		fontWeight: 900,
 		backgroundColor: '#191919',
 		color: 'white',
@@ -180,11 +178,11 @@ const useStyle:any = makeStyles(theme => ({
 			color: '#191919'
 		},
 		[theme.breakpoints.down('md')]: {
-			fontSize: '1.1rem',
+			fontSize: '0.98rem',
 		},
 		[theme.breakpoints.down('sm')]: {
 			padding: '0px 12px',
-			fontSize: '1rem',
+			fontSize: '0.95rem',
 		}
 	},
 	srcCode: {
