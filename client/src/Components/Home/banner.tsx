@@ -117,7 +117,7 @@ const useStyle:any = makeStyles(theme => ({
 	},
 	subTitle: {
 		fontSize:'1.4rem',
-		fontFamily: 'serif',
+		fontFamily: 'sans-serif',
 		margin: '0px 0px 80px 0px',
 		textShadow: '0px 0px 7px black',
 		[theme.breakpoints.down('md')]: {
@@ -132,9 +132,9 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	},
 	CTA: {
-		backgroundColor: '#FFA114',
-		color: '#191919',
-		fontWeight: 600,
+		backgroundColor: '#095569',
+		color: 'white',
+		fontWeight: 800,
 		fontSize: '1.5rem',
 		padding: '5px 20px',
 		borderRadius: 40,
