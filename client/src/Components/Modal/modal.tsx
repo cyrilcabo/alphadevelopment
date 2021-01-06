@@ -24,7 +24,7 @@ const useStyle = makeStyles(theme => ({
 	},
 	container: {
 		zIndex: 2,
-		backgroundColor: 'aliceblue',
+		backgroundColor: '#fbfbfb',
 		height: '90vh',
 		width: '80%',
 		overflowY: 'auto',
