@@ -18,8 +18,7 @@ const useStyle = makeStyles(theme => ({
 		height: '100%',
 		width: '100%',
 		position: 'absolute',
-		backgroundColor: 'black',
-		opacity: '0.9',
+		backgroundColor: '#212121',
 		zIndex: -1,
 	},
 	'@keyframes loading': {
