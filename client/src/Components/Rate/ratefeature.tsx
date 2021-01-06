@@ -33,8 +33,10 @@ const useStyle = makeStyles(theme => ({
 		}
 	},
 	divider: {
-		height: '1px',
-		width: '100%'
+		height: '1.5px',
+		width: '100%',
+		backgroundColor: '#d8d8d8',
+		margin: '5px 0px'
 	},
 	container: {
 		display: 'flex',
@@ -118,7 +120,7 @@ const RateFeature = (props: Props):JSX.Element => {
 					<h2 className={classes.title}> {props.title} Reviews ({props.reviews}) </h2>
 				</Grid>
 				<Grid item>
-					<hr className={classes.divider} />
+					<div className={classes.divider} />
 				</Grid>
 				<Grid item className={classes.container}>
 					<Grid item className={classes.rateContainer}>
