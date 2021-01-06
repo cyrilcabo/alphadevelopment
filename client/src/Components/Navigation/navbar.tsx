@@ -44,6 +44,12 @@ const useStyle:any = makeStyles(theme => ({
 		fontSize: '0.98rem',
 		margin: 0,
 		color: 'white',
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '0.95rem'
+		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '0.93rem'
+		}
 	},
 	navContainer: {
 		display: 'flex',
