@@ -16,11 +16,15 @@ const useStyle = makeStyles(theme => ({
 	root: {
 		display: 'flex',
 		alignItems: 'center',
+	},
+	stars: {
+		display: 'flex',
+		alignItems: 'center',
 		'& > div.MuiGrid-item': {
 			margin: '0px 3px',
-		}
+		},
 	},
-	starContainer: {
+	starsInteractive: {
 		cursor: 'pointer',
 		'&:hover ~ div.MuiGrid-item > p.rate-num': {
 			color: '#00CBFF',
@@ -110,7 +114,7 @@ const Rating = (props: Props):JSX.Element => {
 	const stars: JSX.Element[] = new Array(5).fill(1).map((item, index) => {
 		const add: string = (index < rDown) ?classes.full :"";
 		const half: string = (deci && index === rDown) ?compute(offset, classes) :"";
-		return <Grid item key={index} className={isView ?classes.starContainer :""} onClick={handleOpen} onMouseOver={handleHover.bind(Rating, index+1)} >
+		return <Grid item key={index} onClick={handleOpen} onMouseOver={handleHover.bind(Rating, index+1)} >
 			<Star 
 				viewBox="0 0 28 26" 
 				className={[
@@ -125,7 +129,9 @@ const Rating = (props: Props):JSX.Element => {
 
 	return (
 		<Grid item className={classes.root}>
-			{stars}
+			<Grid item className={[classes.stars, (interactive || isView) && classes.starsInteractive].join(' ')}>
+				{stars}
+			</Grid>
 			{isView
 				?<Grid item>
 					<p className={[classes.rateNum, "rate-num"].join(' ')} onClick={handleOpen}> ({reviews}) </p>
