@@ -5,27 +5,20 @@ import {Switch, Route} from 'react-router-dom';
 import React, {lazy, Suspense} from 'react';
 import LoadingScreen from '../LoadingScreen/loadingscreen';
 
+const lazier = (cb:any) => {
+	return lazy(async() => {
+		await new Promise(resolve => setTimeout(resolve, 300));
+		return cb();
+	});
+}
+
 //Components
-const Index = lazy(async() => {
-	await new Promise(resolve => setTimeout(resolve, 300));
-	return import('../Pages/index');
-});
-const Products = lazy(async() => {
-	await new Promise(resolve => setTimeout(resolve, 300));
-	return import('../Pages/products');
-});
-const ViewProduct = lazy(async() => {
-	await new Promise(resolve => setTimeout(resolve, 300));
-	return import('../Pages/viewproduct');
-});
-const About = lazy(async() => {
-	await new Promise(resolve => setTimeout(resolve, 300));
-	return import('../Pages/about');
-});
-const Services = lazy(async() => {
-	await new Promise(resolve => setTimeout(resolve, 300));
-	return import('../Pages/services');
-});
+const Index = lazier(() => import('../Pages/index'));
+const Products = lazier(() => import('../Pages/products'));
+const ViewProduct = lazier(() => import('../Pages/viewproduct'));
+const About = lazier(() => import('../Pages/about'));
+const Services = lazier(() => import('../Pages/services'));
+const Blogs = lazier(() => import('../Pages/blogs'));
 
 const Routes = ():JSX.Element => {
 	return (
@@ -45,6 +38,9 @@ const Routes = ():JSX.Element => {
 				</Route>
 				<Route path="/services" exact>
 					<Services />
+				</Route>
+				<Route path="/blogs" exact>
+					<Blogs />
 				</Route>
 				<Route path="">
 					<Index />
