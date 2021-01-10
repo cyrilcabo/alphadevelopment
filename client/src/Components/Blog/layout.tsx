@@ -109,6 +109,19 @@ const useStyle = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		padding: '20px 15px',
+		'& > div.MuiGrid-item': {
+			'&:nth-child(1)': {
+				width: '70%',
+				[theme.breakpoints.down('sm')]: {
+					width: '95%'
+				}
+			},
+			'&:nth-child(2)': {
+				[theme.breakpoints.up('md')]: {
+					width: '25%'
+				}
+			},
+		},
 		[theme.breakpoints.down('md')]: {
 			marginBottom: 80,
 		},
@@ -154,11 +167,11 @@ const BlogLayout = ({children, relatedLinks}:Props):JSX.Element => {
 			</Grid>
 			<Grid item xs={12} container justify="center" className={classes.bodyContainer}>
 				<Grid item sm={11} md={10} className={classes.body}>
-					<Grid item xs={11} md={7}>
+					<Grid item>
 						{children}
 					</Grid>
 					<Hidden smDown>
-						<Grid item md={3}>
+						<Grid item>
 							<RelatedList relatedLinks={relatedLinks} />
 						</Grid>
 					</Hidden>
