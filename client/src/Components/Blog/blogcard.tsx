@@ -10,15 +10,23 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyle = makeStyles(theme => ({
 	root: {
 		minHeight: 250,
+		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
+		cursor: 'pointer',
+		'&:hover': {
+			boxShadow: '0px 0px 6px gray',
+		}
 	},
 	imgContainer: {
-		height: 150,
+		height: 200,
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#06232a',
+		[theme.breakpoints.down('sm')]: {
+			height: 160
+		},
 		'& > img': {
 			height: '100%',
 			width: '100%'
