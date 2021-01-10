@@ -127,7 +127,8 @@ const useStyle = makeStyles(theme => ({
 		},
 		[theme.breakpoints.down('sm')]: {
 			marginBottom: 60,
-			padding: '17px 15px'
+			padding: '17px 15px',
+			justifyContent: 'center',
 		},
 		[theme.breakpoints.down('xs')]: {
 			width: '95%',
