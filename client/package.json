@@ -12,13 +12,16 @@
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",
     "graphql": "^15.3.0",
+    "moment": "^2.29.1",
     "qs": "^6.9.4",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
     "react-ga": "^3.2.0",
+    "react-markdown": "^5.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "remark-gfm": "^1.0.0",
     "typescript": "^3.9.7"
   },
   "scripts": {
