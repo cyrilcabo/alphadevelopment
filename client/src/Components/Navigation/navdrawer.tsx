@@ -31,7 +31,7 @@ const useStyle:any = makeStyles(theme => ({
 		boxShadow: '0 2px 2px black',
 	},
 	active: {
-		height: 200,
+		height: 230,
 		'& div.MuiGrid-item': {
 			animation: '$displayTransition 0.4s',
 			display: 'flex',
