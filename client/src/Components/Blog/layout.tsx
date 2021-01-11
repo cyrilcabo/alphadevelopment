@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
@@ -29,7 +28,7 @@ const useStyle = makeStyles(theme => ({
 	},
 	drawer: {
 		'& div.MuiPaper-root': {	
-			padding: '15px 10px',
+			padding: '15px 20px',
 			overflowY: 'auto'
 		}
 	},
@@ -84,7 +83,7 @@ const useStyle = makeStyles(theme => ({
 				fontSize: '2rem'
 			}
 		},
-		'& > p': {
+		'& p': {
 			margin: 0,
 			color: 'white',
 			fontSize: '1.5rem',
@@ -124,25 +123,28 @@ const useStyle = makeStyles(theme => ({
 		},
 		[theme.breakpoints.down('md')]: {
 			marginBottom: 80,
+			padding: '18px 13px'
 		},
 		[theme.breakpoints.down('sm')]: {
 			marginBottom: 60,
-			padding: '17px 15px',
+			padding: '15px 10px',
 			justifyContent: 'center',
 		},
 		[theme.breakpoints.down('xs')]: {
 			width: '95%',
-			padding: '15px'
+			padding: '12px 5px'
 		}
 	}
 }));
 
 interface Props {
+	title?: string,
+	subTitle?: string | JSX.Element,
 	relatedLinks: Sections[],
 	children: JSX.Element,
 }
 
-const BlogLayout = ({children, relatedLinks}:Props):JSX.Element => {
+const BlogLayout = ({children, relatedLinks, title, subTitle}:Props):JSX.Element => {
 	const classes = useStyle();
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -161,8 +163,14 @@ const BlogLayout = ({children, relatedLinks}:Props):JSX.Element => {
 			<Grid item xs={12} className={classes.banner}>
 				<Grid item xs={11} md={10} container justify="flex-start">
 					<Grid item xs={12} md={8} xl={5} className={classes.bannerText}>
-						<h1> Learn all things <span>development.</span> </h1>
-						<p> Follow AlphaDevelopment for the latest updates! </p>
+						{title
+							?<h1> {title} </h1>
+							:<h1> Learn all things <span>development.</span> </h1>
+						}
+						{subTitle
+							?subTitle
+							:<p> Follow AlphaDevelopment for the latest updates! </p>
+						}
 					</Grid>
 				</Grid>
 			</Grid>
