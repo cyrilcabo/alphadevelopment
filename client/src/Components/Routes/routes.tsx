@@ -19,6 +19,7 @@ const ViewProduct = lazier(() => import('../Pages/viewproduct'));
 const About = lazier(() => import('../Pages/about'));
 const Services = lazier(() => import('../Pages/services'));
 const Blogs = lazier(() => import('../Pages/blogs'));
+const Read = lazier(() => import('../Pages/read'));
 
 const Routes = ():JSX.Element => {
 	return (
@@ -41,6 +42,9 @@ const Routes = ():JSX.Element => {
 				</Route>
 				<Route path="/blogs" exact>
 					<Blogs />
+				</Route>
+				<Route path="/blogs/read" exact>
+					<Read />
 				</Route>
 				<Route path="">
 					<Index />
