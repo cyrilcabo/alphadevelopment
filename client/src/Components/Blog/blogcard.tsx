@@ -131,9 +131,9 @@ const BlogCard = ({img, title, rating, totalRating, categories}:Props):JSX.Eleme
 		<Paper elevation={2} className={classes.root}>
 			<Grid item className={classes.imgContainer}>
 				{img
-					?<img src={img} />
+					?<img src={img} alt={"Blog thumbnail"} />
 					:<Grid item className={classes.placeholder}>
-						<img src={'/icons/logo_64.png'} />
+						<img src={'/icons/logo_64.png'} alt={""} />
 						<h3> Alpha<span>Development</span> </h3>
 					</Grid>
 				}
