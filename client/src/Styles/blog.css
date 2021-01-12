@@ -1,4 +1,4 @@
-.md-container > h1, h2, h3 {
+.md-container > h1, .md-container > h2, .md-contaienr > h3 {
 	color: #191919;
 }
 
@@ -30,6 +30,12 @@
 	display: block;
 	margin: 10px auto;
 	max-width: 95%;
+}
+
+.md-container > blockquote {
+	background-color: #f1f0f0;
+	margin: 0;
+	padding: 16px 40px;
 }
 
 /*Breakpoint for MD devices*/
