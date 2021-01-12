@@ -13,6 +13,22 @@ const useStyle = makeStyles(theme => ({
 			height: 35,
 			backgroundColor: '#191919',
 			marginRight: 5,
+			[theme.breakpoints.down('md')]: {
+				height: 32,
+				width: 32,
+				fontSize: '1.2rem',
+			},
+			[theme.breakpoints.down('sm')]: {
+				height: 30,
+				width: 30,
+				fontSize: '1.1rem',
+			},
+			[theme.breakpoints.down('xs')]: {
+				paddingTop: 2,
+				height: 25,
+				width: 25,
+				fontSize: '1rem',
+			}
 		},
 		'& > div.MuiGrid-item': {
 			flex: 1,

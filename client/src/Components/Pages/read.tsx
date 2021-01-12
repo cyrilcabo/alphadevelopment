@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid';
 
 import Layout from '../Blog/layout';
 import Rating from '../Products/rating';
-import Comment from '../Blog/comment';
+import CommentList from '../Blog/commentlist';
 import AddComment from '../Blog/addcomment';
+import Categories from '../Blog/categories';
 
 import someString from '../Utils/somestring';
 
@@ -70,6 +71,7 @@ const useStyle = makeStyles(theme => ({
 	},
 	commentsContainer: {
 		padding: '10px 0px',
+		width: '100%',
 		'& > h2': {
 			fontSize: '1.5rem',
 			margin: '5px 0px 15px 0px',
@@ -125,7 +127,8 @@ const Read = ():JSX.Element => {
 
 	return (
 		<Layout relatedLinks={relatedLinks} title={"Hi blog, welcome to my first guys!"} subTitle={subTitle}>
-			<React.Fragment>	
+			<React.Fragment>
+				<Categories />	
 				<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={someString} className={'md-container'} />
 				<div className={classes.rateMe}>
 					<h3> How did this story make you feel? </h3>
@@ -139,7 +142,7 @@ const Read = ():JSX.Element => {
 						addComment={() => null}
 						blogId={"id123"}
 					/>
-					<Comment />
+					<CommentList />
 				</div>
 			</React.Fragment>
 		</Layout>

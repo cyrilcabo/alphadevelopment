@@ -45,13 +45,26 @@ const useStyle = makeStyles(theme => ({
 		'& div.MuiInputBase-root': {
 			height: '100%',
 			borderRadius: 0,
-		}
+			[theme.breakpoints.down('sm')]: {
+				padding: '15px 12px',
+			},
+			[theme.breakpoints.down('xs')]: {
+				padding: '13px 10px'
+			}
+		},
 	},
 	submit: {
 		minHeight: 30,
 		'& button.MuiButtonBase-root': {
 			borderRadius: 0,
 			backgroundColor: '#191919'
+		},
+		'& div.MuiCircularProgress-root': {
+			height: '30px !important',
+			width: '30px !important',
+			'& > svg': {
+				color: 'white'
+			}
 		}
 	}
 }));
@@ -96,6 +109,7 @@ const AddComment = (props:any) => {
 						control={<Checkbox checked={isAnonymous} onClick={handleAnonymous}/>}
 						label={"Anonymous"}
 						className={classes.label}
+						disabled={loading}
 					/>
 				</Grid>
 				<Grid item className={classes.labelName}>
@@ -103,12 +117,13 @@ const AddComment = (props:any) => {
 						control={<Checkbox checked={!isAnonymous} onClick={handleAnonymous} />}
 						label={"Name"}
 						className={classes.label}
+						disabled={loading}
 					/>
 					<TextField 
 						placeholder="Name"
 						value={name}
 						onChange={handleName}
-						disabled={isAnonymous}
+						disabled={isAnonymous || loading}
 					/>
 				</Grid>	
 			</Grid>
@@ -119,6 +134,7 @@ const AddComment = (props:any) => {
 							fullWidth
 							variant="outlined"
 							placeholder="Add comment..."
+							disabled={loading}
 							onChange={handleComment}
 							value={comment}
 							multiline

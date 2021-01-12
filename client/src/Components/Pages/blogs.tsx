@@ -36,6 +36,47 @@ const useStyle = makeStyles(theme => ({
 			content: "''",
 			width: '45%'
 		}
+	},
+	emptyMessage: {
+		height: '100%',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 15,
+		textAlign: 'center',
+		'& > div': {
+			display: 'flex',
+			width: '100%',
+			flexDirection: 'column',
+			alignItems: 'center',
+			'& > img': {
+				height: 128,
+				width: 128,
+				marginBottom: 10,
+				[theme.breakpoints.down('md')]: {
+					height: 115,
+					width: 115,
+				},
+				[theme.breakpoints.down('sm')]: {
+					height: 96,
+					width: 96,
+				}
+			},
+			'& > h2': {
+				margin: 10,
+				fontSize: '1.3rem',
+				color: 'maroon',
+				[theme.breakpoints.down('md')]: {
+					fontSize: '1.25rem'
+				},
+				[theme.breakpoints.down('sm')]: {
+					fontSize: '1.2rem'
+				},
+				[theme.breakpoints.down('xs')]: {
+					fontSize: '1.1rem'
+				}
+			}
+		}
 	}
 }));
 
@@ -56,39 +97,15 @@ const Blogs = ():JSX.Element => {
 			],
 		}
 	];
-	const posts = [
+	const posts:any = [
 		{
 			title: "Hello wassup mahniggas!",
 			rating: 3.5,
 			totalRating: 10,
 			categories: ["niggas", "beginners"]
 		},
-		{
-			title: "Welcome to my blog, this is Cyril",
-			rating: 5,
-			totalRating: 999,
-			categories: ["daily", "wassup"]
-		},
-		{
-			title: "Welcome to my blog, this is Cyril",
-			rating: 5,
-			totalRating: 999,
-			categories: ["daily", "wassup"]
-		},
-		{
-			title: "Welcome to my blog, this is Cyril",
-			rating: 5,
-			totalRating: 999,
-			categories: ["daily", "wassup"]
-		},
-		{
-			title: "Welcome to my blog, this is Cyril",
-			rating: 5,
-			totalRating: 999,
-			categories: ["daily", "wassup"]
-		}
 	].map((item, index) => {
-		return <Grid item>
+		return <Grid item key={index}>
 			<BlogCard 
 				key={index}
 				title={item.title} 
@@ -97,11 +114,17 @@ const Blogs = ():JSX.Element => {
 				totalRating={item.totalRating}
 			/>
 		</Grid>
-	})
+	});
 	return (
 		<Layout relatedLinks={relatedLinks}>
-			<Grid item xs={12} className={classes.root}>
-				{posts}
+			<Grid item xs={12} className={[classes.root, !posts.length && classes.emptyMessage].join(' ')}>
+				{posts.length
+					?posts
+					:<div>
+						<img src="/icons/logo_128.png" alt="" />
+						<h2> Sorry. There are no posts here, yet. </h2>
+					</div>
+				}
 			</Grid>
 		</Layout>
 	);

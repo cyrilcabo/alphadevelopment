@@ -51,6 +51,19 @@ const useStyle = makeStyles(theme => ({
 				}
 			}
 		},
+	},
+	emptyMessage: {
+		'& p': {
+			margin: 0,
+			fontSize: '1.1rem',
+			color: '#4c4c4c',
+			[theme.breakpoints.down('md')]: {
+				fontSize: '1.05rem'
+			},
+			[theme.breakpoints.down('sm')]: {
+				fontSize: '1rem'
+			},
+		}
 	}
 }));
 
@@ -64,15 +77,21 @@ const RelatedList = ({relatedLinks}:Props):JSX.Element => {
 	const mappedPosts = (posts:Link[]):JSX.Element[] => posts.map((item, index) => {
 		return <a href={item.link} key={index}> {item.title} </a>
 	});
+
+	const mappedLinks = relatedLinks.map((item, index) => {
+		const temp = mappedPosts(item.links);
+		return <Grid item key={index} className={[!temp.length && classes.emptyMessage].join(' ')}>
+			<h2> {item.title} </h2>
+			{temp.length
+				?temp
+				:<p> There are no posts here, yet. </p>
+			}
+		</Grid>
+	});
 	
 	return (
 		<Grid item xs={12} className={classes.root}>
-			{relatedLinks.map((item, index) => {
-				return <Grid item key={index}>
-					<h2> {item.title} </h2>
-					{mappedPosts(item.links)}
-				</Grid>
-			})}
+			{mappedLinks}
 		</Grid>
 	);
 }

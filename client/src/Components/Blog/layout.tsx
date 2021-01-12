@@ -99,7 +99,13 @@ const useStyle = makeStyles(theme => ({
 		}
 	},
 	bodyContainer: {
-		minHeight: 500,
+		minHeight: 400,
+		[theme.breakpoints.down('sm')]: {
+			minHeight: 350,
+		},
+		[theme.breakpoints.down('xs')]: {
+			minHeight: 300
+		}
 	},
 	body: {
 		margin: '-150px 0px 100px 0px',
