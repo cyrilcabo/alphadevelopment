@@ -18,9 +18,9 @@
 	margin: 15px 0px 8px 0px;
 }
 
-.md-container > p {
+.md-container > p, .md-container > ul {
 	text-align: justify;
-	font-size: 1.1rem;
+	font-size: 1.2rem;
 	line-height: 1.5;
 	margin: 0px;
 	font-family: sans-serif;
@@ -66,8 +66,8 @@
 		margin: 10px 0px 6px 0px;
 	}
 
-	.md-container > p {
-		font-size: 1.05rem;
+	.md-container > p, .md-container > ul {
+		font-size: 1.15rem;
 		line-height: 1.3;
 	}
 }
@@ -86,8 +86,8 @@
 		font-size: 1.1rem;
 	}
 
-	.md-container > p {
-		font-size: 1rem;
+	.md-container > p, .md-container > ul {
+		font-size: 1.1rem;
 	}
 }
 
@@ -101,7 +101,7 @@
 		font-size: 1.3rem;
 	}
 
-	.md-container > p {
-		font-size: 0.98rem;
+	.md-container > p, .md-container > ul {
+		font-size: 1rem;
 	}
 }
