@@ -21,8 +21,8 @@ const htmlEmail = require('./utils/mail_html.js');
 const textEmail = require('./utils/mail_text.js');
 
 //Import resolvers
-const { Query } = require('./Graphql/Resolvers/query');
-const { Mutation } = require('./Graphql/Resolvers/mutation');
+const { Query } = require('./Graphql/Resolvers/Query/index');
+const { Mutation } = require('./Graphql/Resolvers/Mutation/index');
 
 //GraphQL schema
 const typeDefs = require('./Graphql/Schema/index');
