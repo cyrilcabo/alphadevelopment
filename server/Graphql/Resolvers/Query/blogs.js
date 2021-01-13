@@ -19,6 +19,13 @@ const blogs = (parent, args, context) => {
 			return db.collection("blogs_summary").find(query).skip(args.skip || 0).limit(10).toArray()
 		}
 		return db.collection("blogs_summary").find().skip(args.skip || 0).limit(10).toArray();
+	}).then(result => {
+		return result.map(item => {
+			return {
+				...item,
+				rating: item.rating/item.totalRatings
+			}
+		});
 	}).catch(err => {
 		return new Error("Something went unexpected. Please try again.");
 	});
