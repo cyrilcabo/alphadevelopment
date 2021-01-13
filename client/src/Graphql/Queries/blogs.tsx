@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const BLOGS = gql`
-	query($title: String, $skip: Int, category: [String]) {
+	query($title: String, $skip: Int, $category: [String]) {
 		blogs(title: $title, skip: $skip, category: $category) {
 			_id,
 			title,
@@ -13,7 +13,7 @@ export const BLOGS = gql`
 `;
 
 export const BLOG = gql`
-	query(_id: ID!) {
+	query($_id: ID!) {
 		blog(_id: $_id) {
 			_id,
 			title,
@@ -31,7 +31,7 @@ export const BLOG = gql`
 `;
 
 export const BLOG_COMMENTS = gql`
-	query(_id: ID!) {
+	query($_id: ID!) {
 		blogComments(_id: $_id) {
 			_id,
 			comment,
