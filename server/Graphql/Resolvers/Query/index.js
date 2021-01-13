@@ -4,6 +4,8 @@ const reviews = require('./reviews');
 const isReviewed = require('./isreviewed');
 const testimonials = require('./testimonials');
 const blogs = require('./blogs');
+const blog = require('./blog');
+const blogComments = require('./blogcomments');
 
 const Query = {
 	products,
@@ -12,6 +14,8 @@ const Query = {
 	isReviewed,
 	testimonials,
 	blogs,
+	blog,
+	blogComments
 }
 
 module.exports = {
