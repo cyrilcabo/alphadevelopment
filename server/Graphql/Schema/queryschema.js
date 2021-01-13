@@ -6,6 +6,8 @@ const querySchema = `
 		isReviewed(pid: String!): IsReviewed!
 		testimonials(featured: Boolean, skip: Int): [Testimonial]!
 		blogs(title: String, date: Date, category: [String], skip: Int): [BlogSummary]!
+		blog(_id: ID!): [Blog]!
+		blogComments(_id: ID!, skip: Int): [BlogComment]!
 	}
 `;
 

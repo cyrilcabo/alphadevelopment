@@ -3,7 +3,33 @@ const blogSchema = `
 		_id: ID!
 		title: String!
 		category: [String!]!
+		featured: Boolean!
 		datePosted: Date!
+		rating: Int!
+		totalRatings: Int!
+	}
+	type Blog {
+		_id: ID!
+		title: String!
+		author: String!
+		category: [String!]!
+		featured: Boolean!
+		datePosted: Date!
+		rating: Int!
+		totalRatings: Int!
+		content: String!
+		series: [String]
+		iRating: Int!
+	}
+	type BlogLike {
+		success: Boolean
+		iRating: Int
+	}
+	type BlogComment {
+		_id: ID
+		name: String
+		comment: String
+		datePosted: Date
 	}
 `;
 
