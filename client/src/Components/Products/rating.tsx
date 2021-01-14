@@ -82,12 +82,12 @@ interface Props {
 	isBig?: boolean;
 	interactive?: boolean;
 	value?: number;
-	handleRate?: HandleRate;
+	handleRate?: HandleRate | null;
 	reviews?: number;
 }
 
 interface HandleOpen {
-	(): void;
+	(value?: number): void;
 }
 
 interface HandleRate {
@@ -110,11 +110,14 @@ const Rating = (props: Props):JSX.Element => {
 	const handleHover = (rateValue: number): void => {
 		if (interactive && handleRate) handleRate(rateValue);
 	}
+	const handleClick = (value?: number | React.MouseEvent): void => {
+		if (handleOpen) typeof(value)==="number" ?handleOpen(value) :handleOpen();
+	}
 	
 	const stars: JSX.Element[] = new Array(5).fill(1).map((item, index) => {
 		const add: string = (index < rDown) ?classes.full :"";
 		const half: string = (deci && index === rDown) ?compute(offset, classes) :"";
-		return <Grid item key={index} onClick={handleOpen} onMouseOver={handleHover.bind(Rating, index+1)} >
+		return <Grid item key={index} onClick={handleClick.bind(Rating, index+1)} onMouseOver={handleHover.bind(Rating, index+1)} >
 			<Star 
 				viewBox="0 0 28 26" 
 				className={[
@@ -134,7 +137,7 @@ const Rating = (props: Props):JSX.Element => {
 			</Grid>
 			{isView
 				?<Grid item>
-					<p className={[classes.rateNum, "rate-num"].join(' ')} onClick={handleOpen}> ({reviews}) </p>
+					<p className={[classes.rateNum, "rate-num"].join(' ')} onClick={handleClick}> ({reviews}) </p>
 				</Grid>
 				:""
 			}
