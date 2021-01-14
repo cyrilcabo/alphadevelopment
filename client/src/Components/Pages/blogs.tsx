@@ -2,8 +2,15 @@ import React from 'react';
 
 import Layout from '../Blog/layout';
 import BlogCard from '../Blog/blogcard';
+import StyledLoading from '../Misc/styledloading';
+
+import {BLOGS} from '../../Graphql/queries';
+import {SKIP_BLOGS} from '../../Graphql/localqueries';
+import {useQuery, useApolloClient} from 'react-apollo';
 
 import Grid from '@material-ui/core/Grid';
+
+import BlogSummary from '../../Types/Blog/blogsummary';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -77,11 +84,52 @@ const useStyle = makeStyles(theme => ({
 				}
 			}
 		}
+	},
+	loading: {
+		width: '100%',
+		padding: 20,
+		display: 'flex',
+		justifyContent: 'center',
+	},
+	loadingFull: {
+		height: '100%',
+		alignItems: 'center',
 	}
 }));
 
 const Blogs = ():JSX.Element => {
 	const classes = useStyle();
+	const [skip, setSkip] = React.useState(0);
+	const client = useApolloClient();
+	const {data: blogsData, loading: blogsLoading} = useQuery(BLOGS, {variables: {skip}});
+	const [hasMore, setHasMore] = React.useState(blogsData ?blogsData.blogs.length >= 10 :false)
+	const [posts, setPosts]: [BlogSummary[], Function] = React.useState([]);
+
+	React.useEffect(() => {
+		if (blogsData?.blogs.length) {
+			setPosts((p:BlogSummary[]) => ([...p, ...blogsData.blogs]));
+			setHasMore(blogsData.blogs.length >= 10)
+		}
+	}, [blogsData]);
+
+	React.useEffect(() => {
+		const scroll = () => {
+			if (window.scrollY >= (document.body.offsetHeight - window.innerHeight - 300) && hasMore && !blogsLoading)  {
+				setSkip((s: number) => s+10);
+				const skipData = client.readQuery({query: SKIP_BLOGS});
+				client.writeQuery({
+					query: SKIP_BLOGS,
+					data: {
+						skipBlogs: skipData.skipBlogs+10,
+					}
+				});
+			}
+		}
+		window.addEventListener("scroll", scroll);
+		if (!hasMore) window.removeEventListener("scroll", scroll);
+		return () => { window.removeEventListener("scroll", scroll); };
+	}, [hasMore, blogsLoading]);
+
 	const relatedLinks = [
 		{
 			title: "Featured blogs",
@@ -97,35 +145,37 @@ const Blogs = ():JSX.Element => {
 			],
 		}
 	];
-	const posts:any = [
-		{
-			title: "Hello wassup mahniggas!",
-			rating: 3.5,
-			totalRating: 10,
-			categories: ["niggas", "beginners"]
-		},
-	].map((item, index) => {
+	const mappedPosts:any = posts.map((item, index) => {
 		return <Grid item key={index}>
 			<BlogCard 
 				key={index}
 				title={item.title} 
-				categories={item.categories}
+				categories={item.category}
 				rating={item.rating}
-				totalRating={item.totalRating}
+				totalRating={item.totalRatings}
 			/>
 		</Grid>
 	});
 	return (
 		<Layout relatedLinks={relatedLinks}>
-			<Grid item xs={12} className={[classes.root, !posts.length && classes.emptyMessage].join(' ')}>
-				{posts.length
-					?posts
-					:<div>
-						<img src="/icons/logo_128.png" alt="" />
-						<h2> Sorry. There are no posts here, yet. </h2>
-					</div>
+			<React.Fragment>
+				<Grid item xs={12} className={[classes.root, (!posts.length && !blogsLoading) && classes.emptyMessage,].join(' ')}>
+					{posts.length
+						?mappedPosts
+						:blogsLoading
+							?""
+							:<div>
+								<img src="/icons/logo_128.png" alt="" />
+								<h2> Sorry. There are no posts here, yet. </h2>
+							</div>
+					}
+				</Grid>
+				{blogsLoading &&
+					<Grid item className={[classes.loading, !posts.length && classes.loadingFull].join(' ')}>
+						<StyledLoading />
+					</Grid>
 				}
-			</Grid>
+			</React.Fragment>
 		</Layout>
 	);
 }

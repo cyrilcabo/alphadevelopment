@@ -8,10 +8,18 @@ import CommentList from '../Blog/commentlist';
 import AddComment from '../Blog/addcomment';
 import Categories from '../Blog/categories';
 
+import qs from 'qs';
+import {useLocation} from 'react-router-dom';
+
 import someString from '../Utils/somestring';
+import {BLOG} from '../../Graphql/queries';
+import {LIKEBLOG} from '../../Graphql/mutation';
+
+import {useQuery, useMutation} from 'react-apollo';
 
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import moment from 'moment';
 
 import '../../Styles/blog.css';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -61,6 +69,15 @@ const useStyle = makeStyles(theme => ({
 			[theme.breakpoints.down('xs')]: {
 				fontSize: '1.1rem'
 			}
+		},
+		'& > span': {
+			margin: '5px 0px',
+			fontSize: '0.97rem',
+			color: '#ffa114',
+			cursor: 'pointer',
+			'&:hover': {
+				color: 'black'
+			}
 		}
 	},
 	divider: {
@@ -90,11 +107,62 @@ const useStyle = makeStyles(theme => ({
 
 const Read = ():JSX.Element => {
 	const classes = useStyle();
-	const [ratingMe, setRatingMe] = React.useState(0);
+	const location = useLocation();
+	const {blogid} = qs.parse(location.search, {ignoreQueryPrefix: true});
+
+	const [blog, setBlog] = React.useState({
+		_id: "",
+		title: "",
+		author: "",
+		category: [],
+		featured: false,
+		datePosted: "From the future",
+		rating: 0,
+		totalRatings: 0,
+		content: "",
+		series: [],
+		iRating: 0
+	});
+	const {data: blogData, loading: blogLoading} = useQuery(BLOG, {variables: {_id: blogid}});
+	const [likeBlog, {data: likeData, loading: likeLoading}] = useMutation(LIKEBLOG, {
+		update(cache, {data: {likeBlog}}) {
+			const prev: any = cache.readQuery({query: BLOG, variables: {_id: blog._id}});
+			cache.writeQuery({
+				query: BLOG,
+				variables: {_id: blog._id},
+				data: { 
+					blog: [
+						{
+							...prev.blog[0],
+							iRating: likeBlog.rating,
+							rating: (prev.blog[0].rating)
+						}
+					],
+				}
+			})
+		}
+	})
+	const [ratingMe, setRatingMe] = React.useState(blog.iRating);
+	const [isRating, setIsRating] = React.useState(false);
+
+	React.useEffect(() => {
+		if (blogData?.blog.length) {
+			setBlog({
+				...blogData.blog[0],
+				datePosted: moment(blogData.blog[0].datePosted).format("MMMM DD, YYYY"),
+				iRating: 4,
+			});
+			setRatingMe(blogData.blog[0].iRating || 3);
+		}
+	}, [blogData]);
+
+	const onRating = (value?: number):void => {
+		setIsRating(false);
+	}
 
 	const relatedLinks = [
 		{
-			title: "Featured blogs",
+			title: "Read more",
 			links: [
 				{
 					title: "Start a Hello World app now",
@@ -105,34 +173,38 @@ const Read = ():JSX.Element => {
 					link: "#"
 				},
 			],
-		}
+		},
 	];
 
 	const subTitle = <div className={classes.rating}>
 		<p className={classes.subTitle}>
-			<span> Cyril Cabo </span>
-			<span> August 24, 2000 </span>
+			<span> {blog.author} </span>
+			<span> {blog.datePosted} </span>
 		</p>
 		<div>
-			<Rating value={4.5} isBig/> <span> (31) </span>
+			<Rating value={blog.rating} isBig/> <span> ({blog.totalRatings}) </span>
 		</div>
 	</div>
 
-	const md = `# Hello world\n## NExt?
-	
-	How about me?\n
-
-	> AHHHHH
-	`;
-
 	return (
-		<Layout relatedLinks={relatedLinks} title={"Hi blog, welcome to my first guys!"} subTitle={subTitle}>
+		<Layout relatedLinks={relatedLinks} title={blog.title} subTitle={subTitle}>
 			<React.Fragment>
-				<Categories />	
-				<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={someString} className={'md-container'} />
+				<Categories categories={blog.category} />	
+				<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={blog.content} className={'md-container'} />
 				<div className={classes.rateMe}>
-					<h3> How did this story make you feel? </h3>
-					<Rating interactive value={ratingMe} handleRate={setRatingMe} isBig />
+					<h3> {!blog.iRating || isRating
+						?"How did this story make you feel?"
+						:"Thank you for sharing your feedback" 
+					}</h3>
+					<Rating 
+						interactive={!blog.iRating || isRating} 
+						value={isRating ?ratingMe :blog.iRating} 
+						handleRate={!blog.iRating || isRating ?setRatingMe :null} isBig 
+						handleOpen={onRating}
+					/>
+					{(blog.iRating && !isRating) &&
+						<span onClick={() => setIsRating(true)}> Edit feedback </span>
+					}
 				</div>
 				<div className={classes.divider} />
 				<div className={classes.commentsContainer}>
