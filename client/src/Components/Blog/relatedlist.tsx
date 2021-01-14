@@ -2,8 +2,8 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import Link from '../../Types/Blog/Link';
-import Sections from '../../Types/Blog/Sections';
+import Link from '../../Types/Blog/link';
+import Sections from '../../Types/Blog/sections';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
