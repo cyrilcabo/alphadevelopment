@@ -24,6 +24,7 @@ const blogSchema = `
 	type BlogLike {
 		success: Boolean
 		iRating: Int
+		upsert: Int
 	}
 	type BlogComment {
 		_id: ID

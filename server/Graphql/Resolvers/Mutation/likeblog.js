@@ -26,10 +26,12 @@ const likeBlog = (parent, args, context) => {
 				}
 			});
 		});
-	}).then(() => {
+		return inc;
+	}).then((upsert) => {
 		return {
 			success: true,
 			iRating: args.rating,
+			upsert,
 		}
 	}).catch(err => {
 		console.log("Error occured while liking blog.", err);
