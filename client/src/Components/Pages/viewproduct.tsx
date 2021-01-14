@@ -20,6 +20,10 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {useQuery} from 'react-apollo';
 import {PRODUCT} from '../../Graphql/queries';
 
+//Types
+import Product from '../../Types/Products/product';
+import ProductImage from '../../Types/Products/productimage';
+
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -357,35 +361,6 @@ const useStyle:any = makeStyles(theme => ({
 		padding: '5px 10px'
 	}
 }));
-
-interface Product {
-	_id: string;
-	title: string;
-	link: string;
-	github: string;
-	pid: string;
-	category: string;
-	details: ProductDetail;
-	techs: string[];
-	images: string[];
-	rating: number;
-	reviews: number;
-}
-
-interface ProductDetail {
-	intro: string;
-	features: ProductFeature[];
-}
-
-interface ProductFeature {
-	title: string;
-	details: string;
-}
-
-interface ProductImage {
-	active: boolean;
-	name: string;
-}
 
 const ViewProduct = ():JSX.Element => {
 	const classes = useStyle();

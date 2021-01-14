@@ -13,6 +13,8 @@ import {useQuery} from 'react-apollo';
 import {PRODUCTS} from '../../Graphql/queries';
 import {SKIP_PRODUCTS} from '../../Graphql/localqueries';
 
+import Product from '../../Types/Products/productsummary';
+
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -65,18 +67,6 @@ const useStyle:any = makeStyles(theme => ({
 		}
 	}
 }));
-
-interface Product {
-	title: string;
-	link: string;
-	github: string;
-	category: string;
-	techs: string[];
-	featured: boolean;
-	pid: string;
-	summary: string;
-	rating: number;
-}
 
 const Products = ():JSX.Element => {
 	const classes:any = useStyle();
