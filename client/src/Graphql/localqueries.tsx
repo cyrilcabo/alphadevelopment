@@ -5,3 +5,9 @@ export const SKIP_PRODUCTS = gql`
 		skipProducts @client
 	}
 `;
+
+export const SKIP_BLOGS = gql`
+	query SKIP_BLOGS {
+		skipBlogs @client
+	}
+`;

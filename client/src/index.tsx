@@ -35,6 +35,7 @@ const client: any = new ApolloClient({
 cache.writeData({
 	data: {
 		skipProducts: 0,
+		skipBlogs: 0
 	}
 });
 
