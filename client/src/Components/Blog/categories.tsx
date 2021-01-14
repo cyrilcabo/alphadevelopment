@@ -24,10 +24,14 @@ const useStyle = makeStyles(theme => ({
 	},
 }));
 
-const Categories = () => {
+interface Props {
+	categories: string[],
+}
+
+const Categories = ({categories}: Props) => {
 	const classes = useStyle();
 
-	const tags = ["omg", "beginners", "tutorial"].map((item, index) => {
+	const tags = (categories.length ?categories :["alphadevelopment"]).map((item, index) => {
 		return <span key={index}> #{item} </span>;
 	});
 

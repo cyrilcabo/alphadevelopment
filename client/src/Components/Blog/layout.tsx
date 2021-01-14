@@ -7,7 +7,7 @@ import Fab from '@material-ui/core/Fab';
 
 import RelatedList from './relatedlist';
 
-import Sections from '../../Types/Blog/Sections';
+import Sections from '../../Types/Blog/sections';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
