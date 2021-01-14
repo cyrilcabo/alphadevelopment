@@ -6,6 +6,7 @@ export const BLOGS = gql`
 			_id,
 			title,
 			rating,
+			category,
 			totalRatings,
 			datePosted
 		}
