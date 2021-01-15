@@ -54,7 +54,7 @@ const StyledLoading = ({className, helperText}: Props):JSX.Element => {
 	return (
 		<Grid item className={[classes.root, className].join(' ')}>
 			<CircularProgress />
-			{helperText != "_" &&
+			{helperText !== "_" &&
 				<p> {helperText || "Loading"} </p>
 			}
 		</Grid>
