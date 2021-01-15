@@ -22,7 +22,6 @@ import {PRODUCT} from '../../Graphql/queries';
 
 //Types
 import Product from '../../Types/Products/product';
-import ProductImage from '../../Types/Products/productimage';
 
 //Styles
 import makeStyles from '@material-ui/core/styles/makeStyles';
