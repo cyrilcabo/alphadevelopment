@@ -1,21 +1,24 @@
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
-
 import Layout from '../Blog/layout';
 import Rating from '../Products/rating';
 import CommentList from '../Blog/commentlist';
 import AddComment from '../Blog/addcomment';
 import Categories from '../Blog/categories';
+import StyledLoading from '../Misc/styledloading';
 
 import qs from 'qs';
 import {useLocation} from 'react-router-dom';
 
-import someString from '../Utils/somestring';
-import {BLOG} from '../../Graphql/queries';
+import {BLOG, BLOGS} from '../../Graphql/queries';
+import {SKIP_BLOGS} from '../../Graphql/localqueries';
 import {LIKEBLOG} from '../../Graphql/mutation';
 
-import {useQuery, useMutation} from 'react-apollo';
+import BlogSummary from '../../Types/Blog/blogsummary';
+import Comment from '../../Types/Blog/comment';
+import BlogSection from '../../Types/Blog/sections';
+
+import {useQuery, useMutation, useLazyQuery} from 'react-apollo';
 
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
@@ -53,6 +56,7 @@ const useStyle = makeStyles(theme => ({
 	},
 	rateMe: {
 		display: 'flex',
+		position: 'relative',
 		flexDirection: 'column',
 		margin: '30px 0px',
 		padding: '10px 5px',
@@ -102,6 +106,24 @@ const useStyle = makeStyles(theme => ({
 				fontSize: '1.2rem'
 			}
 		}
+	},
+	blogLoading: {
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'center',
+		padding: '15px 0px',
+	},
+	likeLoading: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'inherit',
+		opacity: '0.85',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
 	}
 }));
 
@@ -124,9 +146,16 @@ const Read = ():JSX.Element => {
 		iRating: 0
 	});
 	const {data: blogData, loading: blogLoading} = useQuery(BLOG, {variables: {_id: blogid}});
-	const [likeBlog, {data: likeData, loading: likeLoading}] = useMutation(LIKEBLOG, {
+	const [fetchRelatedBlogs, {data: relatedBlogs, loading: relatedLoading}] = useLazyQuery(BLOGS);
+	const [relatedLinks, setRelatedLinks]: [BlogSection, Function] = React.useState({title: "Read more", links: []});
+	const [likeBlog, {loading: likeLoading}] = useMutation(LIKEBLOG, {
 		update(cache, {data: {likeBlog}}) {
 			const prev: any = cache.readQuery({query: BLOG, variables: {_id: blog._id}});
+			const skipData: any = cache.readQuery({query: SKIP_BLOGS});
+			//Update rating
+			const updatedTotal = prev.blog[0].totalRatings+likeBlog.upsert;
+			const updatedRating = prev.blog[0].rating+(likeBlog.iRating-likeBlog.prev);
+			//Update document
 			cache.writeQuery({
 				query: BLOG,
 				variables: {_id: blog._id},
@@ -134,47 +163,73 @@ const Read = ():JSX.Element => {
 					blog: [
 						{
 							...prev.blog[0],
-							iRating: likeBlog.rating,
-							rating: (prev.blog[0].rating)
+							iRating: likeBlog.iRating,
+							rating: updatedRating,
+							totalRatings: updatedTotal
 						}
 					],
 				}
-			})
+			});
+			//Update list
+			for (let i = 0; i < skipData.skipBlogs; i+=10) {
+				const tempData: any = cache.readQuery({query: BLOGS, variables: {skip: i}});
+				cache.writeQuery({
+					query: BLOGS,
+					variables: {skip: i},
+					data: {
+						blogs: tempData.blogs.map((item: BlogSummary) => {
+							if (item._id===blog._id) return {
+								...item,
+								rating: updatedRating,
+								totalRatings: updatedTotal
+							};
+							return item;
+						})					
+					}
+				});
+			}
 		}
-	})
-	const [ratingMe, setRatingMe] = React.useState(blog.iRating);
+	});
+	const [ratingMe, setRatingMe] = React.useState(0);
 	const [isRating, setIsRating] = React.useState(false);
+	const [newComment, setNewComment]: [Comment[], Function] = React.useState([]);
 
 	React.useEffect(() => {
 		if (blogData?.blog.length) {
 			setBlog({
 				...blogData.blog[0],
 				datePosted: moment(blogData.blog[0].datePosted).format("MMMM DD, YYYY"),
-				iRating: 4,
 			});
-			setRatingMe(blogData.blog[0].iRating || 3);
+			setRatingMe(blogData.blog[0].iRating);
+			setIsRating(!blogData.blog[0].iRating);
+			fetchRelatedBlogs({variables: {category: blogData.blog[0].category, limit: 5}});
 		}
-	}, [blogData]);
+	}, [blogData, fetchRelatedBlogs]);
+
+	React.useEffect(() => {
+		if (relatedBlogs?.blogs?.length) {
+			setRelatedLinks({
+				title: "Read more",
+				links: relatedBlogs.blogs.map((item:BlogSummary) => ({
+					title: item.title,
+					link: `/blogs/read?blogid=${item._id}`
+				})),
+			});
+		}
+		if (relatedLoading) {
+			setRelatedLinks({
+				title: "Read more",
+				links: "loading"
+			});
+		}
+	}, [relatedBlogs, relatedLoading]);
 
 	const onRating = (value?: number):void => {
 		setIsRating(false);
+		if (value && (value <= 5 && value > 0)) {
+			likeBlog({variables: {prev: blog.iRating || 0, rating: value, blog: blog._id}});
+		}
 	}
-
-	const relatedLinks = [
-		{
-			title: "Read more",
-			links: [
-				{
-					title: "Start a Hello World app now",
-					link: "#"
-				},
-				{
-					title: "How about a Hi World app?",
-					link: "#"
-				},
-			],
-		},
-	];
 
 	const subTitle = <div className={classes.rating}>
 		<p className={classes.subTitle}>
@@ -187,11 +242,22 @@ const Read = ():JSX.Element => {
 	</div>
 
 	return (
-		<Layout relatedLinks={relatedLinks} title={blog.title} subTitle={subTitle}>
+		<Layout relatedLinks={[relatedLinks]} title={blog.title} subTitle={subTitle}>
 			<React.Fragment>
 				<Categories categories={blog.category} />	
-				<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={blog.content} className={'md-container'} />
+				{blogLoading
+					?<div className={classes.blogLoading}>
+						<StyledLoading />
+					</div>
+					:<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={blog.content} className={'md-container'} />
+				}
 				<div className={classes.rateMe}>
+					{likeLoading
+						?<div className={classes.likeLoading}>
+							<StyledLoading />
+						</div>
+						:""
+					}
 					<h3> {!blog.iRating || isRating
 						?"How did this story make you feel?"
 						:"Thank you for sharing your feedback" 
@@ -199,22 +265,23 @@ const Read = ():JSX.Element => {
 					<Rating 
 						interactive={!blog.iRating || isRating} 
 						value={isRating ?ratingMe :blog.iRating} 
-						handleRate={!blog.iRating || isRating ?setRatingMe :null} isBig 
+						handleRate={!blog.iRating || isRating ?setRatingMe :null} 
+						isBig 
 						handleOpen={onRating}
 					/>
-					{(blog.iRating && !isRating) &&
-						<span onClick={() => setIsRating(true)}> Edit feedback </span>
+					{(blog.iRating && !isRating)
+						?<span onClick={() => setIsRating(true)}> Edit feedback </span>
+						:""
 					}
 				</div>
 				<div className={classes.divider} />
 				<div className={classes.commentsContainer}>
 					<h2> Comments </h2>
 					<AddComment
-						apiAddComment={() => null}
-						addComment={() => null}
-						blogId={"id123"}
+						blogId={blog._id}
+						addComment={setNewComment}
 					/>
-					<CommentList />
+					<CommentList _id={blog._id} newComments={newComment}/>
 				</div>
 			</React.Fragment>
 		</Layout>
