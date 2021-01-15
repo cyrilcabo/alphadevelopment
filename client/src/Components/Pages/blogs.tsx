@@ -113,6 +113,7 @@ const Blogs = ():JSX.Element => {
 			setPosts((p:BlogSummary[]) => ([...p, ...blogsData.blogs]));
 			setHasMore(blogsData.blogs.length >= 10)
 		}
+		if (!blogsData?.blogs.length) setHasMore(false);
 	}, [blogsData]);
 
 	React.useEffect(() => {

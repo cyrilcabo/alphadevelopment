@@ -71,6 +71,7 @@ const CommentList = ({_id, newComments}: Props) => {
 			setComments((c:CommentType[]) => ([...c, ...commentData.blogComments]));
 			setHasMore(commentData.blogComments.length >= 10);
 		}
+		if (!commentData?.blogComments?.length) setHasMore(false);
 	}, [commentData]);
 
 	React.useEffect(() => {
