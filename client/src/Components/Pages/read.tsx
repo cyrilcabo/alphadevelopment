@@ -74,8 +74,10 @@ const useStyle = makeStyles(theme => ({
 				fontSize: '1.1rem'
 			}
 		},
-		'& > span': {
+		'& > div.edit-feedback': {
 			margin: '5px 0px',
+		},
+		'& > div.edit-feedback > span': {
 			fontSize: '0.97rem',
 			color: '#ffa114',
 			cursor: 'pointer',
@@ -270,7 +272,9 @@ const Read = ():JSX.Element => {
 						handleOpen={isRating ?onRating :undefined}
 					/>
 					{(blog.iRating && !isRating)
-						?<span onClick={() => setIsRating(true)}> Edit feedback </span>
+						?<div className={"edit-feedback"}>
+							<span onClick={() => setIsRating(true)}> Edit feedback </span>
+						</div>
 						:""
 					}
 				</div>
