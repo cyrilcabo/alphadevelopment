@@ -11,6 +11,7 @@ import {useQuery, useApolloClient} from 'react-apollo';
 import Grid from '@material-ui/core/Grid';
 
 import BlogSummary from '../../Types/Blog/blogsummary';
+import BlogSection from '../../Types/Blog/sections';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -99,11 +100,13 @@ const useStyle = makeStyles(theme => ({
 
 const Blogs = ():JSX.Element => {
 	const classes = useStyle();
-	const [skip, setSkip] = React.useState(0);
 	const client = useApolloClient();
+	const [skip, setSkip] = React.useState(0);
 	const {data: blogsData, loading: blogsLoading} = useQuery(BLOGS, {variables: {skip}});
+	const {data: featuredBlogs, loading: featuredLoading} = useQuery(BLOGS, {variables: {featured: true, limit: 5}});
 	const [hasMore, setHasMore] = React.useState(blogsData ?blogsData.blogs.length >= 10 :false)
 	const [posts, setPosts]: [BlogSummary[], Function] = React.useState([]);
+	const [featuredLinks, setFeaturedLinks]: [BlogSection, Function] = React.useState({title: "Featured blogs", links: []});
 
 	React.useEffect(() => {
 		if (blogsData?.blogs.length) {
@@ -111,6 +114,24 @@ const Blogs = ():JSX.Element => {
 			setHasMore(blogsData.blogs.length >= 10)
 		}
 	}, [blogsData]);
+
+	React.useEffect(() => {
+		if (featuredBlogs?.blogs?.length) {
+			setFeaturedLinks({
+				title: "Featured blogs",
+				links: featuredBlogs.blogs.map((item:BlogSummary) => ({
+					title: item.title,
+					link: `/blogs/read?blogid=${item._id}`,
+				}))	
+			});
+		}
+		if (featuredLoading) {
+			setFeaturedLinks({
+				title: "Featured blogs",
+				links: "loading"
+			})
+		}
+	}, [featuredBlogs, featuredLoading]);
 
 	React.useEffect(() => {
 		const scroll = () => {
@@ -128,36 +149,22 @@ const Blogs = ():JSX.Element => {
 		window.addEventListener("scroll", scroll);
 		if (!hasMore) window.removeEventListener("scroll", scroll);
 		return () => { window.removeEventListener("scroll", scroll); };
-	}, [hasMore, blogsLoading]);
+	}, [hasMore, blogsLoading, client]);
 
-	const relatedLinks = [
-		{
-			title: "Featured blogs",
-			links: [
-				{
-					title: "Start a Hello World app now",
-					link: "#"
-				},
-				{
-					title: "How about a Hi World app?",
-					link: "#"
-				},
-			],
-		}
-	];
 	const mappedPosts:any = posts.map((item, index) => {
-		return <Grid item key={index}>
+		return  <Grid item key={index}>
 			<BlogCard 
 				key={index}
 				title={item.title} 
 				categories={item.category}
 				rating={item.rating}
 				totalRating={item.totalRatings}
+				link={item._id}
 			/>
 		</Grid>
 	});
 	return (
-		<Layout relatedLinks={relatedLinks}>
+		<Layout relatedLinks={[featuredLinks]}>
 			<React.Fragment>
 				<Grid item xs={12} className={[classes.root, (!posts.length && !blogsLoading) && classes.emptyMessage,].join(' ')}>
 					{posts.length
