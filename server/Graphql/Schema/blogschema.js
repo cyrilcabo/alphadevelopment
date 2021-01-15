@@ -5,7 +5,7 @@ const blogSchema = `
 		category: [String!]!
 		featured: Boolean!
 		datePosted: Date!
-		rating: Int!
+		rating: Float!
 		totalRatings: Int!
 	}
 	type Blog {
@@ -15,7 +15,7 @@ const blogSchema = `
 		category: [String!]!
 		featured: Boolean!
 		datePosted: Date!
-		rating: Int!
+		rating: Float!
 		totalRatings: Int!
 		content: String!
 		series: [String]
@@ -25,6 +25,7 @@ const blogSchema = `
 		success: Boolean
 		iRating: Int
 		upsert: Int
+		prev: Int
 	}
 	type BlogComment {
 		_id: ID

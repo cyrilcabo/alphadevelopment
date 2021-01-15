@@ -20,8 +20,8 @@ const Blog = (parent, args, context) => {
 								$match: {
 									$expr: {
 										$and: [
-											{$eq: ["blog_id", ObjectId(args._id)]},
-											{$eq: ["user_id", context.request.signedCookies["alpha_id"]]}
+											{$eq: ["$blog_id", ObjectId(args._id)]},
+											{$eq: ["$user_id", context.request.signedCookies["alpha_id"]]}
 										]
 									}
 								}

@@ -1,10 +1,11 @@
 import {SUBSCRIBE, CONTACT} from './Mutation/email';
 import {LIKE} from './Mutation/products';
-import {LIKEBLOG} from './Mutation/blogs';
+import {LIKEBLOG, ADDCOMMENT} from './Mutation/blogs';
 
 export {
 	SUBSCRIBE,
 	CONTACT,
 	LIKE,
-	LIKEBLOG
+	LIKEBLOG,
+	ADDCOMMENT
 }
