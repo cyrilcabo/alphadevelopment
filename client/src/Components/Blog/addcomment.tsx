@@ -84,7 +84,7 @@ const AddComment = ({blogId, addComment: addNewComment}:Props) => {
 	//States
 	const [isAnonymous, setAnonymous] = React.useState(true);
 	const [comment, setComment] = React.useState("");
-	const [name, setName] = React.useState("");
+	const [name, setName] = React.useState(window.localStorage.getItem("alpha-name") || "");
 	//State handlers
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>):void => setName((e?.target as HTMLInputElement)?.value);
 	const handleAnonymous = ():void => setAnonymous(isAnonymous ?false :true);
@@ -118,6 +118,7 @@ const AddComment = ({blogId, addComment: addNewComment}:Props) => {
 			name: author,
 			_id: blogId,
 		}}).then(() => {
+			if (!isAnonymous) window.localStorage.setItem("alpha-name", name);
 			setComment("");
 		});
 	}

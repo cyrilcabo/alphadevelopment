@@ -222,7 +222,7 @@ const RateProduct = (props: Props): JSX.Element => {
 	});
 	const [rateValue, setRateValue] = React.useState(1);
 	const [thoughts, setThoughts] = React.useState("");
-	const [name, setName] = React.useState("");
+	const [name, setName] = React.useState(window.localStorage.getItem("alpha-name") || "");
 	const [err, setErr] = React.useState(false);
 	const [isVoted, setIsVoted] = React.useState(false);
 	const [isEditing, setIsEditing] = React.useState(false);
@@ -244,6 +244,7 @@ const RateProduct = (props: Props): JSX.Element => {
 	const submitLike = ():void => {
 		if (data.rating === rateValue && data.msg === thoughts) return;
 		if (rateValue && (rateValue >= 1 && rateValue <= 5)) {
+			window.localStorage.setItem("alpha-name", data.name || name);
 			rateProduct({variables: {
 				pId: props.id, 
 				name: data.name || name, 
