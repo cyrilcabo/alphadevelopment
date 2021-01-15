@@ -267,7 +267,7 @@ const Read = ():JSX.Element => {
 						value={isRating ?ratingMe :blog.iRating} 
 						handleRate={!blog.iRating || isRating ?setRatingMe :null} 
 						isBig 
-						handleOpen={onRating}
+						handleOpen={isRating ?onRating :undefined}
 					/>
 					{(blog.iRating && !isRating)
 						?<span onClick={() => setIsRating(true)}> Edit feedback </span>
