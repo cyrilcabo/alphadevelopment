@@ -9,7 +9,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 //Utils
-import moment from 'moment';
+import {useMutation} from 'react-apollo';
+
+import {ADDCOMMENT} from '../../Graphql/mutation';
+import {BLOG_COMMENTS} from '../../Graphql/queries';
+
+import Comment from '../../Types/Blog/comment';
 
 //Style components
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -70,33 +75,49 @@ const useStyle = makeStyles(theme => ({
 }));
 
 interface Props {
-
+	blogId: string,
+	addComment: Function,
 }
 
-const AddComment = (props:any) => {
+const AddComment = ({blogId, addComment: addNewComment}:Props) => {
 	const classes = useStyle();
-	const {publishComment, addComment, blogId} = props;
 	//States
 	const [isAnonymous, setAnonymous] = React.useState(true);
-	const [loading, setLoading] = React.useState(false);
 	const [comment, setComment] = React.useState("");
 	const [name, setName] = React.useState("");
 	//State handlers
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>):void => setName((e?.target as HTMLInputElement)?.value);
 	const handleAnonymous = ():void => setAnonymous(isAnonymous ?false :true);
 	const handleComment = (e: React.ChangeEvent<HTMLInputElement>):void => setComment((e?.target as HTMLInputElement)?.value);
+	//Submit comment
+	const [publishComment, {loading}] = useMutation(ADDCOMMENT, {
+		update(cache, {data: {addComment}}) {
+			const comments: any = cache.readQuery({query: BLOG_COMMENTS, variables: {skip: 0, _id: blogId}});
+			cache.writeQuery({
+				query: BLOG_COMMENTS,
+				variables: {skip: 0, _id: blogId},
+				data: {
+					blogComments: [
+						addComment,
+						...comments.blogComments,
+					],
+				}
+			});
+			addNewComment((c:Comment[]) => ([addComment, ...c]));
+		}
+	});
 	const submitComment = (e: React.ChangeEvent<HTMLFormElement>):void => {
 		e.preventDefault();
 		postComment();
 	}
-	//Submit comment
 	const postComment = ():void => {
 		const author: string = isAnonymous ?"Anonymous" :name;
-		if (!comment || !author) return;
-		setLoading(true);
-		publishComment(author, comment, blogId).then(() => {
-			setLoading(false);
-			addComment(blogId, [{author, content: comment, datePosted: moment()}]);
+		if (!comment || !author || !blogId) return;
+		publishComment({variables: {
+			comment,
+			name: author,
+			_id: blogId,
+		}}).then(() => {
 			setComment("");
 		});
 	}

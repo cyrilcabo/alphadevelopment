@@ -3,6 +3,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 
+import moment from 'moment';
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle = makeStyles(theme => ({
@@ -69,15 +71,21 @@ const useStyle = makeStyles(theme => ({
 	}
 }));
 
-const Comment = ():JSX.Element => {
+interface Props {
+	name?: string,
+	comment: string,
+	datePosted: Date
+}
+
+const Comment = ({name, comment, datePosted}: Props):JSX.Element => {
 	const classes = useStyle();
 
 	return (
 		<Grid item className={classes.root}>
-			<Avatar> C </Avatar>
+			<Avatar> {name ?name[0] :"A"} </Avatar>
 			<Grid item>
-				<p> How about some nice, yet somehow a long comment right here, and it will make absolutely no sense... </p>
-				<p> <span> Author name </span> <span> Date posted, 2020 </span> </p>
+				<p> {comment || "_"} </p>
+				<p> <span> {name || "Anonymous"} </span> <span> {datePosted ?moment(datePosted).format("MM/DD/YYYY") :"Date unspecified"} </span> </p>
 			</Grid>
 		</Grid>
 	);

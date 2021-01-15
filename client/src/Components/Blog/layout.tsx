@@ -146,7 +146,7 @@ const useStyle = makeStyles(theme => ({
 interface Props {
 	title?: string,
 	subTitle?: string | JSX.Element,
-	relatedLinks: Sections[],
+	relatedLinks: (Sections | null)[],
 	children: JSX.Element,
 }
 

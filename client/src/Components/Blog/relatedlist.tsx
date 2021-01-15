@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Link from '../../Types/Blog/link';
 import Sections from '../../Types/Blog/sections';
 
+import StyledLoading from '../Misc/styledloading';
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyle = makeStyles(theme => ({
@@ -64,11 +66,17 @@ const useStyle = makeStyles(theme => ({
 				fontSize: '1rem'
 			},
 		}
+	},
+	loading: {
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		padding: '5px 0px'
 	}
 }));
 
 interface Props {
-	relatedLinks: Sections[],
+	relatedLinks: (Sections | null)[],
 }
 
 const RelatedList = ({relatedLinks}:Props):JSX.Element => {
@@ -79,7 +87,12 @@ const RelatedList = ({relatedLinks}:Props):JSX.Element => {
 	});
 
 	const mappedLinks = relatedLinks.map((item, index) => {
-		const temp = mappedPosts(item.links);
+		if (item===null) return null;
+		const temp = item.links==="loading"
+			?[<Grid key={0} className={classes.loading}>
+				<StyledLoading />
+			</Grid>]
+			:mappedPosts(item.links);
 		return <Grid item key={index} className={[!temp.length && classes.emptyMessage].join(' ')}>
 			<h2> {item.title} </h2>
 			{temp.length

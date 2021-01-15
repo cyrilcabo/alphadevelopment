@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -118,17 +119,19 @@ interface Props {
 	rating?: number,
 	totalRating?: number,
 	categories: string[],
+	link: string
 }
 
-const BlogCard = ({img, title, rating, totalRating, categories}:Props):JSX.Element => {
+const BlogCard = ({img, title, rating, totalRating, categories, link}:Props):JSX.Element => {
 	const classes = useStyle();
+	const history = useHistory();
 
 	const mappedCategories = categories.map((item, index) => {
 		return <span key={index}> #{item} </span>
 	});
 
 	return (
-		<Paper elevation={2} className={classes.root}>
+		<Paper elevation={2} className={classes.root} onClick={() => {history.push(`/blogs/read?blogid=${link}`)}}>
 			<Grid item className={classes.imgContainer}>
 				{img
 					?<img src={img} alt={"Blog thumbnail"} />
