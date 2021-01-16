@@ -36,9 +36,13 @@ const useStyle = makeStyles(theme => ({
 	}
 }));
 
-const BlogBannerImage = ():JSX.Element => {
+interface Props {
+	className?: string
+}
+
+const BlogBannerImage = ({className}:Props):JSX.Element => {
 	const classes = useStyle();
-	return <BannerContainer viewBox={"0 0 833 451"} className={classes.root}/>
+	return <BannerContainer viewBox={"0 0 833 451"} className={[classes.root, className].join(' ')}/>
 }
 
 export default BlogBannerImage;

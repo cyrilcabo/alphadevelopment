@@ -8,6 +8,7 @@ import HomeExpertise from '../Home/expertise';
 import HomeTechs from '../Home/techs';
 import HomeAvail from '../Home/avail';
 import Testimonials from '../Testimonials/testimonials';
+import BlogTeaser from '../Home/blogteaser';
 
 //Utils
 import React from 'react';
@@ -20,6 +21,7 @@ const Index = ():JSX.Element => {
 			<HomeExpertise />
 			<HomeTechs />
 			<HomeAvail />
+			<BlogTeaser />
 			<Testimonials />
 		</Grid>
 	);
