@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Fab from '@material-ui/core/Fab';
 
 import RelatedList from './relatedlist';
+import BlogBannerImage from '../Misc/blogbannerimage';
 
 import Sections from '../../Types/Blog/sections';
 
@@ -19,6 +20,7 @@ const useStyle = makeStyles(theme => ({
 		position: 'fixed',
 		bottom: 20,
 		right: 20,
+		zIndex: 2,
 	},
 	moreIcon: {
 		fontSize: '2rem',
@@ -35,10 +37,14 @@ const useStyle = makeStyles(theme => ({
 	banner: {
 		minHeight: 400,
 		paddingBottom: 150,
+		position: 'relative',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		backgroundColor: '#191919',
+		'& > div.MuiGrid-item': {
+			zIndex: 1
+		},
 		[theme.breakpoints.down('sm')]: {
 			minHeight: 320
 		},
@@ -110,6 +116,7 @@ const useStyle = makeStyles(theme => ({
 	body: {
 		margin: '-150px 0px 100px 0px',
 		backgroundColor: 'white',
+		zIndex: 1,
 		boxShadow: '0px 2px 5px #00000078',
 		display: 'flex',
 		justifyContent: 'space-between',
@@ -167,6 +174,7 @@ const BlogLayout = ({children, relatedLinks, title, subTitle}:Props):JSX.Element
 				</Drawer>
 			</Hidden>
 			<Grid item xs={12} className={classes.banner}>
+				<BlogBannerImage />
 				<Grid item xs={11} md={10} container justify="flex-start">
 					<Grid item xs={12} md={8} xl={5} className={classes.bannerText}>
 						{title
