@@ -166,10 +166,10 @@ const HomeBanner = ():JSX.Element => {
 		<Grid item className={classes.root} container justify="center" alignItems="center">
 			<div className={classes.rootImg} />
 			<picture onLoad={handleLoad} ref={image} className={classes.bgImg} > 
-				<source media="(min-width: 0px)" srcSet="/images/Banner/Banner_XS.jpg" />
-				<source media="(min-width: 600px)" srcSet="/images/Banner/Banner_SM.jpg" />
-				<source media="(min-width: 1280px)" srcSet="/images/Banner/Banner_LG.jpg" />
 				<source media="(min-width: 1920px)" srcSet="/images/Banner/Banner_XL.jpg" />
+				<source media="(min-width: 1280px)" srcSet="/images/Banner/Banner_LG.jpg" />
+				<source media="(min-width: 600px)" srcSet="/images/Banner/Banner_SM.jpg" />
+				<source media="(min-width: 0px)" srcSet="/images/Banner/Banner_XS.jpg" />
 				<object data={"/images/Banner/Banner_XS.jpg"} type="image/jpeg" aria-label="Banner fallback image"/>
 			</picture>
 			<Grid item xs={11} md={10} lg={10} container alignItems="center" className={classes.contentContainer}>
