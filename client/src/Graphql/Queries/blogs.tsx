@@ -26,7 +26,13 @@ export const BLOG = gql`
 			rating,
 			totalRatings,
 			content,
-			series,
+			series {
+				title,
+				links {
+					_id,
+					title
+				}
+			},
 			iRating
 		}
 	}

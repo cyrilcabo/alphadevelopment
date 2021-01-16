@@ -144,7 +144,10 @@ const Read = ():JSX.Element => {
 		rating: 0,
 		totalRatings: 0,
 		content: "",
-		series: [],
+		series: {
+			title: "",
+			links: [],
+		},
 		iRating: 0
 	});
 	const {data: blogData, loading: blogLoading} = useQuery(BLOG, {variables: {_id: blogid}});
@@ -244,7 +247,7 @@ const Read = ():JSX.Element => {
 	</div>
 
 	return (
-		<Layout relatedLinks={[relatedLinks]} title={blog.title} subTitle={subTitle}>
+		<Layout relatedLinks={[blog?.series?.links?.length ?blog.series :null, relatedLinks]} title={blog.title} subTitle={subTitle}>
 			<React.Fragment>
 				<Categories categories={blog.category} />	
 				{blogLoading

@@ -20,7 +20,7 @@ const Blog = (parent, args, context) => {
 								$match: {
 									$expr: {
 										$and: [
-											{$eq: ["$blog_id", ObjectId(args._id)]},
+											{$eq: ["$blog_id", "$$args_id"]},
 											{$eq: ["$user_id", context.request.signedCookies["alpha_id"]]}
 										]
 									}
@@ -29,6 +29,50 @@ const Blog = (parent, args, context) => {
 						],
 						as: "blogRatings"
 					},
+				},
+				{
+					$lookup: {
+						from: "blog_series",
+						let: {
+							localId: "$_id"
+						},
+						pipeline: [
+							{
+								$unwind: "$links"	
+							},
+							{
+								$match: {
+									$expr: {
+										$eq: ["$links._id", "$$localId"]
+									}
+								}
+							},
+							{
+								$lookup: {
+									from: "blog_series",
+									localField: "_id",
+									foreignField: "_id",
+									as: "blogSeries"
+								}
+							},
+							{
+								$replaceRoot: {
+									newRoot: {
+										$mergeObjects: [
+											"$$ROOT",
+											{$arrayElemAt: ["$blogSeries", 0]},
+										]
+									}
+								}
+							},
+							{
+								$project: {
+									blogSeries: 0
+								}
+							}
+						],
+						as: "series"
+					}
 				},
 				{
 					$replaceRoot: {
@@ -55,6 +99,9 @@ const Blog = (parent, args, context) => {
 						},
 						rating: {
 							$divide: ["$rating", "$totalRatings"]
+						},
+						series: {
+							$ifNull: [{$arrayElemAt: ["$series", 0]}, {}]
 						}
 					}
 				}

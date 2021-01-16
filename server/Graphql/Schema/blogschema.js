@@ -19,7 +19,7 @@ const blogSchema = `
 		rating: Float!
 		totalRatings: Int!
 		content: String!
-		series: [String]
+		series: BlogSeries
 		iRating: Int!
 	}
 	type BlogLike {
@@ -33,6 +33,14 @@ const blogSchema = `
 		name: String
 		comment: String
 		datePosted: Date
+	}
+	type BlogSeries {
+		title: String
+		links: [BlogLink]
+	}
+	type BlogLink {
+		_id: ID!
+		title: String!
 	}
 `;
 

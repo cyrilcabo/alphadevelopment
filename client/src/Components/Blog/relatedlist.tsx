@@ -94,7 +94,7 @@ const RelatedList = ({relatedLinks}:Props):JSX.Element => {
 			</Grid>]
 			:mappedPosts(item.links);
 		return <Grid item key={index} className={[!temp.length && classes.emptyMessage].join(' ')}>
-			<h2> {item.title} </h2>
+			<h2> {item.title || "Continute reading"} </h2>
 			{temp.length
 				?temp
 				:<p> There are no posts here, yet. </p>
