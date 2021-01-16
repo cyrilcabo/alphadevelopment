@@ -6,6 +6,7 @@ import CommentList from '../Blog/commentlist';
 import AddComment from '../Blog/addcomment';
 import Categories from '../Blog/categories';
 import StyledLoading from '../Misc/styledloading';
+import LoadingScreen from '../LoadingScreen/loadingscreen';
 
 import qs from 'qs';
 import {useLocation} from 'react-router-dom';
@@ -245,6 +246,8 @@ const Read = ():JSX.Element => {
 			<Rating value={blog.rating} isBig/> <span> ({blog.totalRatings}) </span>
 		</div>
 	</div>
+
+	if (!blog._id) return <LoadingScreen />
 
 	return (
 		<Layout relatedLinks={[blog?.series?.links?.length ?blog.series :null, relatedLinks]} title={blog.title} subTitle={subTitle}>
