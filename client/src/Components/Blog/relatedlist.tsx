@@ -41,8 +41,9 @@ const useStyle = makeStyles(theme => ({
 				'&:hover': {
 					color: '#fda531'
 				},
-				[theme.breakpoints.down('md')]: {
+				[theme.breakpoints.only('md')]: {
 					marginBottom: 4,
+					fontSize: '1rem'
 				},
 				[theme.breakpoints.down('sm')]: {
 					fontSize: '1.1rem',
