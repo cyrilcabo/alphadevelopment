@@ -2,6 +2,7 @@ const blogSchema = `
 	type BlogSummary {
 		_id: ID!
 		title: String!
+		image: String
 		category: [String!]!
 		featured: Boolean!
 		datePosted: Date!
