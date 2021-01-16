@@ -3,6 +3,7 @@ export default interface BlogSummary {
 	title: string,
 	category: string[],
 	featured: boolean,
+	image: string,
 	datePosted: Date,
 	rating: number,
 	totalRatings: number

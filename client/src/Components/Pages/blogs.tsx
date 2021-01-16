@@ -103,10 +103,12 @@ const Blogs = ():JSX.Element => {
 	const client = useApolloClient();
 	const [skip, setSkip] = React.useState(0);
 	const {data: blogsData, loading: blogsLoading} = useQuery(BLOGS, {variables: {skip}});
-	const {data: featuredBlogs, loading: featuredLoading} = useQuery(BLOGS, {variables: {featured: true, limit: 5}});
+	const {data: featuredBlogs, loading: featuredLoading} = useQuery(BLOGS, {variables: {featured: true, limit: 4}});
+	const {data: hotBlogs, loading: hotLoading} = useQuery(BLOGS, {variables: {hot: true, category: ["tutorial"]}});
 	const [hasMore, setHasMore] = React.useState(blogsData ?blogsData.blogs.length >= 10 :false)
 	const [posts, setPosts]: [BlogSummary[], Function] = React.useState([]);
 	const [featuredLinks, setFeaturedLinks]: [BlogSection, Function] = React.useState({title: "Featured blogs", links: []});
+	const [hotLinks, setHotLinks]: [BlogSection, Function] = React.useState({title: "Hot tutorials", links: []});
 
 	React.useEffect(() => {
 		if (blogsData?.blogs.length) {
@@ -118,21 +120,40 @@ const Blogs = ():JSX.Element => {
 
 	React.useEffect(() => {
 		if (featuredBlogs?.blogs?.length) {
-			setFeaturedLinks({
-				title: "Featured blogs",
+			setFeaturedLinks((f:BlogSection) => ({
+				...f,
 				links: featuredBlogs.blogs.map((item:BlogSummary) => ({
 					title: item.title,
 					link: `/blogs/read?blogid=${item._id}`,
 				}))	
-			});
+			}));
 		}
 		if (featuredLoading) {
-			setFeaturedLinks({
-				title: "Featured blogs",
+			setFeaturedLinks((f:BlogSection) => ({
+				...f,
 				links: "loading"
-			})
+			}));
 		}
 	}, [featuredBlogs, featuredLoading]);
+
+	React.useEffect(() => {
+		if (hotBlogs?.blogs?.length) {
+			setHotLinks((f:BlogSection) => ({
+				...f,
+				links: hotBlogs.blogs.map((item:BlogSummary) => ({
+					title: item.title,
+					link: `/blogs/read?blogid=${item._id}`
+				}))
+			}));
+		}
+		if (hotLoading) {
+			setHotLinks((f:BlogSection) => ({
+				...f,
+				links: "loading"
+			}));
+		}
+	}, [hotBlogs, hotLoading])
+
 
 	React.useEffect(() => {
 		const scroll = () => {
@@ -161,11 +182,12 @@ const Blogs = ():JSX.Element => {
 				rating={item.rating}
 				totalRating={item.totalRatings}
 				link={item._id}
+				img={item.image}
 			/>
 		</Grid>
 	});
 	return (
-		<Layout relatedLinks={[featuredLinks]}>
+		<Layout relatedLinks={[featuredLinks, hotLinks]}>
 			<React.Fragment>
 				<Grid item xs={12} className={[classes.root, (!posts.length && !blogsLoading) && classes.emptyMessage,].join(' ')}>
 					{posts.length
