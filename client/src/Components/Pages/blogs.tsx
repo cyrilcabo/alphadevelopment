@@ -119,7 +119,7 @@ const Blogs = ():JSX.Element => {
 	}, [blogsData]);
 
 	React.useEffect(() => {
-		if (featuredBlogs?.blogs?.length) {
+		if (featuredBlogs?.blogs) {
 			setFeaturedLinks((f:BlogSection) => ({
 				...f,
 				links: featuredBlogs.blogs.map((item:BlogSummary) => ({
@@ -137,7 +137,7 @@ const Blogs = ():JSX.Element => {
 	}, [featuredBlogs, featuredLoading]);
 
 	React.useEffect(() => {
-		if (hotBlogs?.blogs?.length) {
+		if (hotBlogs?.blogs) {
 			setHotLinks((f:BlogSection) => ({
 				...f,
 				links: hotBlogs.blogs.map((item:BlogSummary) => ({

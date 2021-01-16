@@ -212,7 +212,7 @@ const Read = ():JSX.Element => {
 	}, [blogData, fetchRelatedBlogs]);
 
 	React.useEffect(() => {
-		if (relatedBlogs?.blogs?.length) {
+		if (relatedBlogs?.blogs) {
 			setRelatedLinks({
 				title: "Read more",
 				links: relatedBlogs.blogs.map((item:BlogSummary) => ({
