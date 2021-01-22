@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const BLOGS = gql`
-	query($title: String, $skip: Int, $category: [String], $limit: Int, $featured: Boolean, $hot: Boolean) {
-		blogs(title: $title, skip: $skip, category: $category, limit: $limit, featured: $featured, hot: $hot) {
+	query($title: String, $skip: Int, $category: [String], $limit: Int, $featured: Boolean, $hot: Boolean, $exclude: ID) {
+		blogs(title: $title, skip: $skip, category: $category, limit: $limit, featured: $featured, hot: $hot, exclude: $exclude) {
 			_id,
 			title,
 			rating,

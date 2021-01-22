@@ -5,7 +5,7 @@ const querySchema = `
 		reviews(pid: String!, skip: Int, excl: String): [Review]!
 		isReviewed(pid: String!): IsReviewed!
 		testimonials(featured: Boolean, skip: Int): [Testimonial]!
-		blogs(title: String, date: Date, category: [String], skip: Int, limit: Int, featured: Boolean, hot: Boolean): [BlogSummary]!
+		blogs(title: String, date: Date, category: [String], skip: Int, limit: Int, featured: Boolean, hot: Boolean, exclude: ID): [BlogSummary]!
 		blog(_id: ID!): [Blog]!
 		blogComments(_id: ID!, skip: Int): [BlogComment]!
 	}

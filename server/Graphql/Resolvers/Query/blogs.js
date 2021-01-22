@@ -5,13 +5,19 @@ const blogs = (parent, args, context) => {
 	if (args.featured) sort = {...sort, featured: -1};
 	if (args.hot) sort = {...sort, rating: -1};
 	return context.db.then(db => {
-		if (args.title || args.date || args.category) {
-			const {title, date, category} = args;
+		if (args.title || args.date || args.category || args.exclude) {
+			const {title, date, category, exclude} = args;
 			let query = {};
 			if (title) query = {...query, title: new RegExp(title, "i")};
 			if (date) query = {...query, 
 				datePosted: {
 					$gte: date,
+				}
+			};
+			if (exclude) query = {
+				...query,
+				_id: {
+					$ne: ObjectId(exclude)
 				}
 			};
 			if (category) query = {...query, 
