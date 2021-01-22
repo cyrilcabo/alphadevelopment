@@ -98,7 +98,18 @@ const Blog = (parent, args, context) => {
 							$ifNull: ["$iRating", 0]
 						},
 						rating: {
-							$divide: ["$rating", "$totalRatings"]
+							$divide: [
+								"$rating", 
+								{
+									$cond: {
+										if: {
+											$eq: ["$totalRatings", 0]
+										},
+										then: 1,
+										else: "$totalRatings"
+									}
+								}
+							]
 						},
 						series: {
 							$ifNull: [{$arrayElemAt: ["$series", 0]}, {}]

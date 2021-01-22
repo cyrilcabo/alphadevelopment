@@ -26,7 +26,7 @@ const blogs = (parent, args, context) => {
 		return result.map(item => {
 			return {
 				...item,
-				rating: item.rating/item.totalRatings
+				rating: item.rating/(item.totalRatings || 1)
 			}
 		});
 	}).catch(err => {
