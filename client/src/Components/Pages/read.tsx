@@ -255,7 +255,6 @@ const Read = ():JSX.Element => {
 			<React.Fragment>
 				<Helmet>
 					<title> {blog?.title ?`${blog.title} -` :""} Alpha Development </title>
-					<meta name="description" content="description hello!"></meta>
 				</Helmet>
 				<Categories categories={blog.category} />	
 				{blogLoading
