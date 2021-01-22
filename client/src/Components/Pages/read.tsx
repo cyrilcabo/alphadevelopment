@@ -208,7 +208,7 @@ const Read = ():JSX.Element => {
 			});
 			setRatingMe(blogData.blog[0].iRating);
 			setIsRating(!blogData.blog[0].iRating);
-			fetchRelatedBlogs({variables: {category: blogData.blog[0].category, limit: 5}});
+			fetchRelatedBlogs({variables: {category: blogData.blog[0].category, exclude: blogData.blog[0]._id, limit: 5}});
 		}
 	}, [blogData, fetchRelatedBlogs]);
 
@@ -257,7 +257,7 @@ const Read = ():JSX.Element => {
 					?<div className={classes.blogLoading}>
 						<StyledLoading />
 					</div>
-					:<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={blog.content} className={'md-container'} />
+					:<ReactMarkdown plugins={[[gfm, {singleTilde: false}]]} source={blog.content} className={'md-container'} allowDangerousHtml />
 				}
 				<div className={classes.rateMe}>
 					{likeLoading
