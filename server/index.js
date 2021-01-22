@@ -11,7 +11,6 @@ const cookieParser = require('cookie-parser');
 const { setCookie } = require('./cookies/setcookie');
 
 const { GraphQLServer} = require('graphql-yoga');
-const { MongoClient} = require('mongodb');
 
 //Nodemailer
 const nodemailer = require('nodemailer');
@@ -28,18 +27,10 @@ const { Mutation } = require('./Graphql/Resolvers/Mutation/index');
 const typeDefs = require('./Graphql/Schema/index');
 
 //Configure database
-const client = new MongoClient(process.env.MONGO_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+const database = require('./database/index');
 
-const database = () => {
-	return new Promise(async (resolve) => {
-		if (!client.isConnected()) await client.connect();
-		const db = client.db('alphadevelopment');
-		resolve(db)
-	});
-}
+//Custom endpoints
+const admin = require('./rest/admin');
 
 //Define resolvers
 const resolvers = {
@@ -84,6 +75,8 @@ const server = new GraphQLServer({
 server.express.use(cookieParser(process.env.COOKIE_SECRET));
 server.express.use((req, res, next) => setCookie(req, res, next));
 server.express.use(express.static(path.join(__dirname, "build"), {maxAge: '7d'}));
+
+server.express.use('/admin', admin);
 
 server.express.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
