@@ -177,7 +177,7 @@ const Read = ():JSX.Element => {
 				}
 			});
 			//Update list
-			for (let i = 0; i < skipData.skipBlogs; i+=10) {
+			for (let i = 0; i <= skipData.skipBlogs; i+=10) {
 				const tempData: any = cache.readQuery({query: BLOGS, variables: {skip: i}});
 				cache.writeQuery({
 					query: BLOGS,
