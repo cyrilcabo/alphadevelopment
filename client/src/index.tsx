@@ -13,6 +13,8 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
+import {Helmet} from 'react-helmet';
+
 //Initialize Google analytics
 ReactGA.initialize('UA-170812891-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -43,6 +45,9 @@ cache.writeData({
 //Bind apollo client to application
 ReactDOM.render(
   <React.StrictMode>
+  		<Helmet>
+  			<title> Alpha Development </title>
+  		</Helmet>
     	<ApolloProvider client={client}>
     		<App />
     	</ApolloProvider>
