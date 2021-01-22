@@ -22,6 +22,7 @@ import BlogSection from '../../Types/Blog/sections';
 import {useQuery, useMutation, useLazyQuery} from 'react-apollo';
 
 import ReactMarkdown from 'react-markdown';
+import {Helmet} from 'react-helmet';
 import gfm from 'remark-gfm';
 import moment from 'moment';
 
@@ -160,7 +161,7 @@ const Read = ():JSX.Element => {
 			const skipData: any = cache.readQuery({query: SKIP_BLOGS});
 			//Update rating
 			const updatedTotal = prev.blog[0].totalRatings+likeBlog.upsert;
-			const updatedRating = prev.blog[0].rating+(likeBlog.iRating-likeBlog.prev);
+			const updatedRating = ((prev.blog[0].rating*prev.blog[0].totalRatings)+(likeBlog.iRating-likeBlog.prev))/updatedTotal;
 			//Update document
 			cache.writeQuery({
 				query: BLOG,
@@ -252,6 +253,10 @@ const Read = ():JSX.Element => {
 	return (
 		<Layout relatedLinks={[blog?.series?.links?.length ?blog.series :null, relatedLinks]} title={blog.title} subTitle={subTitle}>
 			<React.Fragment>
+				<Helmet>
+					<title> {blog?.title ?`${blog.title} -` :""} Alpha Development </title>
+					<meta name="description" content="description hello!"></meta>
+				</Helmet>
 				<Categories categories={blog.category} />	
 				{blogLoading
 					?<div className={classes.blogLoading}>
