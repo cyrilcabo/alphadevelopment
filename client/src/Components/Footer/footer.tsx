@@ -1,6 +1,5 @@
 //Material components
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 //Utils
@@ -165,12 +164,6 @@ const Footer = ({navs}: Props): JSX.Element => {
 									</a>
 								</IconButton>
 							</Grid>
-						</Grid>
-						<Grid item>
-							<Button 
-								className={classes.CTA}
-								onClick={() => window.open('/Resume/resume.pdf')}
-							> Download Resume </Button>
 						</Grid>
 					</Grid>
 				</Grid>
