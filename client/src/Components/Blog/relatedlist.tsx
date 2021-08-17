@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -84,7 +85,7 @@ const RelatedList = ({relatedLinks}:Props):JSX.Element => {
 	const classes = useStyle();
 
 	const mappedPosts = (posts:Link[]):JSX.Element[] => posts.map((item, index) => {
-		return <a href={item.link} key={index}> {item.title} </a>
+		return <RouterLink to={item.link} key={index}> {item.title} </RouterLink>
 	});
 
 	const mappedLinks = relatedLinks.map((item, index) => {
